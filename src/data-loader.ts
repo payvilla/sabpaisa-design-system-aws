@@ -85,6 +85,14 @@ export class DataLoader {
   }
 
   /**
+   * Get templates
+   * Complete template library with code, installation, props, examples
+   */
+  getTemplates(): any {
+    return this.load('design-templates.json');
+  }
+
+  /**
    * Clear the cache (useful for hot-reloading during development)
    */
   clearCache(): void {

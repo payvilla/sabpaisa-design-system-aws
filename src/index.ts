@@ -117,7 +117,7 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
             },
             category: {
               type: 'string',
-              enum: ['all', 'tokens', 'components', 'patterns', 'formatting'],
+              enum: ['all', 'tokens', 'components', 'patterns', 'formatting', 'templates'],
               description: 'Category to search in (default: all)',
             },
             limit: {

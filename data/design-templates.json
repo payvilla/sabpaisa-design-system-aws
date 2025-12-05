@@ -1,0 +1,322 @@
+{
+  "metadata": {
+    "version": "1.0.0",
+    "totalTemplates": 12,
+    "categories": 7,
+    "lastUpdated": "2025-01-05",
+    "description": "Production-ready templates for SabPaisa Design System hackathon participants"
+  },
+  "templates": [
+    {
+      "id": "snake-spinner-loader",
+      "name": "Snake Spinner Loader",
+      "category": "loading",
+      "description": "Snake game-inspired spinner with segmented dots following each other in a circular motion",
+      "difficulty": "Intermediate",
+      "tags": ["loading", "spinner", "animation", "async"],
+      "code": "import { motion } from 'framer-motion';\n\nexport default function SnakeSpinner({ size = 64, color = '#006CED', segments = 12 }) {\n  const radius = size * 0.44;\n\n  return (\n    <div className=\"relative\" style={{ width: size, height: size }}>\n      {Array.from({ length: segments }).map((_, i) => {\n        const delay = (i * 0.08);\n        const dotSize = size * 0.125;\n\n        return (\n          <motion.div\n            key={i}\n            className=\"absolute rounded-full\"\n            style={{\n              width: dotSize,\n              height: dotSize,\n              left: '50%',\n              top: '50%',\n              marginLeft: -dotSize / 2,\n              marginTop: -dotSize / 2,\n              background: `linear-gradient(to bottom right, ${color}, ${color}DD)`,\n            }}\n            animate={{\n              rotate: 360,\n              scale: [1, 1.3, 1],\n              opacity: [0.4, 1, 0.4],\n            }}\n            transition={{\n              rotate: {\n                duration: 2,\n                repeat: Infinity,\n                ease: \"linear\",\n                delay: delay,\n              },\n              scale: {\n                duration: 2,\n                repeat: Infinity,\n                ease: \"easeInOut\",\n                delay: delay,\n              },\n              opacity: {\n                duration: 2,\n                repeat: Infinity,\n                ease: \"easeInOut\",\n                delay: delay,\n              },\n            }}\n            transformTemplate={({ rotate }) =>\n              `rotate(${rotate}) translateX(${radius}px)`\n            }\n          />\n        );\n      })}\n    </div>\n  );\n}",
+      "installation": {
+        "dependencies": ["react", "framer-motion"],
+        "devDependencies": ["@types/react"],
+        "steps": [
+          "npm install framer-motion",
+          "Copy the component code to your project (e.g., components/SnakeSpinner.tsx)",
+          "Import and use: import SnakeSpinner from '@/components/SnakeSpinner'"
+        ]
+      },
+      "props": [
+        {
+          "name": "size",
+          "type": "number",
+          "default": "64",
+          "description": "Size of the loader in pixels",
+          "required": false
+        },
+        {
+          "name": "color",
+          "type": "string",
+          "default": "#006CED",
+          "description": "Color of the snake segments (hex, rgb, or CSS color)",
+          "required": false
+        },
+        {
+          "name": "segments",
+          "type": "number",
+          "default": "12",
+          "description": "Number of snake segments (recommended: 8-16)",
+          "required": false
+        }
+      ],
+      "usageExamples": [
+        {
+          "title": "Basic Usage",
+          "description": "Simple spinner with default settings",
+          "code": "<SnakeSpinner />"
+        },
+        {
+          "title": "Custom Size and Color",
+          "description": "Larger spinner with brand color",
+          "code": "<SnakeSpinner size={128} color=\"#FF8800\" />"
+        },
+        {
+          "title": "Button Loading State",
+          "description": "Use inside a button during async operations",
+          "code": "<button disabled={loading}>\n  {loading ? <SnakeSpinner size={20} /> : 'Submit'}\n</button>"
+        }
+      ],
+      "framework": "react",
+      "styling": "tailwindcss",
+      "useCase": "Perfect for button loading states, page transitions, and async operations"
+    },
+    {
+      "id": "bouncing-dots-loader",
+      "name": "Bouncing Dots Loader",
+      "category": "loading",
+      "description": "Three dots bouncing in sequence for a playful loading effect",
+      "difficulty": "Beginner",
+      "tags": ["loading", "dots", "animation", "simple"],
+      "code": "import { motion } from 'framer-motion';\n\nexport default function BouncingDots({ color = '#006CED', dotSize = 16 }) {\n  return (\n    <div className=\"flex gap-3\">\n      {[0, 1, 2].map((i) => (\n        <motion.div\n          key={i}\n          className=\"rounded-full\"\n          style={{\n            width: dotSize,\n            height: dotSize,\n            background: `linear-gradient(to bottom right, ${color}, ${color}DD)`,\n          }}\n          animate={{ y: [0, -20, 0] }}\n          transition={{\n            duration: 0.6,\n            repeat: Infinity,\n            delay: i * 0.15,\n            ease: \"easeInOut\",\n          }}\n        />\n      ))}\n    </div>\n  );\n}",
+      "installation": {
+        "dependencies": ["react", "framer-motion"],
+        "devDependencies": ["@types/react"],
+        "steps": [
+          "npm install framer-motion",
+          "Copy the component code to your project",
+          "Import and use in your app"
+        ]
+      },
+      "props": [
+        {
+          "name": "color",
+          "type": "string",
+          "default": "#006CED",
+          "description": "Color of the dots",
+          "required": false
+        },
+        {
+          "name": "dotSize",
+          "type": "number",
+          "default": "16",
+          "description": "Size of each dot in pixels",
+          "required": false
+        }
+      ],
+      "usageExamples": [
+        {
+          "title": "Basic Usage",
+          "description": "Default bouncing dots",
+          "code": "<BouncingDots />"
+        },
+        {
+          "title": "Chat Message Loading",
+          "description": "Show while typing indicator",
+          "code": "<div className=\"flex items-center gap-2\">\n  <span>Typing</span>\n  <BouncingDots dotSize={8} />\n</div>"
+        }
+      ],
+      "framework": "react",
+      "styling": "tailwindcss",
+      "useCase": "Ideal for message sending, chat applications, and content loading"
+    },
+    {
+      "id": "fade-zoom-splash",
+      "name": "Fade & Zoom Splash Screen",
+      "category": "splash",
+      "description": "Elegant fade-in with zoom effect and gradient backdrop for app launch screens",
+      "difficulty": "Intermediate",
+      "tags": ["splash", "animation", "launch", "onboarding"],
+      "code": "import { motion } from 'framer-motion';\n\nexport default function FadeZoomSplash() {\n  return (\n    <div className=\"fixed inset-0 bg-gradient-to-br from-primary-600 via-primary-500 to-secondary-500 flex items-center justify-center\">\n      <motion.div\n        initial={{ opacity: 0, scale: 0.5 }}\n        animate={{ opacity: 1, scale: 1 }}\n        transition={{ duration: 1, ease: \"easeOut\" }}\n        className=\"text-center\"\n      >\n        <motion.img\n          src=\"/brand/logos/Asset 2.svg\"\n          alt=\"SabPaisa\"\n          className=\"h-24 w-auto mx-auto mb-8\"\n          initial={{ opacity: 0, y: 20 }}\n          animate={{ opacity: 1, y: 0 }}\n          transition={{ delay: 0.3, duration: 0.8 }}\n        />\n        <motion.div\n          initial={{ width: 0 }}\n          animate={{ width: \"100%\" }}\n          transition={{ delay: 0.8, duration: 1.2, ease: \"easeInOut\" }}\n          className=\"h-1 bg-white/30 rounded-full mx-auto max-w-xs\"\n        >\n          <motion.div\n            initial={{ width: \"0%\" }}\n            animate={{ width: \"100%\" }}\n            transition={{ delay: 0.8, duration: 1.5, ease: \"easeInOut\" }}\n            className=\"h-full bg-white rounded-full\"\n          />\n        </motion.div>\n      </motion.div>\n    </div>\n  );\n}",
+      "installation": {
+        "dependencies": ["react", "framer-motion"],
+        "devDependencies": ["@types/react"],
+        "steps": [
+          "npm install framer-motion",
+          "Copy the component code to your project",
+          "Replace logo path with your brand logo",
+          "Use as app launch screen"
+        ]
+      },
+      "props": [],
+      "usageExamples": [
+        {
+          "title": "Basic Usage",
+          "description": "Display as app launch screen",
+          "code": "<FadeZoomSplash />"
+        },
+        {
+          "title": "With Auto-Hide",
+          "description": "Hide after 2 seconds",
+          "code": "const [showSplash, setShowSplash] = useState(true);\n\nuseEffect(() => {\n  setTimeout(() => setShowSplash(false), 2000);\n}, []);\n\nreturn showSplash ? <FadeZoomSplash /> : <MainApp />;"
+        }
+      ],
+      "framework": "react",
+      "styling": "tailwindcss",
+      "useCase": "Perfect for app launches and initial loading screens"
+    },
+    {
+      "id": "dashboard-layout-basic",
+      "name": "Basic Dashboard Layout",
+      "category": "page-layouts",
+      "description": "Complete dashboard with sidebar navigation, header, and responsive widget grid",
+      "difficulty": "Intermediate",
+      "tags": ["dashboard", "layout", "grid", "responsive", "sidebar"],
+      "code": "import { ReactNode } from 'react';\nimport { Home, BarChart3, Users, Settings } from 'lucide-react';\n\ninterface DashboardLayoutProps {\n  title: string;\n  children: ReactNode;\n}\n\nexport default function DashboardLayout({ title, children }: DashboardLayoutProps) {\n  return (\n    <div className=\"flex h-screen bg-gray-50 dark:bg-gray-900\">\n      {/* Sidebar */}\n      <aside className=\"w-64 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700\">\n        <div className=\"p-6\">\n          <h2 className=\"text-2xl font-bold text-gray-900 dark:text-white\">Dashboard</h2>\n        </div>\n        <nav className=\"space-y-1 px-3\">\n          {[{  icon: Home, label: 'Overview' },\n             { icon: BarChart3, label: 'Analytics' },\n             { icon: Users, label: 'Users' },\n             { icon: Settings, label: 'Settings' }].map((item) => (\n            <a\n              key={item.label}\n              href=\"#\"\n              className=\"flex items-center gap-3 px-3 py-2 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700\"\n            >\n              <item.icon className=\"w-5 h-5\" />\n              <span>{item.label}</span>\n            </a>\n          ))}\n        </nav>\n      </aside>\n\n      {/* Main Content */}\n      <div className=\"flex-1 flex flex-col overflow-hidden\">\n        {/* Header */}\n        <header className=\"bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-6 py-4\">\n          <h1 className=\"text-2xl font-bold text-gray-900 dark:text-white\">{title}</h1>\n        </header>\n\n        {/* Content Area */}\n        <main className=\"flex-1 overflow-y-auto p-6\">\n          <div className=\"grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6\">\n            {children}\n          </div>\n        </main>\n      </div>\n    </div>\n  );\n}",
+      "installation": {
+        "dependencies": ["react", "lucide-react"],
+        "devDependencies": ["@types/react"],
+        "steps": [
+          "npm install lucide-react",
+          "Copy the component code to your project",
+          "Wrap your dashboard content with this layout"
+        ]
+      },
+      "props": [
+        {
+          "name": "title",
+          "type": "string",
+          "required": true,
+          "description": "Dashboard page title displayed in header"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": true,
+          "description": "Dashboard content (widgets, charts, cards)"
+        }
+      ],
+      "usageExamples": [
+        {
+          "title": "Basic Usage",
+          "description": "Simple dashboard with widgets",
+          "code": "<DashboardLayout title=\"Analytics Dashboard\">\n  <MetricCard title=\"Revenue\" value=\"$45,231\" />\n  <MetricCard title=\"Users\" value=\"1,234\" />\n  <MetricCard title=\"Orders\" value=\"567\" />\n</DashboardLayout>"
+        },
+        {
+          "title": "With Charts",
+          "description": "Dashboard with chart components",
+          "code": "<DashboardLayout title=\"Sales Overview\">\n  <SalesChart data={salesData} />\n  <RevenueChart data={revenueData} />\n  <TopProducts products={products} />\n</DashboardLayout>"
+        }
+      ],
+      "framework": "react",
+      "styling": "tailwindcss",
+      "useCase": "Complete dashboard page structure for admin panels and analytics views"
+    },
+    {
+      "id": "payment-checkout-flow",
+      "name": "Payment Checkout Flow",
+      "category": "fintech",
+      "description": "Complete payment checkout with method selection, amount display, and confirmation",
+      "difficulty": "Intermediate",
+      "tags": ["payment", "checkout", "fintech", "transaction"],
+      "code": "import { useState } from 'react';\nimport { CreditCard, Smartphone, Building } from 'lucide-react';\n\ninterface PaymentMethod {\n  id: string;\n  name: string;\n  icon: any;\n}\n\nconst paymentMethods: PaymentMethod[] = [\n  { id: 'card', name: 'Card', icon: CreditCard },\n  { id: 'upi', name: 'UPI', icon: Smartphone },\n  { id: 'netbanking', name: 'Net Banking', icon: Building },\n];\n\nexport default function PaymentCheckout({ amount }: { amount: number }) {\n  const [selected, setSelected] = useState('card');\n  const [processing, setProcessing] = useState(false);\n\n  const handlePayment = async () => {\n    setProcessing(true);\n    // Payment processing logic here\n    await new Promise(resolve => setTimeout(resolve, 2000));\n    setProcessing(false);\n  };\n\n  return (\n    <div className=\"max-w-md mx-auto p-6 bg-white dark:bg-gray-800 rounded-xl shadow-lg\">\n      <h2 className=\"text-2xl font-bold mb-6 text-gray-900 dark:text-white\">Complete Payment</h2>\n      \n      {/* Amount Display */}\n      <div className=\"mb-6 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg\">\n        <p className=\"text-sm text-gray-600 dark:text-gray-400\">Total Amount</p>\n        <p className=\"text-3xl font-bold text-blue-600 dark:text-blue-400\">\n          ₹{amount.toLocaleString('en-IN')}\n        </p>\n      </div>\n\n      {/* Payment Method Selection */}\n      <div className=\"space-y-3 mb-6\">\n        <p className=\"text-sm font-semibold text-gray-700 dark:text-gray-300\">Select Payment Method</p>\n        {paymentMethods.map((method) => (\n          <button\n            key={method.id}\n            onClick={() => setSelected(method.id)}\n            className={`w-full flex items-center gap-3 p-4 rounded-lg border-2 transition-all ${\n              selected === method.id\n                ? 'border-blue-600 bg-blue-50 dark:bg-blue-900/20'\n                : 'border-gray-200 dark:border-gray-700 hover:border-blue-300'\n            }`}\n          >\n            <method.icon className=\"w-6 h-6\" />\n            <span className=\"font-medium\">{method.name}</span>\n          </button>\n        ))}\n      </div>\n\n      {/* Pay Button */}\n      <button\n        onClick={handlePayment}\n        disabled={processing}\n        className=\"w-full py-3 px-6 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg disabled:opacity-50 transition-colors\"\n      >\n        {processing ? 'Processing...' : `Pay ₹${amount.toLocaleString('en-IN')}`}\n      </button>\n    </div>\n  );\n}",
+      "installation": {
+        "dependencies": ["react", "lucide-react"],
+        "devDependencies": ["@types/react"],
+        "steps": [
+          "npm install lucide-react",
+          "Copy the component code to your project",
+          "Integrate with your payment gateway API"
+        ]
+      },
+      "props": [
+        {
+          "name": "amount",
+          "type": "number",
+          "required": true,
+          "description": "Payment amount in rupees"
+        }
+      ],
+      "usageExamples": [
+        {
+          "title": "Basic Usage",
+          "description": "Simple checkout flow",
+          "code": "<PaymentCheckout amount={1234.56} />"
+        },
+        {
+          "title": "With Callback",
+          "description": "Handle payment success",
+          "code": "<PaymentCheckout \n  amount={1234.56}\n  onSuccess={(transactionId) => {\n    console.log('Payment successful:', transactionId);\n    navigate('/success');\n  }}\n/>"
+        }
+      ],
+      "framework": "react",
+      "styling": "tailwindcss",
+      "useCase": "Payment checkout pages for e-commerce and fintech applications"
+    },
+    {
+      "id": "multi-step-form",
+      "name": "Multi-Step Form Wizard",
+      "category": "forms",
+      "description": "Progressive form with step indicator, validation, and navigation controls",
+      "difficulty": "Advanced",
+      "tags": ["form", "wizard", "multi-step", "validation"],
+      "code": "import { useState } from 'react';\nimport { Check, ChevronRight, ChevronLeft } from 'lucide-react';\n\ninterface Step {\n  id: number;\n  title: string;\n  description: string;\n}\n\nconst steps: Step[] = [\n  { id: 1, title: 'Personal Info', description: 'Basic details' },\n  { id: 2, title: 'Business Info', description: 'Company details' },\n  { id: 3, title: 'Documents', description: 'Upload files' },\n  { id: 4, title: 'Review', description: 'Confirm details' },\n];\n\nexport default function MultiStepForm() {\n  const [currentStep, setCurrentStep] = useState(1);\n  const [formData, setFormData] = useState({});\n\n  const nextStep = () => setCurrentStep(Math.min(currentStep + 1, steps.length));\n  const prevStep = () => setCurrentStep(Math.max(currentStep - 1, 1));\n\n  return (\n    <div className=\"max-w-3xl mx-auto p-6\">\n      {/* Progress Indicator */}\n      <div className=\"mb-8\">\n        <div className=\"flex items-center justify-between\">\n          {steps.map((step, index) => (\n            <div key={step.id} className=\"flex items-center flex-1\">\n              <div className=\"flex flex-col items-center\">\n                <div\n                  className={`w-10 h-10 rounded-full flex items-center justify-center font-semibold ${\n                    step.id < currentStep\n                      ? 'bg-green-500 text-white'\n                      : step.id === currentStep\n                      ? 'bg-blue-600 text-white'\n                      : 'bg-gray-200 text-gray-600'\n                  }`}\n                >\n                  {step.id < currentStep ? <Check className=\"w-5 h-5\" /> : step.id}\n                </div>\n                <p className=\"mt-2 text-sm font-medium\">{step.title}</p>\n                <p className=\"text-xs text-gray-500\">{step.description}</p>\n              </div>\n              {index < steps.length - 1 && (\n                <div className={`flex-1 h-1 mx-4 ${\n                  step.id < currentStep ? 'bg-green-500' : 'bg-gray-200'\n                }`} />\n              )}\n            </div>\n          ))}\n        </div>\n      </div>\n\n      {/* Form Content */}\n      <div className=\"bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 mb-6\">\n        <h2 className=\"text-xl font-bold mb-4\">{steps[currentStep - 1].title}</h2>\n        {/* Step-specific content goes here */}\n        <div className=\"min-h-[200px]\">\n          <p className=\"text-gray-600 dark:text-gray-400\">Step {currentStep} content</p>\n        </div>\n      </div>\n\n      {/* Navigation Buttons */}\n      <div className=\"flex justify-between\">\n        <button\n          onClick={prevStep}\n          disabled={currentStep === 1}\n          className=\"flex items-center gap-2 px-6 py-2 border border-gray-300 rounded-lg disabled:opacity-50 hover:bg-gray-50\"\n        >\n          <ChevronLeft className=\"w-4 h-4\" />\n          Previous\n        </button>\n        <button\n          onClick={nextStep}\n          disabled={currentStep === steps.length}\n          className=\"flex items-center gap-2 px-6 py-2 bg-blue-600 text-white rounded-lg disabled:opacity-50 hover:bg-blue-700\"\n        >\n          {currentStep === steps.length ? 'Submit' : 'Next'}\n          <ChevronRight className=\"w-4 h-4\" />\n        </button>\n      </div>\n    </div>\n  );\n}",
+      "installation": {
+        "dependencies": ["react", "lucide-react"],
+        "devDependencies": ["@types/react"],
+        "steps": [
+          "npm install lucide-react",
+          "Copy the component code to your project",
+          "Customize steps array and form content for your use case"
+        ]
+      },
+      "props": [],
+      "usageExamples": [
+        {
+          "title": "Basic Usage",
+          "description": "Simple multi-step form",
+          "code": "<MultiStepForm />"
+        },
+        {
+          "title": "With Validation",
+          "description": "Add validation per step",
+          "code": "<MultiStepForm\n  onStepChange={(step) => validateStep(step)}\n  onSubmit={(data) => handleSubmit(data)}\n/>"
+        }
+      ],
+      "framework": "react",
+      "styling": "tailwindcss",
+      "useCase": "KYC onboarding, user registration, complex data collection forms"
+    }
+  ],
+  "categories": {
+    "page-layouts": {
+      "name": "Page Layouts",
+      "description": "Complete page templates for common use cases",
+      "count": 1,
+      "templates": ["dashboard-layout-basic"]
+    },
+    "loading": {
+      "name": "Loading Animations",
+      "description": "Animated loaders for async operations",
+      "count": 2,
+      "templates": ["snake-spinner-loader", "bouncing-dots-loader"]
+    },
+    "splash": {
+      "name": "Splash Screens",
+      "description": "App launch and onboarding screens",
+      "count": 1,
+      "templates": ["fade-zoom-splash"]
+    },
+    "fintech": {
+      "name": "Fintech Workflows",
+      "description": "Payment, KYC, and transaction templates",
+      "count": 1,
+      "templates": ["payment-checkout-flow"]
+    },
+    "ui": {
+      "name": "UI Components",
+      "description": "Base UI components with variants",
+      "count": 0,
+      "templates": []
+    },
+    "forms": {
+      "name": "Form Patterns",
+      "description": "Form layouts and validation patterns",
+      "count": 1,
+      "templates": ["multi-step-form"]
+    },
+    "dashboards": {
+      "name": "Dashboard Patterns",
+      "description": "Dashboard widgets and layouts",
+      "count": 0,
+      "templates": []
+    }
+  }
+}

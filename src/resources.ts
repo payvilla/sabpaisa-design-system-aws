@@ -142,6 +142,56 @@ export function listResources(): Resource[] {
       name: 'Brand Guidelines',
       description: 'Logo usage, brand colors, voice & tone, iconography, animations',
       mimeType: 'application/json'
+    },
+
+    // Templates
+    {
+      uri: 'sabpaisa://templates/all',
+      name: 'All Templates',
+      description: 'Complete template library - page layouts, loaders, workflows, forms',
+      mimeType: 'application/json'
+    },
+    {
+      uri: 'sabpaisa://templates/page-layouts',
+      name: 'Page Layout Templates',
+      description: 'Dashboard, form, table, detail view, and auth page layouts',
+      mimeType: 'application/json'
+    },
+    {
+      uri: 'sabpaisa://templates/loading',
+      name: 'Loading Animation Templates',
+      description: 'Spinner, dots, pulse, progress ring, bars, brand loaders',
+      mimeType: 'application/json'
+    },
+    {
+      uri: 'sabpaisa://templates/splash',
+      name: 'Splash Screen Templates',
+      description: 'Fade & zoom, particle burst, slide reveal, circular progress, wave morph, glitch neon',
+      mimeType: 'application/json'
+    },
+    {
+      uri: 'sabpaisa://templates/fintech',
+      name: 'Fintech Workflow Templates',
+      description: 'Payment checkout, transaction history, KYC flows, settlement dashboards',
+      mimeType: 'application/json'
+    },
+    {
+      uri: 'sabpaisa://templates/ui',
+      name: 'UI Component Templates',
+      description: 'Button, badge, switch, checkbox, radio, tooltip, select, modal, tabs variants',
+      mimeType: 'application/json'
+    },
+    {
+      uri: 'sabpaisa://templates/forms',
+      name: 'Form Pattern Templates',
+      description: 'Multi-step forms, validation patterns, field groups',
+      mimeType: 'application/json'
+    },
+    {
+      uri: 'sabpaisa://templates/dashboards',
+      name: 'Dashboard Pattern Templates',
+      description: 'Widget layouts, metric cards, chart compositions',
+      mimeType: 'application/json'
     }
   ];
 }
@@ -172,6 +222,9 @@ export function getResource(uri: string): string {
 
       case 'guidelines':
         return getGuidelineResource(subdomain);
+
+      case 'templates':
+        return getTemplateResource(subdomain);
 
       default:
         throw new Error(`Unknown resource domain: ${domain}`);
@@ -293,4 +346,34 @@ function getGuidelineResource(subdomain: string): string {
     default:
       throw new Error(`Unknown guideline subdomain: ${subdomain}`);
   }
+}
+
+/**
+ * Get template resources
+ */
+function getTemplateResource(subdomain: string): string {
+  const data = dataLoader.getTemplates();
+
+  if (!data) {
+    throw new Error('Templates data not available');
+  }
+
+  if (subdomain === 'all') {
+    return JSON.stringify(data, null, 2);
+  }
+
+  // Get templates by category
+  const categoryTemplates = data.templates.filter(
+    (t: any) => t.category === subdomain
+  );
+
+  if (categoryTemplates.length === 0) {
+    throw new Error(`No templates found for category: ${subdomain}`);
+  }
+
+  return JSON.stringify({
+    category: subdomain,
+    count: categoryTemplates.length,
+    templates: categoryTemplates
+  }, null, 2);
 }

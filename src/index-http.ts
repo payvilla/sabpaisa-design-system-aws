@@ -119,7 +119,7 @@ function initializeServer(): Server {
               query: { type: 'string', description: 'Search query' },
               category: {
                 type: 'string',
-                enum: ['all', 'tokens', 'components', 'patterns', 'formatting'],
+                enum: ['all', 'tokens', 'components', 'patterns', 'formatting', 'templates'],
                 description: 'Category to search in',
               },
               limit: { type: 'number', description: 'Max results' },
