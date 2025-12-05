@@ -1,0 +1,897 @@
+{
+  "section": 4,
+  "title": "Color Token System",
+  "metadata": {
+    "startLine": 297,
+    "endLine": 953,
+    "codeBlockCount": 16,
+    "tableCount": 17,
+    "extractedAt": "2025-12-01T16:35:09.293Z"
+  },
+  "codeBlocks": [
+    {
+      "id": "code-4-0",
+      "language": "tsx",
+      "code": "// Link component\n<a href=\"/dashboard\" className=\"text-primary-500 hover:text-primary-600 underline\">\n  View Dashboard\n</a>\n\n// Icon with primary color\n<CreditCard className=\"w-5 h-5 text-primary-500\" />\n\n// Focus ring\n<input className=\"focus:ring-2 focus:ring-primary-500 focus:border-transparent\" />",
+      "lineNumber": 458
+    },
+    {
+      "id": "code-4-1",
+      "language": "tsx",
+      "code": "// Primary button (most important action)\n<button className=\"bg-primary-600 hover:bg-primary-700 text-white px-6 py-3 rounded-xl font-medium transition-colors\">\n  Complete Payment\n</button>\n\n// Badge with primary color\n<span className=\"bg-primary-600 text-white px-3 py-1 rounded-full text-xs font-medium\">\n  Active\n</span>",
+      "lineNumber": 504
+    },
+    {
+      "id": "code-4-2",
+      "language": "text",
+      "code": "Should I use Primary-600?\n├─ Is this the MOST important action on the page?\n│  └─ YES → Use Primary-600 (bg-primary-600)\n└─ NO → Consider Primary-500 (links), Secondary-600 (alt actions), or Outline variant",
+      "lineNumber": 517
+    },
+    {
+      "id": "code-4-3",
+      "language": "css",
+      "code": "/* CSS */\nbackground: linear-gradient(to right, #60a5fa, #3b82f6);",
+      "lineNumber": 585
+    },
+    {
+      "id": "code-4-4",
+      "language": "tsx",
+      "code": "/* Tailwind */\nclassName=\"bg-gradient-to-r from-primary-400 to-primary-500\"",
+      "lineNumber": 590
+    },
+    {
+      "id": "code-4-5",
+      "language": "css",
+      "code": "/* CSS */\nbackground: linear-gradient(to right, #2563eb, #1d4ed8);",
+      "lineNumber": 601
+    },
+    {
+      "id": "code-4-6",
+      "language": "tsx",
+      "code": "/* Tailwind */\nclassName=\"bg-gradient-to-r from-primary-600 to-primary-700\"",
+      "lineNumber": 606
+    },
+    {
+      "id": "code-4-7",
+      "language": "css",
+      "code": "/* CSS */\nbackground: linear-gradient(to bottom, #3b82f6, #2563eb);",
+      "lineNumber": 617
+    },
+    {
+      "id": "code-4-8",
+      "language": "tsx",
+      "code": "/* Tailwind */\nclassName=\"bg-gradient-to-b from-primary-500 to-primary-600\"",
+      "lineNumber": 622
+    },
+    {
+      "id": "code-4-9",
+      "language": "css",
+      "code": "/* CSS */\nbackground: radial-gradient(circle, #60a5fa, #1d4ed8);",
+      "lineNumber": 631
+    },
+    {
+      "id": "code-4-10",
+      "language": "tsx",
+      "code": "// Secondary button\n<button className=\"bg-secondary-600 hover:bg-secondary-700 text-white px-6 py-3 rounded-xl\">\n  Save Draft\n</button>\n\n// Secondary link\n<a className=\"text-secondary-600 hover:text-secondary-700\">Learn More</a>",
+      "lineNumber": 662
+    },
+    {
+      "id": "code-4-11",
+      "language": "tsx",
+      "code": "// Success toast\n<div className=\"bg-success/10 border border-success/20 rounded-lg p-4\">\n  <p className=\"text-success-dark\">Payment successful!</p>\n</div>\n\n// Success badge\n<span className=\"bg-success text-white px-3 py-1 rounded-full text-xs\">\n  Completed\n</span>\n\n// Credit transaction\n<span className=\"text-success font-semibold\">+₹1,23,456.00</span>",
+      "lineNumber": 698
+    },
+    {
+      "id": "code-4-12",
+      "language": "tsx",
+      "code": "// Error message\n<div className=\"bg-error/10 border border-error/20 rounded-lg p-4\">\n  <p className=\"text-error-dark\">Payment failed. Please try again.</p>\n</div>\n\n// Danger button\n<button className=\"bg-error hover:bg-error-dark text-white px-6 py-3 rounded-xl\">\n  Delete Account\n</button>\n\n// Debit transaction\n<span className=\"text-error font-semibold\">-₹500.00</span>",
+      "lineNumber": 738
+    },
+    {
+      "id": "code-4-13",
+      "language": "tsx",
+      "code": "// Transaction amount with color coding\nconst getAmountColor = (type: 'credit' | 'debit') => {\n  return type === 'credit' ? 'text-success' : 'text-error';\n};\n\n<span className={`${getAmountColor(transaction.type)} font-semibold`}>\n  {transaction.type === 'credit' ? '+' : '-'}₹{formatINR(transaction.amount)}\n</span>\n\n// Status badge\nconst getStatusBadge = (status: TransactionStatus) => {\n  const config = {\n    credit: { bg: 'bg-success/10', text: 'text-success', border: 'border-success/20' },\n    pending: { bg: 'bg-warning/10', text: 'text-warning', border: 'border-warning/20' },\n    failed: { bg: 'bg-error/10', text: 'text-error', border: 'border-error/20' },\n  };\n\n  const { bg, text, border } = config[status];\n\n  return (\n    <span className={`${bg} ${text} ${border} border px-3 py-1 rounded-full text-xs font-medium`}>\n      {status.toUpperCase()}\n    </span>\n  );\n};",
+      "lineNumber": 807
+    },
+    {
+      "id": "code-4-14",
+      "language": "css",
+      "code": ":root {\n  /* Primary Colors */\n  --color-primary-50: #eff6ff;\n  --color-primary-100: #dbeafe;\n  --color-primary-200: #bfdbfe;\n  --color-primary-300: #93c5fd;\n  --color-primary-400: #60a5fa;\n  --color-primary-500: #3b82f6;\n  --color-primary-600: #2563eb;\n  --color-primary-700: #1d4ed8;\n  --color-primary-800: #1e40af;\n  --color-primary-900: #1e3a8a;\n\n  /* Secondary Colors */\n  --color-secondary-50: #f0fdfa;\n  --color-secondary-100: #ccfbf1;\n  --color-secondary-200: #99f6e4;\n  --color-secondary-300: #5eead4;\n  --color-secondary-400: #2dd4bf;\n  --color-secondary-500: #14b8a6;\n  --color-secondary-600: #0d9488;\n  --color-secondary-700: #0f766e;\n  --color-secondary-800: #115e59;\n  --color-secondary-900: #134e4a;\n\n  /* Semantic Colors */\n  --color-success: #22c55e;\n  --color-success-light: #dcfce7;\n  --color-success-dark: #15803d;\n  --color-error: #ef4444;\n  --color-error-light: #fee2e2;\n  --color-error-dark: #b91c1c;\n  --color-warning: #f59e0b;\n  --color-warning-light: #fef3c7;\n  --color-warning-dark: #b45309;\n  --color-info: #3b82f6;\n  --color-info-light: #dbeafe;\n  --color-info-dark: #1d4ed8;\n}\n\n/* Usage Example */\n.button-primary {\n  background-color: var(--color-primary-600);\n}",
+      "lineNumber": 858
+    },
+    {
+      "id": "code-4-15",
+      "language": "javascript",
+      "code": "module.exports = {\n  theme: {\n    extend: {\n      colors: {\n        primary: {\n          50: '#eff6ff',\n          100: '#dbeafe',\n          200: '#bfdbfe',\n          300: '#93c5fd',\n          400: '#60a5fa',\n          500: '#3b82f6',\n          600: '#2563eb',\n          700: '#1d4ed8',\n          800: '#1e40af',\n          900: '#1e3a8a',\n          DEFAULT: '#2563eb',\n        },\n        secondary: {\n          50: '#f0fdfa',\n          100: '#ccfbf1',\n          200: '#99f6e4',\n          300: '#5eead4',\n          400: '#2dd4bf',\n          500: '#14b8a6',\n          600: '#0d9488',\n          700: '#0f766e',\n          800: '#115e59',\n          900: '#134e4a',\n          DEFAULT: '#14b8a6',\n        },\n        success: '#22c55e',\n        error: '#ef4444',\n        warning: '#f59e0b',\n        info: '#3b82f6',\n      },\n    },\n  },\n};",
+      "lineNumber": 911
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-4-0",
+      "headers": [
+        "Format",
+        "Value",
+        "Usage Context"
+      ],
+      "rows": [
+        [
+          "Hex",
+          "`#eff6ff`",
+          "Design tools"
+        ],
+        [
+          "RGB",
+          "`rgb(239, 246, 255)`",
+          "CSS"
+        ],
+        [
+          "HSL",
+          "`hsl(214, 100%, 97%)`",
+          "Dynamic theming"
+        ],
+        [
+          "RGBA-10",
+          "`rgba(239, 246, 255, 0.1)`",
+          "Ultra-subtle overlays"
+        ],
+        [
+          "RGBA-20",
+          "`rgba(239, 246, 255, 0.2)`",
+          "Subtle overlays"
+        ],
+        [
+          "RGBA-50",
+          "`rgba(239, 246, 255, 0.5)`",
+          "Semi-transparent"
+        ],
+        [
+          "RGBA-80",
+          "`rgba(239, 246, 255, 0.8)`",
+          "Nearly opaque"
+        ],
+        [
+          "RGBA-90",
+          "`rgba(239, 246, 255, 0.9)`",
+          "Very opaque"
+        ],
+        [
+          "CSS Var",
+          "`var(--color-primary-50)`",
+          "Theme switching"
+        ],
+        [
+          "Tailwind BG",
+          "`bg-primary-50`",
+          "Background color"
+        ],
+        [
+          "Tailwind Text",
+          "`text-primary-50`",
+          "Text color"
+        ],
+        [
+          "Tailwind Border",
+          "`border-primary-50`",
+          "Border color"
+        ]
+      ],
+      "lineNumber": 328
+    },
+    {
+      "id": "table-4-1",
+      "headers": [
+        "Format",
+        "Value"
+      ],
+      "rows": [
+        [
+          "Hex",
+          "`#dbeafe`"
+        ],
+        [
+          "RGB",
+          "`rgb(219, 234, 254)`"
+        ],
+        [
+          "HSL",
+          "`hsl(214, 95%, 93%)`"
+        ],
+        [
+          "RGBA-50",
+          "`rgba(219, 234, 254, 0.5)`"
+        ],
+        [
+          "CSS Var",
+          "`var(--color-primary-100)`"
+        ],
+        [
+          "Tailwind",
+          "`bg-primary-100`, `text-primary-100`, `border-primary-100`"
+        ]
+      ],
+      "lineNumber": 360
+    },
+    {
+      "id": "table-4-2",
+      "headers": [
+        "Format",
+        "Value"
+      ],
+      "rows": [
+        [
+          "Hex",
+          "`#bfdbfe`"
+        ],
+        [
+          "RGB",
+          "`rgb(191, 219, 254)`"
+        ],
+        [
+          "HSL",
+          "`hsl(213, 97%, 87%)`"
+        ],
+        [
+          "RGBA-50",
+          "`rgba(191, 219, 254, 0.5)`"
+        ],
+        [
+          "CSS Var",
+          "`var(--color-primary-200)`"
+        ],
+        [
+          "Tailwind",
+          "`bg-primary-200`, `text-primary-200`, `border-primary-200`"
+        ]
+      ],
+      "lineNumber": 377
+    },
+    {
+      "id": "table-4-3",
+      "headers": [
+        "Format",
+        "Value"
+      ],
+      "rows": [
+        [
+          "Hex",
+          "`#93c5fd`"
+        ],
+        [
+          "RGB",
+          "`rgb(147, 197, 253)`"
+        ],
+        [
+          "HSL",
+          "`hsl(212, 96%, 78%)`"
+        ],
+        [
+          "RGBA-50",
+          "`rgba(147, 197, 253, 0.5)`"
+        ],
+        [
+          "CSS Var",
+          "`var(--color-primary-300)`"
+        ],
+        [
+          "Tailwind",
+          "`bg-primary-300`, `text-primary-300`, `border-primary-300`"
+        ]
+      ],
+      "lineNumber": 394
+    },
+    {
+      "id": "table-4-4",
+      "headers": [
+        "Format",
+        "Value"
+      ],
+      "rows": [
+        [
+          "Hex",
+          "`#60a5fa`"
+        ],
+        [
+          "RGB",
+          "`rgb(96, 165, 250)`"
+        ],
+        [
+          "HSL",
+          "`hsl(213, 94%, 68%)`"
+        ],
+        [
+          "RGBA-50",
+          "`rgba(96, 165, 250, 0.5)`"
+        ],
+        [
+          "CSS Var",
+          "`var(--color-primary-400)`"
+        ],
+        [
+          "Tailwind",
+          "`bg-primary-400`, `text-primary-400`, `border-primary-400`"
+        ]
+      ],
+      "lineNumber": 411
+    },
+    {
+      "id": "table-4-5",
+      "headers": [
+        "Format",
+        "Value"
+      ],
+      "rows": [
+        [
+          "Hex",
+          "`#3b82f6`"
+        ],
+        [
+          "RGB",
+          "`rgb(59, 130, 246)`"
+        ],
+        [
+          "HSL",
+          "`hsl(217, 91%, 60%)`"
+        ],
+        [
+          "RGBA-10",
+          "`rgba(59, 130, 246, 0.1)`"
+        ],
+        [
+          "RGBA-20",
+          "`rgba(59, 130, 246, 0.2)`"
+        ],
+        [
+          "RGBA-50",
+          "`rgba(59, 130, 246, 0.5)`"
+        ],
+        [
+          "RGBA-80",
+          "`rgba(59, 130, 246, 0.8)`"
+        ],
+        [
+          "RGBA-90",
+          "`rgba(59, 130, 246, 0.9)`"
+        ],
+        [
+          "CSS Var",
+          "`var(--color-primary-500)`"
+        ],
+        [
+          "Tailwind BG",
+          "`bg-primary-500`"
+        ],
+        [
+          "Tailwind Text",
+          "`text-primary-500`"
+        ],
+        [
+          "Tailwind Border",
+          "`border-primary-500`"
+        ]
+      ],
+      "lineNumber": 428
+    },
+    {
+      "id": "table-4-6",
+      "headers": [
+        "Format",
+        "Value"
+      ],
+      "rows": [
+        [
+          "Hex",
+          "`#2563eb`"
+        ],
+        [
+          "RGB",
+          "`rgb(37, 99, 235)`"
+        ],
+        [
+          "HSL",
+          "`hsl(221, 83%, 53%)`"
+        ],
+        [
+          "RGBA-10",
+          "`rgba(37, 99, 235, 0.1)`"
+        ],
+        [
+          "RGBA-20",
+          "`rgba(37, 99, 235, 0.2)`"
+        ],
+        [
+          "RGBA-50",
+          "`rgba(37, 99, 235, 0.5)`"
+        ],
+        [
+          "RGBA-80",
+          "`rgba(37, 99, 235, 0.8)`"
+        ],
+        [
+          "RGBA-90",
+          "`rgba(37, 99, 235, 0.9)`"
+        ],
+        [
+          "CSS Var",
+          "`var(--color-primary-600)`"
+        ],
+        [
+          "Tailwind BG",
+          "`bg-primary-600`"
+        ],
+        [
+          "Tailwind Text",
+          "`text-primary-600`"
+        ],
+        [
+          "Tailwind Border",
+          "`border-primary-600`"
+        ]
+      ],
+      "lineNumber": 475
+    },
+    {
+      "id": "table-4-7",
+      "headers": [
+        "Format",
+        "Value"
+      ],
+      "rows": [
+        [
+          "Hex",
+          "`#1d4ed8`"
+        ],
+        [
+          "RGB",
+          "`rgb(29, 78, 216)`"
+        ],
+        [
+          "HSL",
+          "`hsl(224, 76%, 48%)`"
+        ],
+        [
+          "RGBA-50",
+          "`rgba(29, 78, 216, 0.5)`"
+        ],
+        [
+          "CSS Var",
+          "`var(--color-primary-700)`"
+        ],
+        [
+          "Tailwind",
+          "`bg-primary-700`, `text-primary-700`, `border-primary-700`"
+        ]
+      ],
+      "lineNumber": 528
+    },
+    {
+      "id": "table-4-8",
+      "headers": [
+        "Format",
+        "Value"
+      ],
+      "rows": [
+        [
+          "Hex",
+          "`#1e40af`"
+        ],
+        [
+          "RGB",
+          "`rgb(30, 64, 175)`"
+        ],
+        [
+          "HSL",
+          "`hsl(226, 71%, 40%)`"
+        ],
+        [
+          "RGBA-50",
+          "`rgba(30, 64, 175, 0.5)`"
+        ],
+        [
+          "CSS Var",
+          "`var(--color-primary-800)`"
+        ],
+        [
+          "Tailwind",
+          "`bg-primary-800`, `text-primary-800`, `border-primary-800`"
+        ]
+      ],
+      "lineNumber": 547
+    },
+    {
+      "id": "table-4-9",
+      "headers": [
+        "Format",
+        "Value"
+      ],
+      "rows": [
+        [
+          "Hex",
+          "`#1e3a8a`"
+        ],
+        [
+          "RGB",
+          "`rgb(30, 58, 138)`"
+        ],
+        [
+          "HSL",
+          "`hsl(226, 64%, 33%)`"
+        ],
+        [
+          "RGBA-50",
+          "`rgba(30, 58, 138, 0.5)`"
+        ],
+        [
+          "CSS Var",
+          "`var(--color-primary-900)`"
+        ],
+        [
+          "Tailwind",
+          "`bg-primary-900`, `text-primary-900`, `border-primary-900`"
+        ]
+      ],
+      "lineNumber": 565
+    },
+    {
+      "id": "table-4-10",
+      "headers": [
+        "Shade",
+        "Hex",
+        "RGB",
+        "HSL",
+        "Tailwind",
+        "WCAG (White)",
+        "Usage"
+      ],
+      "rows": [
+        [
+          "50",
+          "`#f0fdfa`",
+          "`rgb(240, 253, 250)`",
+          "`hsl(166, 76%, 97%)`",
+          "`secondary-50`",
+          "1.13:1 (Fail)",
+          "Lightest bg"
+        ],
+        [
+          "100",
+          "`#ccfbf1`",
+          "`rgb(204, 251, 241)`",
+          "`hsl(167, 85%, 89%)`",
+          "`secondary-100`",
+          "1.32:1 (Fail)",
+          "Light bg"
+        ],
+        [
+          "200",
+          "`#99f6e4`",
+          "`rgb(153, 246, 228)`",
+          "`hsl(168, 84%, 78%)`",
+          "`secondary-200`",
+          "1.68:1 (Fail)",
+          "Hover bg"
+        ],
+        [
+          "300",
+          "`#5eead4`",
+          "`rgb(94, 234, 212)`",
+          "`hsl(171, 76%, 64%)`",
+          "`secondary-300`",
+          "2.41:1 (Fail)",
+          "Accents"
+        ],
+        [
+          "400",
+          "`#2dd4bf`",
+          "`rgb(45, 212, 191)`",
+          "`hsl(172, 66%, 50%)`",
+          "`secondary-400`",
+          "3.88:1 (AA)",
+          "Borders"
+        ],
+        [
+          "500",
+          "`#14b8a6`",
+          "`rgb(20, 184, 166)`",
+          "`hsl(173, 80%, 40%)`",
+          "`secondary-500` **DEFAULT**",
+          "5.09:1 (AA ✓)",
+          "Base color"
+        ],
+        [
+          "600",
+          "`#0d9488`",
+          "`rgb(13, 148, 136)`",
+          "`hsl(175, 84%, 32%)`",
+          "`secondary-600`",
+          "6.76:1 (AA ✓)",
+          "**Secondary buttons**"
+        ],
+        [
+          "700",
+          "`#0f766e`",
+          "`rgb(15, 118, 110)`",
+          "`hsl(175, 77%, 26%)`",
+          "`secondary-700`",
+          "8.95:1 (AAA ✓)",
+          "Hover states"
+        ],
+        [
+          "800",
+          "`#115e59`",
+          "`rgb(17, 94, 89)`",
+          "`hsl(176, 69%, 22%)`",
+          "`secondary-800`",
+          "10.84:1 (AAA)",
+          "Dark text"
+        ],
+        [
+          "900",
+          "`#134e4a`",
+          "`rgb(19, 78, 74)`",
+          "`hsl(176, 61%, 19%)`",
+          "`secondary-900`",
+          "12.23:1 (AAA)",
+          "Darkest"
+        ]
+      ],
+      "lineNumber": 648
+    },
+    {
+      "id": "table-4-11",
+      "headers": [
+        "Property",
+        "Value"
+      ],
+      "rows": [
+        [
+          "**Base Hex**",
+          "`#22c55e`"
+        ],
+        [
+          "**RGB**",
+          "`rgb(34, 197, 94)`"
+        ],
+        [
+          "**HSL**",
+          "`hsl(142, 71%, 45%)`"
+        ],
+        [
+          "**RGBA-50**",
+          "`rgba(34, 197, 94, 0.5)`"
+        ],
+        [
+          "**CSS Var**",
+          "`var(--color-success)`"
+        ],
+        [
+          "**Tailwind**",
+          "`bg-success`, `text-success`"
+        ]
+      ],
+      "lineNumber": 678
+    },
+    {
+      "id": "table-4-12",
+      "headers": [
+        "Property",
+        "Value"
+      ],
+      "rows": [
+        [
+          "**Base Hex**",
+          "`#ef4444`"
+        ],
+        [
+          "**RGB**",
+          "`rgb(239, 68, 68)`"
+        ],
+        [
+          "**HSL**",
+          "`hsl(0, 84%, 60%)`"
+        ],
+        [
+          "**RGBA-50**",
+          "`rgba(239, 68, 68, 0.5)`"
+        ],
+        [
+          "**CSS Var**",
+          "`var(--color-error)`"
+        ],
+        [
+          "**Tailwind**",
+          "`bg-error`, `text-error`"
+        ]
+      ],
+      "lineNumber": 717
+    },
+    {
+      "id": "table-4-13",
+      "headers": [
+        "Property",
+        "Value"
+      ],
+      "rows": [
+        [
+          "**Base Hex**",
+          "`#f59e0b`"
+        ],
+        [
+          "**RGB**",
+          "`rgb(245, 158, 11)`"
+        ],
+        [
+          "**HSL**",
+          "`hsl(38, 92%, 50%)`"
+        ],
+        [
+          "**RGBA-50**",
+          "`rgba(245, 158, 11, 0.5)`"
+        ],
+        [
+          "**CSS Var**",
+          "`var(--color-warning)`"
+        ],
+        [
+          "**Tailwind**",
+          "`bg-warning`, `text-warning`"
+        ]
+      ],
+      "lineNumber": 757
+    },
+    {
+      "id": "table-4-14",
+      "headers": [
+        "Property",
+        "Value"
+      ],
+      "rows": [
+        [
+          "**Base Hex**",
+          "`#3b82f6`"
+        ],
+        [
+          "**RGB**",
+          "`rgb(59, 130, 246)`"
+        ],
+        [
+          "**HSL**",
+          "`hsl(217, 91%, 60%)`"
+        ],
+        [
+          "**CSS Var**",
+          "`var(--color-info)`"
+        ],
+        [
+          "**Tailwind**",
+          "`bg-info`, `text-info`"
+        ]
+      ],
+      "lineNumber": 780
+    },
+    {
+      "id": "table-4-15",
+      "headers": [
+        "Type",
+        "Hex",
+        "RGB",
+        "HSL",
+        "Tailwind",
+        "Usage"
+      ],
+      "rows": [
+        [
+          "**Credit**",
+          "`#22c55e`",
+          "`rgb(34, 197, 94)`",
+          "`hsl(142, 71%, 45%)`",
+          "`transaction-credit`",
+          "Money received/credited"
+        ],
+        [
+          "**Debit**",
+          "`#ef4444`",
+          "`rgb(239, 68, 68)`",
+          "`hsl(0, 84%, 60%)`",
+          "`transaction-debit`",
+          "Money sent/debited"
+        ],
+        [
+          "**Pending**",
+          "`#f59e0b`",
+          "`rgb(245, 158, 11)`",
+          "`hsl(38, 92%, 50%)`",
+          "`transaction-pending`",
+          "Pending transactions"
+        ],
+        [
+          "**Settled**",
+          "`#06b6d4`",
+          "`rgb(6, 182, 212)`",
+          "`hsl(189, 94%, 43%)`",
+          "`transaction-settled`",
+          "Completed & reconciled"
+        ],
+        [
+          "**Refunded**",
+          "`#a855f7`",
+          "`rgb(168, 85, 247)`",
+          "`hsl(271, 91%, 65%)`",
+          "`transaction-refunded`",
+          "Money returned"
+        ],
+        [
+          "**Failed**",
+          "`#dc2626`",
+          "`rgb(220, 38, 38)`",
+          "`hsl(0, 73%, 51%)`",
+          "`transaction-failed`",
+          "Payment declined"
+        ]
+      ],
+      "lineNumber": 797
+    },
+    {
+      "id": "table-4-16",
+      "headers": [
+        "Shade",
+        "Hex",
+        "Usage"
+      ],
+      "rows": [
+        [
+          "50",
+          "`#f8fafc`",
+          "Lightest background"
+        ],
+        [
+          "100",
+          "`#f1f5f9`",
+          "Light background"
+        ],
+        [
+          "200",
+          "`#e2e8f0`",
+          "Borders, dividers"
+        ],
+        [
+          "300",
+          "`#cbd5e1`",
+          "Disabled backgrounds"
+        ],
+        [
+          "400",
+          "`#94a3b8`",
+          "Placeholder text"
+        ],
+        [
+          "500",
+          "`#64748b`",
+          "Muted text"
+        ],
+        [
+          "600",
+          "`#475569`",
+          "Secondary text"
+        ],
+        [
+          "700",
+          "`#334155`",
+          "Body text"
+        ],
+        [
+          "800",
+          "`#1e293b`",
+          "Headings"
+        ],
+        [
+          "900",
+          "`#0f172a`",
+          "Black (darkest)"
+        ]
+      ],
+      "lineNumber": 839
+    }
+  ],
+  "content": "## Section 4: Color Token System\n\n### 4.1 Overview\n\nThe SabPaisa COB color system provides **500+ color variants** across multiple palettes, each available in **7 different formats** for maximum flexibility. All colors are WCAG 2.2 compliant for accessibility.\n\n**Color Categories**:\n1. **Primary** (Blue) - Main brand color, CTAs, primary actions\n2. **Secondary** (Teal) - Secondary actions, accents, highlights\n3. **Neutrals** (Gray/Slate) - Text, backgrounds, borders\n4. **Semantic** (Success/Error/Warning/Info) - Status indicators\n5. **Transaction-Specific** - Financial transaction states\n6. **Extended Palette** - Additional brand colors\n\n**7 Format Variants per Color**:\n1. **Hex** - `#3b82f6` (for design tools, CSS)\n2. **RGB** - `rgb(59, 130, 246)` (for CSS)\n3. **HSL** - `hsl(217, 91%, 60%)` (for dynamic theming)\n4. **RGBA with Opacity** - 10%, 20%, 50%, 80%, 90% variants\n5. **CSS Variable** - `var(--color-primary-500)` (for theme switching)\n6. **Tailwind Class** - `bg-primary-500`, `text-primary-500`, `border-primary-500`\n7. **TypeScript** - `colors.primary[500]` (for component props)\n\n---\n\n### 4.2 Primary Color Palette (Blue)\n\n**Usage**: Main CTAs, primary navigation, key interactive elements, primary actions\n\n#### Primary-50\n\n| Format | Value | Usage Context |\n|--------|-------|---------------|\n| Hex | `#eff6ff` | Design tools |\n| RGB | `rgb(239, 246, 255)` | CSS |\n| HSL | `hsl(214, 100%, 97%)` | Dynamic theming |\n| RGBA-10 | `rgba(239, 246, 255, 0.1)` | Ultra-subtle overlays |\n| RGBA-20 | `rgba(239, 246, 255, 0.2)` | Subtle overlays |\n| RGBA-50 | `rgba(239, 246, 255, 0.5)` | Semi-transparent |\n| RGBA-80 | `rgba(239, 246, 255, 0.8)` | Nearly opaque |\n| RGBA-90 | `rgba(239, 246, 255, 0.9)` | Very opaque |\n| CSS Var | `var(--color-primary-50)` | Theme switching |\n| Tailwind BG | `bg-primary-50` | Background color |\n| Tailwind Text | `text-primary-50` | Text color |\n| Tailwind Border | `border-primary-50` | Border color |\n\n**WCAG Contrast Ratios**:\n- Black text: 18.5:1 (AAA ✓✓✓)\n- White text: 1.13:1 (Fail ✗)\n\n**When to Use**:\n- Lightest backgrounds\n- Subtle highlights\n- Hover states on white backgrounds\n\n**Do NOT Use For**:\n- ❌ Text on white backgrounds (insufficient contrast)\n- ❌ Primary CTAs (too light)\n\n---\n\n#### Primary-100\n\n| Format | Value |\n|--------|-------|\n| Hex | `#dbeafe` |\n| RGB | `rgb(219, 234, 254)` |\n| HSL | `hsl(214, 95%, 93%)` |\n| RGBA-50 | `rgba(219, 234, 254, 0.5)` |\n| CSS Var | `var(--color-primary-100)` |\n| Tailwind | `bg-primary-100`, `text-primary-100`, `border-primary-100` |\n\n**WCAG Contrast Ratios**: Black 16.2:1 (AAA), White 1.29:1 (Fail)\n\n**Usage**: Light backgrounds, disabled states, subtle accents\n\n---\n\n#### Primary-200\n\n| Format | Value |\n|--------|-------|\n| Hex | `#bfdbfe` |\n| RGB | `rgb(191, 219, 254)` |\n| HSL | `hsl(213, 97%, 87%)` |\n| RGBA-50 | `rgba(191, 219, 254, 0.5)` |\n| CSS Var | `var(--color-primary-200)` |\n| Tailwind | `bg-primary-200`, `text-primary-200`, `border-primary-200` |\n\n**WCAG Contrast Ratios**: Black 13.1:1 (AAA), White 1.6:1 (Fail)\n\n**Usage**: Hover backgrounds, selected states, active backgrounds\n\n---\n\n#### Primary-300\n\n| Format | Value |\n|--------|-------|\n| Hex | `#93c5fd` |\n| RGB | `rgb(147, 197, 253)` |\n| HSL | `hsl(212, 96%, 78%)` |\n| RGBA-50 | `rgba(147, 197, 253, 0.5)` |\n| CSS Var | `var(--color-primary-300)` |\n| Tailwind | `bg-primary-300`, `text-primary-300`, `border-primary-300` |\n\n**WCAG Contrast Ratios**: Black 9.2:1 (AAA), White 2.28:1 (Fail)\n\n**Usage**: Disabled states, subtle accents, inactive elements\n\n---\n\n#### Primary-400\n\n| Format | Value |\n|--------|-------|\n| Hex | `#60a5fa` |\n| RGB | `rgb(96, 165, 250)` |\n| HSL | `hsl(213, 94%, 68%)` |\n| RGBA-50 | `rgba(96, 165, 250, 0.5)` |\n| CSS Var | `var(--color-primary-400)` |\n| Tailwind | `bg-primary-400`, `text-primary-400`, `border-primary-400` |\n\n**WCAG Contrast Ratios**: Black 5.8:1 (AA), White 3.62:1 (AA)\n\n**Usage**: Borders, icons, lighter interactive elements\n\n---\n\n#### Primary-500 (Base)\n\n| Format | Value |\n|--------|-------|\n| Hex | `#3b82f6` |\n| RGB | `rgb(59, 130, 246)` |\n| HSL | `hsl(217, 91%, 60%)` |\n| RGBA-10 | `rgba(59, 130, 246, 0.1)` |\n| RGBA-20 | `rgba(59, 130, 246, 0.2)` |\n| RGBA-50 | `rgba(59, 130, 246, 0.5)` |\n| RGBA-80 | `rgba(59, 130, 246, 0.8)` |\n| RGBA-90 | `rgba(59, 130, 246, 0.9)` |\n| CSS Var | `var(--color-primary-500)` |\n| Tailwind BG | `bg-primary-500` |\n| Tailwind Text | `text-primary-500` |\n| Tailwind Border | `border-primary-500` |\n\n**WCAG Compliance**: AA ✓ (for both black and white text)\n\n**WCAG Contrast Ratios**:\n- White text: 5.33:1 (AA ✓ - Recommended for body text)\n- Black text: 3.94:1 (AA ✓ - Use 600+ for better contrast)\n\n**When to Use**:\n- ✅ Links and hyperlinks\n- ✅ Navigation highlights\n- ✅ Form focus states\n- ✅ Loading indicators\n- ✅ Icon colors\n- ✅ Accent colors\n\n**Code Example**:\n```tsx\n// Link component\n<a href=\"/dashboard\" className=\"text-primary-500 hover:text-primary-600 underline\">\n  View Dashboard\n</a>\n\n// Icon with primary color\n<CreditCard className=\"w-5 h-5 text-primary-500\" />\n\n// Focus ring\n<input className=\"focus:ring-2 focus:ring-primary-500 focus:border-transparent\" />\n```\n\n---\n\n#### Primary-600 (DEFAULT)\n\n| Format | Value |\n|--------|-------|\n| Hex | `#2563eb` |\n| RGB | `rgb(37, 99, 235)` |\n| HSL | `hsl(221, 83%, 53%)` |\n| RGBA-10 | `rgba(37, 99, 235, 0.1)` |\n| RGBA-20 | `rgba(37, 99, 235, 0.2)` |\n| RGBA-50 | `rgba(37, 99, 235, 0.5)` |\n| RGBA-80 | `rgba(37, 99, 235, 0.8)` |\n| RGBA-90 | `rgba(37, 99, 235, 0.9)` |\n| CSS Var | `var(--color-primary-600)` |\n| Tailwind BG | `bg-primary-600` |\n| Tailwind Text | `text-primary-600` |\n| Tailwind Border | `border-primary-600` |\n\n**DEFAULT**: This is the primary brand color\n**WCAG Compliance**: AAA ✓ (for white text)\n\n**WCAG Contrast Ratios**:\n- White text: 6.87:1 (AAA ✓✓✓ - Excellent for all text sizes)\n- Black text: 3.05:1 (AA ✓ - Minimum for large text)\n\n**When to Use**:\n- ✅ **PRIMARY BUTTONS** (Most important CTA on page - MAX 1)\n- ✅ Primary hover states\n- ✅ Emphasized actions\n- ✅ Brand elements\n\n**Code Example**:\n```tsx\n// Primary button (most important action)\n<button className=\"bg-primary-600 hover:bg-primary-700 text-white px-6 py-3 rounded-xl font-medium transition-colors\">\n  Complete Payment\n</button>\n\n// Badge with primary color\n<span className=\"bg-primary-600 text-white px-3 py-1 rounded-full text-xs font-medium\">\n  Active\n</span>\n```\n\n**Decision Rule**:\n```\nShould I use Primary-600?\n├─ Is this the MOST important action on the page?\n│  └─ YES → Use Primary-600 (bg-primary-600)\n└─ NO → Consider Primary-500 (links), Secondary-600 (alt actions), or Outline variant\n```\n\n---\n\n#### Primary-700\n\n| Format | Value |\n|--------|-------|\n| Hex | `#1d4ed8` |\n| RGB | `rgb(29, 78, 216)` |\n| HSL | `hsl(224, 76%, 48%)` |\n| RGBA-50 | `rgba(29, 78, 216, 0.5)` |\n| CSS Var | `var(--color-primary-700)` |\n| Tailwind | `bg-primary-700`, `text-primary-700`, `border-primary-700` |\n\n**WCAG Compliance**: AAA ✓✓✓\n\n**WCAG Contrast Ratios**: White 8.81:1 (AAA), Black 2.38:1 (Fail)\n\n**Usage**: Active/pressed states, dark hover states, emphasized elements\n\n---\n\n#### Primary-800\n\n| Format | Value |\n|--------|-------|\n| Hex | `#1e40af` |\n| RGB | `rgb(30, 64, 175)` |\n| HSL | `hsl(226, 71%, 40%)` |\n| RGBA-50 | `rgba(30, 64, 175, 0.5)` |\n| CSS Var | `var(--color-primary-800)` |\n| Tailwind | `bg-primary-800`, `text-primary-800`, `border-primary-800` |\n\n**WCAG Compliance**: AAA ✓✓✓\n**WCAG Contrast Ratios**: White 11.46:1 (AAA), Black 1.83:1 (Fail)\n\n**Usage**: Dark text on light backgrounds, high-contrast elements\n\n---\n\n#### Primary-900\n\n| Format | Value |\n|--------|-------|\n| Hex | `#1e3a8a` |\n| RGB | `rgb(30, 58, 138)` |\n| HSL | `hsl(226, 64%, 33%)` |\n| RGBA-50 | `rgba(30, 58, 138, 0.5)` |\n| CSS Var | `var(--color-primary-900)` |\n| Tailwind | `bg-primary-900`, `text-primary-900`, `border-primary-900` |\n\n**WCAG Compliance**: AAA ✓✓✓\n**WCAG Contrast Ratios**: White 14.17:1 (AAA), Black 1.48:1 (Fail)\n\n**Usage**: Darkest shade, high contrast text, headings, strong emphasis\n\n---\n\n### 4.3 Primary Gradients\n\n#### Horizontal Gradient\n\n```css\n/* CSS */\nbackground: linear-gradient(to right, #60a5fa, #3b82f6);\n```\n\n```tsx\n/* Tailwind */\nclassName=\"bg-gradient-to-r from-primary-400 to-primary-500\"\n```\n\n**Usage**: Button backgrounds, hero sections, decorative elements\n\n---\n\n#### Primary Hover Gradient\n\n```css\n/* CSS */\nbackground: linear-gradient(to right, #2563eb, #1d4ed8);\n```\n\n```tsx\n/* Tailwind */\nclassName=\"bg-gradient-to-r from-primary-600 to-primary-700\"\n```\n\n**Usage**: Hover states for gradient buttons\n\n---\n\n#### Vertical Gradient\n\n```css\n/* CSS */\nbackground: linear-gradient(to bottom, #3b82f6, #2563eb);\n```\n\n```tsx\n/* Tailwind */\nclassName=\"bg-gradient-to-b from-primary-500 to-primary-600\"\n```\n\n---\n\n#### Radial Gradient\n\n```css\n/* CSS */\nbackground: radial-gradient(circle, #60a5fa, #1d4ed8);\n```\n\n**Usage**: Background effects, spotlight effects\n\n---\n\n### 4.4 Secondary Color Palette (Teal/Cyan)\n\n**Usage**: Secondary actions, accents, highlights, supporting elements\n\n#### Secondary-50 through Secondary-900\n\n*(Full 10-shade palette with same structure as Primary)*\n\n| Shade | Hex | RGB | HSL | Tailwind | WCAG (White) | Usage |\n|-------|-----|-----|-----|----------|--------------|-------|\n| 50 | `#f0fdfa` | `rgb(240, 253, 250)` | `hsl(166, 76%, 97%)` | `secondary-50` | 1.13:1 (Fail) | Lightest bg |\n| 100 | `#ccfbf1` | `rgb(204, 251, 241)` | `hsl(167, 85%, 89%)` | `secondary-100` | 1.32:1 (Fail) | Light bg |\n| 200 | `#99f6e4` | `rgb(153, 246, 228)` | `hsl(168, 84%, 78%)` | `secondary-200` | 1.68:1 (Fail) | Hover bg |\n| 300 | `#5eead4` | `rgb(94, 234, 212)` | `hsl(171, 76%, 64%)` | `secondary-300` | 2.41:1 (Fail) | Accents |\n| 400 | `#2dd4bf` | `rgb(45, 212, 191)` | `hsl(172, 66%, 50%)` | `secondary-400` | 3.88:1 (AA) | Borders |\n| 500 | `#14b8a6` | `rgb(20, 184, 166)` | `hsl(173, 80%, 40%)` | `secondary-500` **DEFAULT** | 5.09:1 (AA ✓) | Base color |\n| 600 | `#0d9488` | `rgb(13, 148, 136)` | `hsl(175, 84%, 32%)` | `secondary-600` | 6.76:1 (AA ✓) | **Secondary buttons** |\n| 700 | `#0f766e` | `rgb(15, 118, 110)` | `hsl(175, 77%, 26%)` | `secondary-700` | 8.95:1 (AAA ✓) | Hover states |\n| 800 | `#115e59` | `rgb(17, 94, 89)` | `hsl(176, 69%, 22%)` | `secondary-800` | 10.84:1 (AAA) | Dark text |\n| 900 | `#134e4a` | `rgb(19, 78, 74)` | `hsl(176, 61%, 19%)` | `secondary-900` | 12.23:1 (AAA) | Darkest |\n\n**Code Example**:\n```tsx\n// Secondary button\n<button className=\"bg-secondary-600 hover:bg-secondary-700 text-white px-6 py-3 rounded-xl\">\n  Save Draft\n</button>\n\n// Secondary link\n<a className=\"text-secondary-600 hover:text-secondary-700\">Learn More</a>\n```\n\n---\n\n### 4.5 Semantic Colors\n\n#### Success (Green)\n\n| Property | Value |\n|----------|-------|\n| **Base Hex** | `#22c55e` |\n| **RGB** | `rgb(34, 197, 94)` |\n| **HSL** | `hsl(142, 71%, 45%)` |\n| **RGBA-50** | `rgba(34, 197, 94, 0.5)` |\n| **CSS Var** | `var(--color-success)` |\n| **Tailwind** | `bg-success`, `text-success` |\n\n**Light Variant**: `#dcfce7` (bg for success messages)\n**Dark Variant**: `#15803d` (text for high contrast)\n\n**Usage**:\n- ✅ Successful operations\n- ✅ Positive feedback\n- ✅ Confirmations\n- ✅ Completed transactions\n- ✅ Credit transactions (money in)\n\n**Code Example**:\n```tsx\n// Success toast\n<div className=\"bg-success/10 border border-success/20 rounded-lg p-4\">\n  <p className=\"text-success-dark\">Payment successful!</p>\n</div>\n\n// Success badge\n<span className=\"bg-success text-white px-3 py-1 rounded-full text-xs\">\n  Completed\n</span>\n\n// Credit transaction\n<span className=\"text-success font-semibold\">+₹1,23,456.00</span>\n```\n\n---\n\n#### Error (Red)\n\n| Property | Value |\n|----------|-------|\n| **Base Hex** | `#ef4444` |\n| **RGB** | `rgb(239, 68, 68)` |\n| **HSL** | `hsl(0, 84%, 60%)` |\n| **RGBA-50** | `rgba(239, 68, 68, 0.5)` |\n| **CSS Var** | `var(--color-error)` |\n| **Tailwind** | `bg-error`, `text-error` |\n\n**Light Variant**: `#fee2e2`\n**Dark Variant**: `#b91c1c`\n\n**Usage**:\n- ❌ Errors\n- ❌ Destructive actions\n- ❌ Critical alerts\n- ❌ Failed transactions\n- ❌ Debit transactions (money out)\n- ❌ Validation errors\n\n**Code Example**:\n```tsx\n// Error message\n<div className=\"bg-error/10 border border-error/20 rounded-lg p-4\">\n  <p className=\"text-error-dark\">Payment failed. Please try again.</p>\n</div>\n\n// Danger button\n<button className=\"bg-error hover:bg-error-dark text-white px-6 py-3 rounded-xl\">\n  Delete Account\n</button>\n\n// Debit transaction\n<span className=\"text-error font-semibold\">-₹500.00</span>\n```\n\n---\n\n#### Warning (Amber)\n\n| Property | Value |\n|----------|-------|\n| **Base Hex** | `#f59e0b` |\n| **RGB** | `rgb(245, 158, 11)` |\n| **HSL** | `hsl(38, 92%, 50%)` |\n| **RGBA-50** | `rgba(245, 158, 11, 0.5)` |\n| **CSS Var** | `var(--color-warning)` |\n| **Tailwind** | `bg-warning`, `text-warning` |\n\n**Light Variant**: `#fef3c7`\n**Dark Variant**: `#b45309`\n\n**Usage**:\n- ⚠️ Warnings\n- ⚠️ Cautions\n- ⚠️ Important notices\n- ⚠️ Pending states\n- ⚠️ Documents expiring soon\n\n---\n\n#### Info (Blue)\n\n| Property | Value |\n|----------|-------|\n| **Base Hex** | `#3b82f6` |\n| **RGB** | `rgb(59, 130, 246)` |\n| **HSL** | `hsl(217, 91%, 60%)` |\n| **CSS Var** | `var(--color-info)` |\n| **Tailwind** | `bg-info`, `text-info` |\n\n**Light Variant**: `#dbeafe`\n**Dark Variant**: `#1d4ed8`\n\n**Usage**: Informational messages, neutral notifications, tips\n\n---\n\n### 4.6 Transaction-Specific Colors\n\n| Type | Hex | RGB | HSL | Tailwind | Usage |\n|------|-----|-----|-----|----------|-------|\n| **Credit** | `#22c55e` | `rgb(34, 197, 94)` | `hsl(142, 71%, 45%)` | `transaction-credit` | Money received/credited |\n| **Debit** | `#ef4444` | `rgb(239, 68, 68)` | `hsl(0, 84%, 60%)` | `transaction-debit` | Money sent/debited |\n| **Pending** | `#f59e0b` | `rgb(245, 158, 11)` | `hsl(38, 92%, 50%)` | `transaction-pending` | Pending transactions |\n| **Settled** | `#06b6d4` | `rgb(6, 182, 212)` | `hsl(189, 94%, 43%)` | `transaction-settled` | Completed & reconciled |\n| **Refunded** | `#a855f7` | `rgb(168, 85, 247)` | `hsl(271, 91%, 65%)` | `transaction-refunded` | Money returned |\n| **Failed** | `#dc2626` | `rgb(220, 38, 38)` | `hsl(0, 73%, 51%)` | `transaction-failed` | Payment declined |\n\n**Code Example**:\n```tsx\n// Transaction amount with color coding\nconst getAmountColor = (type: 'credit' | 'debit') => {\n  return type === 'credit' ? 'text-success' : 'text-error';\n};\n\n<span className={`${getAmountColor(transaction.type)} font-semibold`}>\n  {transaction.type === 'credit' ? '+' : '-'}₹{formatINR(transaction.amount)}\n</span>\n\n// Status badge\nconst getStatusBadge = (status: TransactionStatus) => {\n  const config = {\n    credit: { bg: 'bg-success/10', text: 'text-success', border: 'border-success/20' },\n    pending: { bg: 'bg-warning/10', text: 'text-warning', border: 'border-warning/20' },\n    failed: { bg: 'bg-error/10', text: 'text-error', border: 'border-error/20' },\n  };\n\n  const { bg, text, border } = config[status];\n\n  return (\n    <span className={`${bg} ${text} ${border} border px-3 py-1 rounded-full text-xs font-medium`}>\n      {status.toUpperCase()}\n    </span>\n  );\n};\n```\n\n---\n\n### 4.7 Neutral Colors (Gray/Slate)\n\n| Shade | Hex | Usage |\n|-------|-----|-------|\n| 50 | `#f8fafc` | Lightest background |\n| 100 | `#f1f5f9` | Light background |\n| 200 | `#e2e8f0` | Borders, dividers |\n| 300 | `#cbd5e1` | Disabled backgrounds |\n| 400 | `#94a3b8` | Placeholder text |\n| 500 | `#64748b` | Muted text |\n| 600 | `#475569` | Secondary text |\n| 700 | `#334155` | Body text |\n| 800 | `#1e293b` | Headings |\n| 900 | `#0f172a` | Black (darkest) |\n\n---\n\n### 4.8 CSS Custom Properties\n\nAdd to `:root` in your CSS:\n\n```css\n:root {\n  /* Primary Colors */\n  --color-primary-50: #eff6ff;\n  --color-primary-100: #dbeafe;\n  --color-primary-200: #bfdbfe;\n  --color-primary-300: #93c5fd;\n  --color-primary-400: #60a5fa;\n  --color-primary-500: #3b82f6;\n  --color-primary-600: #2563eb;\n  --color-primary-700: #1d4ed8;\n  --color-primary-800: #1e40af;\n  --color-primary-900: #1e3a8a;\n\n  /* Secondary Colors */\n  --color-secondary-50: #f0fdfa;\n  --color-secondary-100: #ccfbf1;\n  --color-secondary-200: #99f6e4;\n  --color-secondary-300: #5eead4;\n  --color-secondary-400: #2dd4bf;\n  --color-secondary-500: #14b8a6;\n  --color-secondary-600: #0d9488;\n  --color-secondary-700: #0f766e;\n  --color-secondary-800: #115e59;\n  --color-secondary-900: #134e4a;\n\n  /* Semantic Colors */\n  --color-success: #22c55e;\n  --color-success-light: #dcfce7;\n  --color-success-dark: #15803d;\n  --color-error: #ef4444;\n  --color-error-light: #fee2e2;\n  --color-error-dark: #b91c1c;\n  --color-warning: #f59e0b;\n  --color-warning-light: #fef3c7;\n  --color-warning-dark: #b45309;\n  --color-info: #3b82f6;\n  --color-info-light: #dbeafe;\n  --color-info-dark: #1d4ed8;\n}\n\n/* Usage Example */\n.button-primary {\n  background-color: var(--color-primary-600);\n}\n```\n\n---\n\n### 4.9 Tailwind Configuration\n\nAdd to `tailwind.config.js`:\n\n```javascript\nmodule.exports = {\n  theme: {\n    extend: {\n      colors: {\n        primary: {\n          50: '#eff6ff',\n          100: '#dbeafe',\n          200: '#bfdbfe',\n          300: '#93c5fd',\n          400: '#60a5fa',\n          500: '#3b82f6',\n          600: '#2563eb',\n          700: '#1d4ed8',\n          800: '#1e40af',\n          900: '#1e3a8a',\n          DEFAULT: '#2563eb',\n        },\n        secondary: {\n          50: '#f0fdfa',\n          100: '#ccfbf1',\n          200: '#99f6e4',\n          300: '#5eead4',\n          400: '#2dd4bf',\n          500: '#14b8a6',\n          600: '#0d9488',\n          700: '#0f766e',\n          800: '#115e59',\n          900: '#134e4a',\n          DEFAULT: '#14b8a6',\n        },\n        success: '#22c55e',\n        error: '#ef4444',\n        warning: '#f59e0b',\n        info: '#3b82f6',\n      },\n    },\n  },\n};\n```\n\n---\n"
+}

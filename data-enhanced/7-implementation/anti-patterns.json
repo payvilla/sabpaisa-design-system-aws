@@ -1,0 +1,75 @@
+{
+  "section": 35,
+  "title": "Anti-Patterns Consolidated",
+  "metadata": {
+    "startLine": 9383,
+    "endLine": 9533,
+    "codeBlockCount": 10,
+    "tableCount": 0,
+    "extractedAt": "2025-12-01T16:35:09.344Z"
+  },
+  "codeBlocks": [
+    {
+      "id": "code-35-0",
+      "language": "tsx",
+      "code": "// BAD\n<App user={user}>\n  <Dashboard user={user}>\n    <TransactionList user={user}>\n      <Transaction user={user} />\n\n// GOOD - Use Context\nconst UserContext = createContext();\n<UserContext.Provider value={user}>\n  <App />\n</UserContext.Provider>",
+      "lineNumber": 9388
+    },
+    {
+      "id": "code-35-1",
+      "language": "tsx",
+      "code": "// BAD\n<div style={{ backgroundColor: 'rgba(255,255,255,0.1)', padding: '24px' }}>\n\n// GOOD\n<div className=\"bg-white/10 p-6\">",
+      "lineNumber": 9403
+    },
+    {
+      "id": "code-35-2",
+      "language": "tsx",
+      "code": "// BAD - Monolithic component\nconst Dashboard = () => (\n  <div>\n    {/* 500 lines of JSX */}\n  </div>\n);\n\n// GOOD - Composed from smaller pieces\nconst Dashboard = () => (\n  <DashboardLayout>\n    <StatsGrid />\n    <RevenueChart />\n    <TransactionsList />\n  </DashboardLayout>\n);",
+      "lineNumber": 9412
+    },
+    {
+      "id": "code-35-3",
+      "language": "tsx",
+      "code": "// BAD\nconst filteredData = transactions.filter(expensive_operation);\n\n// GOOD\nconst filteredData = useMemo(\n  () => transactions.filter(expensive_operation),\n  [transactions]\n);",
+      "lineNumber": 9433
+    },
+    {
+      "id": "code-35-4",
+      "language": "tsx",
+      "code": "// BAD\n<Button onClick={() => handleClick(item.id)}>\n\n// GOOD\nconst handleClick = useCallback((id) => {\n  // Handle click\n}, []);\n<Button onClick={() => handleClick(item.id)}>",
+      "lineNumber": 9445
+    },
+    {
+      "id": "code-35-5",
+      "language": "tsx",
+      "code": "// BAD\n<img src=\"logo.png\" />\n\n// GOOD\n<img src=\"logo.png\" alt=\"SabPaisa logo\" />",
+      "lineNumber": 9459
+    },
+    {
+      "id": "code-35-6",
+      "language": "tsx",
+      "code": "// BAD\n<div onClick={handleClick}>Click me</div>\n\n// GOOD\n<button onClick={handleClick}>Click me</button>",
+      "lineNumber": 9468
+    },
+    {
+      "id": "code-35-7",
+      "language": "tsx",
+      "code": "// BAD\n<button><X /></button>\n\n// GOOD\n<button aria-label=\"Close modal\"><X /></button>",
+      "lineNumber": 9477
+    },
+    {
+      "id": "code-35-8",
+      "language": "tsx",
+      "code": "// BAD\nuseEffect(() => {\n  const timer = setInterval(() => {}, 1000);\n}, []);\n\n// GOOD\nuseEffect(() => {\n  const timer = setInterval(() => {}, 1000);\n  return () => clearInterval(timer); // Cleanup\n}, []);",
+      "lineNumber": 9488
+    },
+    {
+      "id": "code-35-9",
+      "language": "tsx",
+      "code": "// BAD\nconst handleUpdate = () => {\n  user.name = 'New Name';\n  setUser(user);\n};\n\n// GOOD\nconst handleUpdate = () => {\n  setUser({ ...user, name: 'New Name' });\n};",
+      "lineNumber": 9502
+    }
+  ],
+  "tables": [],
+  "content": "## Section 35: Anti-Patterns Consolidated\n\n### 35.1 Component Anti-Patterns\n\n❌ **Prop Drilling (more than 3 levels)**\n```tsx\n// BAD\n<App user={user}>\n  <Dashboard user={user}>\n    <TransactionList user={user}>\n      <Transaction user={user} />\n\n// GOOD - Use Context\nconst UserContext = createContext();\n<UserContext.Provider value={user}>\n  <App />\n</UserContext.Provider>\n```\n\n❌ **Inline Styles Over Utility Classes**\n```tsx\n// BAD\n<div style={{ backgroundColor: 'rgba(255,255,255,0.1)', padding: '24px' }}>\n\n// GOOD\n<div className=\"bg-white/10 p-6\">\n```\n\n❌ **Not Using Component Composition**\n```tsx\n// BAD - Monolithic component\nconst Dashboard = () => (\n  <div>\n    {/* 500 lines of JSX */}\n  </div>\n);\n\n// GOOD - Composed from smaller pieces\nconst Dashboard = () => (\n  <DashboardLayout>\n    <StatsGrid />\n    <RevenueChart />\n    <TransactionsList />\n  </DashboardLayout>\n);\n```\n\n### 35.2 Performance Anti-Patterns\n\n❌ **Not Memoizing Expensive Calculations**\n```tsx\n// BAD\nconst filteredData = transactions.filter(expensive_operation);\n\n// GOOD\nconst filteredData = useMemo(\n  () => transactions.filter(expensive_operation),\n  [transactions]\n);\n```\n\n❌ **Creating Functions in Render**\n```tsx\n// BAD\n<Button onClick={() => handleClick(item.id)}>\n\n// GOOD\nconst handleClick = useCallback((id) => {\n  // Handle click\n}, []);\n<Button onClick={() => handleClick(item.id)}>\n```\n\n### 35.3 Accessibility Anti-Patterns\n\n❌ **Missing Alt Text**\n```tsx\n// BAD\n<img src=\"logo.png\" />\n\n// GOOD\n<img src=\"logo.png\" alt=\"SabPaisa logo\" />\n```\n\n❌ **Non-Semantic Buttons**\n```tsx\n// BAD\n<div onClick={handleClick}>Click me</div>\n\n// GOOD\n<button onClick={handleClick}>Click me</button>\n```\n\n❌ **Missing ARIA Labels**\n```tsx\n// BAD\n<button><X /></button>\n\n// GOOD\n<button aria-label=\"Close modal\"><X /></button>\n```\n\n### 35.4 State Management Anti-Patterns\n\n❌ **Not Cleaning Up Side Effects**\n```tsx\n// BAD\nuseEffect(() => {\n  const timer = setInterval(() => {}, 1000);\n}, []);\n\n// GOOD\nuseEffect(() => {\n  const timer = setInterval(() => {}, 1000);\n  return () => clearInterval(timer); // Cleanup\n}, []);\n```\n\n❌ **Mutating State Directly**\n```tsx\n// BAD\nconst handleUpdate = () => {\n  user.name = 'New Name';\n  setUser(user);\n};\n\n// GOOD\nconst handleUpdate = () => {\n  setUser({ ...user, name: 'New Name' });\n};\n```\n\n---\n\n**END OF PHASE 6 (Sections 31-35)**\n\n**Phases 5 & 6 Complete** ✓\n\n**Document Status**:\n- Phase 1: Complete ✓ (Design Tokens)\n- Phase 2: Complete ✓ (Core Components)\n- Phase 3: Complete ✓ (Complex Components)\n- Phase 4: Complete ✓ (User Flows)\n- Phase 5: Complete ✓ (UX Patterns & Fintech)\n- Phase 6: Complete ✓ (Implementation Guides)\n- Remaining: Phase 7 (Appendices & Polish)\n\n**Total Sections Documented**: 35 of 35\n\n---\n"
+}

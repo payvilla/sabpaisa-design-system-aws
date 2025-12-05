@@ -1,0 +1,81 @@
+{
+  "section": 16,
+  "title": "FileUpload Component",
+  "metadata": {
+    "startLine": 5457,
+    "endLine": 5748,
+    "codeBlockCount": 11,
+    "tableCount": 0,
+    "extractedAt": "2025-12-01T16:35:09.316Z"
+  },
+  "codeBlocks": [
+    {
+      "id": "code-16-0",
+      "language": "typescript",
+      "code": "interface FileUploadProps {\n  /** Field name */\n  name: string;\n\n  /** Field label */\n  label: string;\n\n  /** Accepted file types (MIME types or extensions) */\n  accept?: string; // Default: \"image/*,.pdf\"\n\n  /** Allow multiple files */\n  multiple?: boolean; // Default: false\n\n  /** Max file size in MB */\n  maxSize?: number; // Default: 5\n\n  /** Helper text */\n  helperText?: string;\n\n  /** Required field */\n  required?: boolean;\n\n  /** Allow camera capture (mobile) */\n  allowCamera?: boolean;\n\n  /** Current files */\n  value?: File[];\n\n  /** Change callback */\n  onChange?: (files: File[]) => void;\n\n  /** Custom class names */\n  className?: string;\n}",
+      "lineNumber": 5475
+    },
+    {
+      "id": "code-16-1",
+      "language": "tsx",
+      "code": "import FileUpload from '@/components/ui/FileUpload';\nimport { useState } from 'react';\n\nconst DocumentUploadForm = () => {\n  const [panCard, setPanCard] = useState<File[]>([]);\n  const [aadhaar, setAadhaar] = useState<File[]>([]);\n\n  return (\n    <form>\n      <FileUpload\n        name=\"panCard\"\n        label=\"PAN Card\"\n        accept=\"image/*,.pdf\"\n        maxSize={5}\n        helperText=\"Upload clear image or PDF of your PAN card\"\n        required={true}\n        value={panCard}\n        onChange={setPanCard}\n      />\n\n      <FileUpload\n        name=\"aadhaar\"\n        label=\"Aadhaar Card\"\n        accept=\"image/*,.pdf\"\n        maxSize={5}\n        allowCamera={true}\n        helperText=\"Upload front and back of Aadhaar or take photos\"\n        required={true}\n        multiple={true}\n        value={aadhaar}\n        onChange={setAadhaar}\n      />\n    </form>\n  );\n};",
+      "lineNumber": 5540
+    },
+    {
+      "id": "code-16-2",
+      "language": "tsx",
+      "code": "<div className=\"border-2 border-dashed border-white/20 rounded-xl p-8 bg-white/5 hover:border-white/30 hover:bg-white/10\">\n  <Upload className=\"mx-auto h-16 w-16 text-blue-400/70\" />\n  <p className=\"text-white/70 mt-4\">Click to upload or drag and drop</p>\n  <p className=\"text-white/50 text-xs mt-2\">image/*,.pdf up to 5MB</p>\n</div>",
+      "lineNumber": 5583
+    },
+    {
+      "id": "code-16-3",
+      "language": "tsx",
+      "code": "<div className=\"border-2 border-dashed border-blue-400 bg-blue-500/10 shadow-lg shadow-blue-500/20\">\n  <Upload className=\"mx-auto h-16 w-16 text-blue-400 animate-pulse\" />\n  <p className=\"text-blue-400 font-medium\">Drop files here</p>\n</div>",
+      "lineNumber": 5592
+    },
+    {
+      "id": "code-16-4",
+      "language": "tsx",
+      "code": "<div className=\"space-y-2\">\n  {files.map((file, index) => (\n    <div key={index} className=\"flex items-center justify-between p-4 bg-white/10 rounded-lg border border-white/10\">\n      <div className=\"flex items-center space-x-3\">\n        <img src={preview} className=\"w-8 h-8 rounded object-cover\" />\n        <div>\n          <p className=\"text-sm text-white font-medium\">{file.name}</p>\n          <p className=\"text-xs text-white/60\">{fileSize} MB</p>\n        </div>\n      </div>\n      <div className=\"flex items-center space-x-2\">\n        <CheckCircle className=\"h-5 w-5 text-green-400\" />\n        <button onClick={() => removeFile(index)}>\n          <X className=\"h-5 w-5 text-red-400\" />\n        </button>\n      </div>\n    </div>\n  ))}\n</div>",
+      "lineNumber": 5600
+    },
+    {
+      "id": "code-16-5",
+      "language": "typescript",
+      "code": "const validateFile = (file: File): string | null => {\n  // Size validation\n  if (maxSize && file.size > maxSize * 1024 * 1024) {\n    return `File size must be less than ${maxSize}MB`;\n  }\n\n  // Type validation\n  const acceptedTypes = accept.split(',').map(type => type.trim());\n  const isValidType = acceptedTypes.some(type => {\n    if (type.startsWith('.')) {\n      // Extension check\n      return file.name.toLowerCase().endsWith(type.toLowerCase());\n    }\n    // MIME type check (supports wildcards like image/*)\n    return file.type.match(type.replace('*', '.*'));\n  });\n\n  if (!isValidType) {\n    return `File type not supported. Accepted: ${accept}`;\n  }\n\n  return null; // Valid file\n};",
+      "lineNumber": 5626
+    },
+    {
+      "id": "code-16-6",
+      "language": "typescript",
+      "code": "const capturePhoto = async () => {\n  try {\n    // Request camera access\n    const stream = await navigator.mediaDevices.getUserMedia({\n      video: { facingMode: 'environment' } // Rear camera\n    });\n\n    // Open camera modal/canvas\n    // Capture frame and convert to File\n    // Add to files array\n\n    stream.getTracks().forEach(track => track.stop());\n  } catch (error) {\n    console.error('Camera access denied:', error);\n    toast.show({\n      type: 'error',\n      title: 'Camera Access Denied',\n      message: 'Please enable camera permissions to take photos.',\n    });\n  }\n};",
+      "lineNumber": 5656
+    },
+    {
+      "id": "code-16-7",
+      "language": "tsx",
+      "code": "<label htmlFor={name} className=\"...\">\n  {label}\n  {required && <span className=\"sr-only\">required</span>}\n</label>\n\n<input\n  type=\"file\"\n  id={name}\n  name={name}\n  accept={accept}\n  multiple={multiple}\n  onChange={handleChange}\n  aria-label={`Upload ${label}`}\n  aria-required={required}\n/>\n\n{helperText && (\n  <p id={`${name}-helper`} className=\"text-sm text-white/60\">\n    {helperText}\n  </p>\n)}",
+      "lineNumber": 5690
+    },
+    {
+      "id": "code-16-8",
+      "language": "tsx",
+      "code": "// WRONG: Accept any file size\n<FileUpload name=\"doc\" accept=\"*\" />\n\n// CORRECT: Set reasonable limits\n<FileUpload name=\"doc\" accept=\"image/*,.pdf\" maxSize={10} />",
+      "lineNumber": 5719
+    },
+    {
+      "id": "code-16-9",
+      "language": "tsx",
+      "code": "// WRONG: Silent failure\nif (!isValid) return;\n\n// CORRECT: Show specific error\nif (!isValid) {\n  setErrors([`File ${file.name} exceeds 5MB limit`]);\n}",
+      "lineNumber": 5728
+    },
+    {
+      "id": "code-16-10",
+      "language": "tsx",
+      "code": "// WRONG: Accept all files\n<FileUpload name=\"avatar\" accept=\"*\" />\n\n// CORRECT: Restrict to relevant types\n<FileUpload name=\"avatar\" accept=\"image/jpeg,image/png\" maxSize={2} />",
+      "lineNumber": 5739
+    }
+  ],
+  "tables": [],
+  "content": "## Section 16: FileUpload Component\n\n### 16.1 Component Overview\n\n**Description**: Drag-and-drop file upload with validation, preview, and multi-file support. Supports images, PDFs, and custom file types.\n\n**Location**: `src/components/ui/FileUpload.tsx`\n\n**When to Use**:\n- ✅ Document uploads (KYC, agreements)\n- ✅ Image uploads (profile photos, signatures)\n- ✅ Bulk file uploads\n- ✅ Form attachments\n\n---\n\n### 16.2 TypeScript Interface\n\n```typescript\ninterface FileUploadProps {\n  /** Field name */\n  name: string;\n\n  /** Field label */\n  label: string;\n\n  /** Accepted file types (MIME types or extensions) */\n  accept?: string; // Default: \"image/*,.pdf\"\n\n  /** Allow multiple files */\n  multiple?: boolean; // Default: false\n\n  /** Max file size in MB */\n  maxSize?: number; // Default: 5\n\n  /** Helper text */\n  helperText?: string;\n\n  /** Required field */\n  required?: boolean;\n\n  /** Allow camera capture (mobile) */\n  allowCamera?: boolean;\n\n  /** Current files */\n  value?: File[];\n\n  /** Change callback */\n  onChange?: (files: File[]) => void;\n\n  /** Custom class names */\n  className?: string;\n}\n```\n\n---\n\n### 16.3 Features\n\n#### Drag and Drop\n- Visual feedback on drag enter/leave\n- Highlight drop zone when dragging\n- Support for multiple files (if enabled)\n\n#### File Validation\n- File type checking (MIME type + extension)\n- File size validation\n- Error messages for invalid files\n\n#### Preview\n- Image thumbnails\n- File name + size display\n- Remove file button\n\n#### Camera Capture\n- Mobile camera integration\n- Take photo directly\n- Immediate upload\n\n---\n\n### 16.4 Code Example: Basic Upload\n\n```tsx\nimport FileUpload from '@/components/ui/FileUpload';\nimport { useState } from 'react';\n\nconst DocumentUploadForm = () => {\n  const [panCard, setPanCard] = useState<File[]>([]);\n  const [aadhaar, setAadhaar] = useState<File[]>([]);\n\n  return (\n    <form>\n      <FileUpload\n        name=\"panCard\"\n        label=\"PAN Card\"\n        accept=\"image/*,.pdf\"\n        maxSize={5}\n        helperText=\"Upload clear image or PDF of your PAN card\"\n        required={true}\n        value={panCard}\n        onChange={setPanCard}\n      />\n\n      <FileUpload\n        name=\"aadhaar\"\n        label=\"Aadhaar Card\"\n        accept=\"image/*,.pdf\"\n        maxSize={5}\n        allowCamera={true}\n        helperText=\"Upload front and back of Aadhaar or take photos\"\n        required={true}\n        multiple={true}\n        value={aadhaar}\n        onChange={setAadhaar}\n      />\n    </form>\n  );\n};\n```\n\n---\n\n### 16.5 Visual States\n\n#### Default State\n```tsx\n<div className=\"border-2 border-dashed border-white/20 rounded-xl p-8 bg-white/5 hover:border-white/30 hover:bg-white/10\">\n  <Upload className=\"mx-auto h-16 w-16 text-blue-400/70\" />\n  <p className=\"text-white/70 mt-4\">Click to upload or drag and drop</p>\n  <p className=\"text-white/50 text-xs mt-2\">image/*,.pdf up to 5MB</p>\n</div>\n```\n\n#### Drag Active State\n```tsx\n<div className=\"border-2 border-dashed border-blue-400 bg-blue-500/10 shadow-lg shadow-blue-500/20\">\n  <Upload className=\"mx-auto h-16 w-16 text-blue-400 animate-pulse\" />\n  <p className=\"text-blue-400 font-medium\">Drop files here</p>\n</div>\n```\n\n#### Files Uploaded State\n```tsx\n<div className=\"space-y-2\">\n  {files.map((file, index) => (\n    <div key={index} className=\"flex items-center justify-between p-4 bg-white/10 rounded-lg border border-white/10\">\n      <div className=\"flex items-center space-x-3\">\n        <img src={preview} className=\"w-8 h-8 rounded object-cover\" />\n        <div>\n          <p className=\"text-sm text-white font-medium\">{file.name}</p>\n          <p className=\"text-xs text-white/60\">{fileSize} MB</p>\n        </div>\n      </div>\n      <div className=\"flex items-center space-x-2\">\n        <CheckCircle className=\"h-5 w-5 text-green-400\" />\n        <button onClick={() => removeFile(index)}>\n          <X className=\"h-5 w-5 text-red-400\" />\n        </button>\n      </div>\n    </div>\n  ))}\n</div>\n```\n\n---\n\n### 16.6 Validation Logic\n\n```typescript\nconst validateFile = (file: File): string | null => {\n  // Size validation\n  if (maxSize && file.size > maxSize * 1024 * 1024) {\n    return `File size must be less than ${maxSize}MB`;\n  }\n\n  // Type validation\n  const acceptedTypes = accept.split(',').map(type => type.trim());\n  const isValidType = acceptedTypes.some(type => {\n    if (type.startsWith('.')) {\n      // Extension check\n      return file.name.toLowerCase().endsWith(type.toLowerCase());\n    }\n    // MIME type check (supports wildcards like image/*)\n    return file.type.match(type.replace('*', '.*'));\n  });\n\n  if (!isValidType) {\n    return `File type not supported. Accepted: ${accept}`;\n  }\n\n  return null; // Valid file\n};\n```\n\n---\n\n### 16.7 Camera Capture (Mobile)\n\n```typescript\nconst capturePhoto = async () => {\n  try {\n    // Request camera access\n    const stream = await navigator.mediaDevices.getUserMedia({\n      video: { facingMode: 'environment' } // Rear camera\n    });\n\n    // Open camera modal/canvas\n    // Capture frame and convert to File\n    // Add to files array\n\n    stream.getTracks().forEach(track => track.stop());\n  } catch (error) {\n    console.error('Camera access denied:', error);\n    toast.show({\n      type: 'error',\n      title: 'Camera Access Denied',\n      message: 'Please enable camera permissions to take photos.',\n    });\n  }\n};\n```\n\n---\n\n### 16.8 Accessibility\n\n#### Keyboard Navigation\n- File input is keyboard accessible (native `<input type=\"file\">`)\n- Remove buttons are focusable\n- Clear focus indicators\n\n#### Screen Reader Support\n```tsx\n<label htmlFor={name} className=\"...\">\n  {label}\n  {required && <span className=\"sr-only\">required</span>}\n</label>\n\n<input\n  type=\"file\"\n  id={name}\n  name={name}\n  accept={accept}\n  multiple={multiple}\n  onChange={handleChange}\n  aria-label={`Upload ${label}`}\n  aria-required={required}\n/>\n\n{helperText && (\n  <p id={`${name}-helper`} className=\"text-sm text-white/60\">\n    {helperText}\n  </p>\n)}\n```\n\n---\n\n### 16.9 Anti-Patterns\n\n❌ **No File Size Validation**\n```tsx\n// WRONG: Accept any file size\n<FileUpload name=\"doc\" accept=\"*\" />\n\n// CORRECT: Set reasonable limits\n<FileUpload name=\"doc\" accept=\"image/*,.pdf\" maxSize={10} />\n```\n\n❌ **Poor Error Feedback**\n```tsx\n// WRONG: Silent failure\nif (!isValid) return;\n\n// CORRECT: Show specific error\nif (!isValid) {\n  setErrors([`File ${file.name} exceeds 5MB limit`]);\n}\n```\n\n❌ **No File Type Restriction**\n```tsx\n// WRONG: Accept all files\n<FileUpload name=\"avatar\" accept=\"*\" />\n\n// CORRECT: Restrict to relevant types\n<FileUpload name=\"avatar\" accept=\"image/jpeg,image/png\" maxSize={2} />\n```\n\n---\n"
+}

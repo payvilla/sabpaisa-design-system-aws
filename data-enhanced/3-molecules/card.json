@@ -1,0 +1,129 @@
+{
+  "section": 11,
+  "title": "Card Component",
+  "metadata": {
+    "startLine": 2930,
+    "endLine": 3419,
+    "codeBlockCount": 19,
+    "tableCount": 0,
+    "extractedAt": "2025-12-01T16:35:09.306Z"
+  },
+  "codeBlocks": [
+    {
+      "id": "code-11-0",
+      "language": "typescript",
+      "code": "interface CardProps extends React.HTMLAttributes<HTMLDivElement> {\n  /** Visual style variant */\n  variant?: 'default' | 'glass' | 'gradient' | 'outlined';\n\n  /** Internal padding */\n  padding?: 'none' | 'sm' | 'md' | 'lg' | 'xl';\n\n  /** Drop shadow */\n  shadow?: 'none' | 'sm' | 'md' | 'lg' | 'xl' | 'glow';\n\n  /** Enable hover effect */\n  hover?: boolean;\n\n  /** Standard div attributes */\n  className?: string;\n  children: React.ReactNode;\n}",
+      "lineNumber": 2949
+    },
+    {
+      "id": "code-11-1",
+      "language": "tsx",
+      "code": "import Card from '@/components/ui/Card';\nimport { TrendingUp } from 'lucide-react';\n\n<Card variant=\"default\" padding=\"md\" shadow=\"md\">\n  <div className=\"flex items-center justify-between\">\n    <div>\n      <p className=\"text-sm text-white/60\">Total Revenue</p>\n      <p className=\"text-3xl font-bold text-white mt-1\">\n        ₹12,45,678.00\n      </p>\n      <p className=\"text-sm text-green-400 mt-2 flex items-center gap-1\">\n        <TrendingUp className=\"w-4 h-4\" />\n        +12.5% from last month\n      </p>\n    </div>\n    <div className=\"w-12 h-12 bg-blue-500/20 rounded-xl flex items-center justify-center\">\n      <TrendingUp className=\"w-6 h-6 text-blue-400\" />\n    </div>\n  </div>\n</Card>",
+      "lineNumber": 2999
+    },
+    {
+      "id": "code-11-2",
+      "language": "tsx",
+      "code": "<Card\n  variant=\"glass\"\n  padding=\"lg\"\n  shadow=\"md\"\n  hover={true}\n  className=\"cursor-pointer\"\n  onClick={() => navigate('/features/payments')}\n>\n  <h3 className=\"text-xl font-semibold text-white mb-2\">\n    Payment Gateway\n  </h3>\n  <p className=\"text-white/70 text-sm\">\n    Accept payments from 100+ methods including cards, UPI, net banking, and wallets.\n  </p>\n</Card>",
+      "lineNumber": 3026
+    },
+    {
+      "id": "code-11-3",
+      "language": "tsx",
+      "code": "<Card variant=\"default\" padding=\"md\" shadow=\"sm\" hover={true}>\n  <div className=\"space-y-3\">\n    <div className=\"flex items-center justify-between\">\n      <span className=\"text-sm text-white/60\">Transaction ID: TXN123456</span>\n      <span className=\"px-3 py-1 rounded-full text-xs font-medium bg-green-500/20 text-green-400 border border-green-400/30\">\n        Success\n      </span>\n    </div>\n    <div className=\"flex items-baseline justify-between\">\n      <span className=\"text-2xl font-bold text-white\">₹15,000.00</span>\n      <span className=\"text-sm text-white/60\">UPI Payment</span>\n    </div>\n    <div className=\"flex items-center justify-between text-sm\">\n      <span className=\"text-white/50\">Date</span>\n      <span className=\"text-white/90\">25 Nov 2025, 2:30 PM</span>\n    </div>\n    <div className=\"flex items-center justify-between text-sm\">\n      <span className=\"text-white/50\">Customer</span>\n      <span className=\"text-white/90\">Rajesh Kumar</span>\n    </div>\n  </div>\n</Card>",
+      "lineNumber": 3048
+    },
+    {
+      "id": "code-11-4",
+      "language": "tsx",
+      "code": "<Card variant=\"outlined\" padding=\"lg\" shadow=\"none\">\n  <h3 className=\"text-lg font-semibold text-white mb-4\">Business Information</h3>\n  <div className=\"space-y-4\">\n    <TextField\n      name=\"businessName\"\n      label=\"Business Name\"\n      placeholder=\"Your Business Name\"\n    />\n    <TextField\n      name=\"gst\"\n      label=\"GST Number\"\n      placeholder=\"22AAAAA0000A1Z5\"\n    />\n    <TextField\n      name=\"pan\"\n      label=\"PAN Number\"\n      placeholder=\"ABCDE1234F\"\n    />\n  </div>\n</Card>",
+      "lineNumber": 3077
+    },
+    {
+      "id": "code-11-5",
+      "language": "tsx",
+      "code": "<Card variant=\"gradient\" padding=\"lg\" shadow=\"glow\" hover={true}>\n  <div className=\"flex items-center space-x-4\">\n    <div className=\"w-16 h-16 bg-gradient-to-br from-blue-500 to-teal-500 rounded-2xl flex items-center justify-center\">\n      <span className=\"text-2xl font-bold text-white\">42</span>\n    </div>\n    <div>\n      <p className=\"text-sm text-white/60\">Active Settlements</p>\n      <p className=\"text-2xl font-bold text-white mt-1\">Processing</p>\n      <p className=\"text-sm text-blue-400 mt-1\">\n        ₹2,45,678 in queue\n      </p>\n    </div>\n  </div>\n</Card>",
+      "lineNumber": 3104
+    },
+    {
+      "id": "code-11-6",
+      "language": "tsx",
+      "code": "<Card\n  variant=\"glass\"\n  padding=\"xl\"\n  shadow=\"md\"\n  hover={true}\n  onClick={() => navigate('/kyc/upload')}\n  className=\"cursor-pointer\"\n>\n  <div className=\"text-center space-y-4\">\n    <div className=\"w-20 h-20 mx-auto bg-blue-500/20 rounded-full flex items-center justify-center\">\n      <Upload className=\"w-10 h-10 text-blue-400\" />\n    </div>\n    <h3 className=\"text-xl font-semibold text-white\">Upload Documents</h3>\n    <p className=\"text-white/70\">\n      Upload your business registration and identity documents\n    </p>\n    <Button variant=\"secondary\" size=\"md\">\n      Start Upload\n    </Button>\n  </div>\n</Card>",
+      "lineNumber": 3125
+    },
+    {
+      "id": "code-11-7",
+      "language": "typescript",
+      "code": "padding?: 'none' | 'sm' | 'md' | 'lg' | 'xl'\n\n// Mapping\nnone: ''           // 0rem (0px)\nsm:   'p-4'       // 1rem (16px)\nmd:   'p-6'       // 1.5rem (24px) - DEFAULT\nlg:   'p-8'       // 2rem (32px)\nxl:   'p-10'      // 2.5rem (40px)",
+      "lineNumber": 3154
+    },
+    {
+      "id": "code-11-8",
+      "language": "typescript",
+      "code": "shadow?: 'none' | 'sm' | 'md' | 'lg' | 'xl' | 'glow'\n\n// CSS Classes\nnone: ''\nsm:   'shadow-lg shadow-black/10'\nmd:   'shadow-xl shadow-black/20'      // DEFAULT\nlg:   'shadow-2xl shadow-black/30'\nxl:   'shadow-2xl shadow-black/40'\nglow: 'shadow-2xl shadow-blue-500/30'  // Special effect",
+      "lineNumber": 3173
+    },
+    {
+      "id": "code-11-9",
+      "language": "typescript",
+      "code": "hover={true}\n// Applies:\n// - hover:shadow-2xl hover:shadow-blue-500/20\n// - hover:scale-[1.02]\n// - cursor-pointer\n// - hover:bg-white/15",
+      "lineNumber": 3198
+    },
+    {
+      "id": "code-11-10",
+      "language": "tsx",
+      "code": "✓ Use appropriate semantic HTML inside cards (<article>, <section>)\n✓ Add aria-label for clickable cards\n✓ Ensure focus visible for keyboard navigation\n✓ Maintain logical tab order\n✓ Provide alt text for images inside cards",
+      "lineNumber": 3226
+    },
+    {
+      "id": "code-11-11",
+      "language": "tsx",
+      "code": "<Card\n  variant=\"glass\"\n  padding=\"md\"\n  hover={true}\n  onClick={() => navigate('/feature')}\n  role=\"button\"\n  tabIndex={0}\n  aria-label=\"Navigate to payment gateway feature\"\n  onKeyPress={(e) => e.key === 'Enter' && navigate('/feature')}\n>\n  {/* Card content */}\n</Card>",
+      "lineNumber": 3235
+    },
+    {
+      "id": "code-11-12",
+      "language": "tsx",
+      "code": "// Mobile: Reduce padding\n<Card padding=\"sm\" className=\"md:p-6\">\n\n// Tablet/Desktop: Increase padding\n<Card padding=\"md\" className=\"lg:p-8\">\n\n// Full-width on mobile\n<Card className=\"w-full md:max-w-md lg:max-w-lg\">",
+      "lineNumber": 3274
+    },
+    {
+      "id": "code-11-13",
+      "language": "tsx",
+      "code": "// Card is used to compose Dashboard widgets\n<div className=\"grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6\">\n  <Card variant=\"default\" padding=\"md\">\n    <StatWidget title=\"Revenue\" value=\"₹12.5L\" />\n  </Card>\n  <Card variant=\"default\" padding=\"md\">\n    <StatWidget title=\"Transactions\" value=\"1,234\" />\n  </Card>\n  {/* More cards... */}\n</div>",
+      "lineNumber": 3302
+    },
+    {
+      "id": "code-11-14",
+      "language": "text",
+      "code": "Should I use a Card?\n│\n├─ Need to group related content?\n│  └─ YES → Use Card\n│     │\n│     ├─ Is it clickable/interactive?\n│     │  └─ YES → Use hover={true}\n│     │\n│     ├─ What visual style?\n│     │  ├─ Standard grouping → variant=\"default\"\n│     │  ├─ Subtle, background → variant=\"glass\"\n│     │  ├─ Emphasis, highlight → variant=\"gradient\"\n│     │  └─ Flat, minimal → variant=\"outlined\"\n│     │\n│     ├─ How much content?\n│     │  ├─ Compact → padding=\"sm\"\n│     │  ├─ Standard → padding=\"md\"\n│     │  └─ Spacious → padding=\"lg\" or \"xl\"\n│     │\n│     └─ How much elevation?\n│        ├─ Subtle → shadow=\"sm\"\n│        ├─ Standard → shadow=\"md\"\n│        ├─ Prominent → shadow=\"lg\" or \"xl\"\n│        └─ Special effect → shadow=\"glow\"\n│\n└─ NO → Use plain <div> or semantic HTML",
+      "lineNumber": 3319
+    },
+    {
+      "id": "code-11-15",
+      "language": "tsx",
+      "code": "// WRONG\n<Card variant=\"default\">\n  <Card variant=\"glass\">\n    <p>Content</p>\n  </Card>\n</Card>\n\n// CORRECT: Use one card with appropriate variant\n<Card variant=\"default\">\n  <p>Content</p>\n</Card>",
+      "lineNumber": 3353
+    },
+    {
+      "id": "code-11-16",
+      "language": "tsx",
+      "code": "// WRONG: Overkill for simple text\n<Card padding=\"md\">\n  <p>Hello World</p>\n</Card>\n\n// CORRECT: Use card for meaningful content groups\n<Card padding=\"md\">\n  <h3>User Profile</h3>\n  <p>Name: John Doe</p>\n  <p>Email: john@example.com</p>\n  <p>Role: Admin</p>\n</Card>",
+      "lineNumber": 3368
+    },
+    {
+      "id": "code-11-17",
+      "language": "tsx",
+      "code": "// WRONG: hover={true} without onClick\n<Card hover={true}>\n  <p>Static content</p>\n</Card>\n\n// CORRECT: Only use hover with interactive cards\n<Card hover={true} onClick={() => navigate('/details')}>\n  <p>Click to view details</p>\n</Card>",
+      "lineNumber": 3384
+    },
+    {
+      "id": "code-11-18",
+      "language": "tsx",
+      "code": "// WRONG: Different padding for similar purpose\n<Card padding=\"sm\">...</Card>\n<Card padding=\"lg\">...</Card>\n<Card padding=\"md\">...</Card>\n\n// CORRECT: Consistent padding for card grid\n<Card padding=\"md\">...</Card>\n<Card padding=\"md\">...</Card>\n<Card padding=\"md\">...</Card>",
+      "lineNumber": 3397
+    }
+  ],
+  "tables": [],
+  "content": "## Section 11: Card Component\n\n### 11.1 Component Overview\n\n**Description**: A flexible container component with glassmorphic styling, multiple variants, configurable padding and shadows. Primary building block for layouts.\n\n**Location**: `src/components/ui/Card.tsx`\n\n**When to Use**:\n- ✅ Content grouping\n- ✅ Dashboard widgets\n- ✅ Form sections\n- ✅ Feature cards\n- ✅ Transaction/item cards\n\n---\n\n### 11.2 TypeScript Interface\n\n```typescript\ninterface CardProps extends React.HTMLAttributes<HTMLDivElement> {\n  /** Visual style variant */\n  variant?: 'default' | 'glass' | 'gradient' | 'outlined';\n\n  /** Internal padding */\n  padding?: 'none' | 'sm' | 'md' | 'lg' | 'xl';\n\n  /** Drop shadow */\n  shadow?: 'none' | 'sm' | 'md' | 'lg' | 'xl' | 'glow';\n\n  /** Enable hover effect */\n  hover?: boolean;\n\n  /** Standard div attributes */\n  className?: string;\n  children: React.ReactNode;\n}\n```\n\n---\n\n### 11.3 All Variants\n\n#### Variant: Default\n- Background: `bg-white/10` with `backdrop-blur-lg`\n- Border: `border border-white/20`\n- **Most commonly used variant**\n\n#### Variant: Glass\n- Background: `bg-white/5` with `backdrop-blur-xl`\n- Border: `border border-white/10`\n- More transparent, stronger blur\n\n#### Variant: Gradient\n- Background: `bg-gradient-to-br from-blue-500/10 to-teal-500/10`\n- Border: `border border-blue-400/20`\n- Subtle gradient background\n\n#### Variant: Outlined\n- Background: `bg-transparent`\n- Border: `border-2 border-white/20`\n- No background fill\n\n---\n\n### 11.4 Code Examples\n\n#### Example 1: Stats Card\n\n```tsx\nimport Card from '@/components/ui/Card';\nimport { TrendingUp } from 'lucide-react';\n\n<Card variant=\"default\" padding=\"md\" shadow=\"md\">\n  <div className=\"flex items-center justify-between\">\n    <div>\n      <p className=\"text-sm text-white/60\">Total Revenue</p>\n      <p className=\"text-3xl font-bold text-white mt-1\">\n        ₹12,45,678.00\n      </p>\n      <p className=\"text-sm text-green-400 mt-2 flex items-center gap-1\">\n        <TrendingUp className=\"w-4 h-4\" />\n        +12.5% from last month\n      </p>\n    </div>\n    <div className=\"w-12 h-12 bg-blue-500/20 rounded-xl flex items-center justify-center\">\n      <TrendingUp className=\"w-6 h-6 text-blue-400\" />\n    </div>\n  </div>\n</Card>\n```\n\n---\n\n#### Example 2: Hover-able Feature Card\n\n```tsx\n<Card\n  variant=\"glass\"\n  padding=\"lg\"\n  shadow=\"md\"\n  hover={true}\n  className=\"cursor-pointer\"\n  onClick={() => navigate('/features/payments')}\n>\n  <h3 className=\"text-xl font-semibold text-white mb-2\">\n    Payment Gateway\n  </h3>\n  <p className=\"text-white/70 text-sm\">\n    Accept payments from 100+ methods including cards, UPI, net banking, and wallets.\n  </p>\n</Card>\n```\n\n---\n\n#### Example 3: Transaction Card\n\n```tsx\n<Card variant=\"default\" padding=\"md\" shadow=\"sm\" hover={true}>\n  <div className=\"space-y-3\">\n    <div className=\"flex items-center justify-between\">\n      <span className=\"text-sm text-white/60\">Transaction ID: TXN123456</span>\n      <span className=\"px-3 py-1 rounded-full text-xs font-medium bg-green-500/20 text-green-400 border border-green-400/30\">\n        Success\n      </span>\n    </div>\n    <div className=\"flex items-baseline justify-between\">\n      <span className=\"text-2xl font-bold text-white\">₹15,000.00</span>\n      <span className=\"text-sm text-white/60\">UPI Payment</span>\n    </div>\n    <div className=\"flex items-center justify-between text-sm\">\n      <span className=\"text-white/50\">Date</span>\n      <span className=\"text-white/90\">25 Nov 2025, 2:30 PM</span>\n    </div>\n    <div className=\"flex items-center justify-between text-sm\">\n      <span className=\"text-white/50\">Customer</span>\n      <span className=\"text-white/90\">Rajesh Kumar</span>\n    </div>\n  </div>\n</Card>\n```\n\n---\n\n#### Example 4: Form Section Card\n\n```tsx\n<Card variant=\"outlined\" padding=\"lg\" shadow=\"none\">\n  <h3 className=\"text-lg font-semibold text-white mb-4\">Business Information</h3>\n  <div className=\"space-y-4\">\n    <TextField\n      name=\"businessName\"\n      label=\"Business Name\"\n      placeholder=\"Your Business Name\"\n    />\n    <TextField\n      name=\"gst\"\n      label=\"GST Number\"\n      placeholder=\"22AAAAA0000A1Z5\"\n    />\n    <TextField\n      name=\"pan\"\n      label=\"PAN Number\"\n      placeholder=\"ABCDE1234F\"\n    />\n  </div>\n</Card>\n```\n\n---\n\n#### Example 5: Dashboard Widget with Gradient\n\n```tsx\n<Card variant=\"gradient\" padding=\"lg\" shadow=\"glow\" hover={true}>\n  <div className=\"flex items-center space-x-4\">\n    <div className=\"w-16 h-16 bg-gradient-to-br from-blue-500 to-teal-500 rounded-2xl flex items-center justify-center\">\n      <span className=\"text-2xl font-bold text-white\">42</span>\n    </div>\n    <div>\n      <p className=\"text-sm text-white/60\">Active Settlements</p>\n      <p className=\"text-2xl font-bold text-white mt-1\">Processing</p>\n      <p className=\"text-sm text-blue-400 mt-1\">\n        ₹2,45,678 in queue\n      </p>\n    </div>\n  </div>\n</Card>\n```\n\n---\n\n#### Example 6: Clickable Card with Full Layout\n\n```tsx\n<Card\n  variant=\"glass\"\n  padding=\"xl\"\n  shadow=\"md\"\n  hover={true}\n  onClick={() => navigate('/kyc/upload')}\n  className=\"cursor-pointer\"\n>\n  <div className=\"text-center space-y-4\">\n    <div className=\"w-20 h-20 mx-auto bg-blue-500/20 rounded-full flex items-center justify-center\">\n      <Upload className=\"w-10 h-10 text-blue-400\" />\n    </div>\n    <h3 className=\"text-xl font-semibold text-white\">Upload Documents</h3>\n    <p className=\"text-white/70\">\n      Upload your business registration and identity documents\n    </p>\n    <Button variant=\"secondary\" size=\"md\">\n      Start Upload\n    </Button>\n  </div>\n</Card>\n```\n\n---\n\n### 11.5 Padding & Shadow Variations\n\n#### Padding Scale\n```typescript\npadding?: 'none' | 'sm' | 'md' | 'lg' | 'xl'\n\n// Mapping\nnone: ''           // 0rem (0px)\nsm:   'p-4'       // 1rem (16px)\nmd:   'p-6'       // 1.5rem (24px) - DEFAULT\nlg:   'p-8'       // 2rem (32px)\nxl:   'p-10'      // 2.5rem (40px)\n```\n\n**Usage Guide**:\n- `none`: Cards with custom internal layout\n- `sm`: Compact cards, tight spacing\n- `md`: Standard cards (DEFAULT)\n- `lg`: Feature cards, emphasis\n- `xl`: Hero cards, landing pages\n\n#### Shadow Scale\n```typescript\nshadow?: 'none' | 'sm' | 'md' | 'lg' | 'xl' | 'glow'\n\n// CSS Classes\nnone: ''\nsm:   'shadow-lg shadow-black/10'\nmd:   'shadow-xl shadow-black/20'      // DEFAULT\nlg:   'shadow-2xl shadow-black/30'\nxl:   'shadow-2xl shadow-black/40'\nglow: 'shadow-2xl shadow-blue-500/30'  // Special effect\n```\n\n**Usage Guide**:\n- `none`: Flat cards, minimal depth\n- `sm`: Subtle elevation\n- `md`: Standard cards (DEFAULT)\n- `lg`: Elevated cards, overlays\n- `xl`: Modals, dialogs\n- `glow`: Special effects, highlights\n\n---\n\n### 11.6 Hover Effects\n\n#### Standard Hover\n```typescript\nhover={true}\n// Applies:\n// - hover:shadow-2xl hover:shadow-blue-500/20\n// - hover:scale-[1.02]\n// - cursor-pointer\n// - hover:bg-white/15\n```\n\n#### When to Use Hover\n- ✅ Clickable cards (navigation)\n- ✅ Feature cards (interactive)\n- ✅ Dashboard widgets (clickable)\n- ❌ Static content cards\n- ❌ Form section containers\n- ❌ Read-only information cards\n\n---\n\n### 11.7 Accessibility\n\n#### WCAG Compliance\n- **Contrast**: All text meets WCAG 2.2 AA standards\n- **Focus Indicators**: Keyboard navigation support via native HTML\n- **Touch Targets**: Minimum 44x44px for clickable cards\n- **Screen Readers**: Use semantic HTML structure\n\n#### Implementation Checklist\n```tsx\n✓ Use appropriate semantic HTML inside cards (<article>, <section>)\n✓ Add aria-label for clickable cards\n✓ Ensure focus visible for keyboard navigation\n✓ Maintain logical tab order\n✓ Provide alt text for images inside cards\n```\n\n#### Example: Accessible Clickable Card\n```tsx\n<Card\n  variant=\"glass\"\n  padding=\"md\"\n  hover={true}\n  onClick={() => navigate('/feature')}\n  role=\"button\"\n  tabIndex={0}\n  aria-label=\"Navigate to payment gateway feature\"\n  onKeyPress={(e) => e.key === 'Enter' && navigate('/feature')}\n>\n  {/* Card content */}\n</Card>\n```\n\n---\n\n### 11.8 Design Specifications\n\n#### Visual Hierarchy\n1. **Elevation Layers**:\n   - `glass`: Bottom layer (most subtle)\n   - `default`: Standard layer\n   - `gradient`: Emphasis layer\n   - `outlined`: Flat layer (no depth)\n\n2. **Border Transparency**:\n   - Glass: `border-white/10` (subtle)\n   - Default: `border-white/20` (standard)\n   - Gradient: `border-blue-400/20` (tinted)\n   - Outlined: `border-white/20` (prominent)\n\n3. **Backdrop Blur**:\n   - Glass: `backdrop-blur-xl` (24px blur)\n   - Default: `backdrop-blur-lg` (16px blur)\n   - Gradient: No blur (solid gradient)\n   - Outlined: No blur (transparent)\n\n#### Responsive Behavior\n```tsx\n// Mobile: Reduce padding\n<Card padding=\"sm\" className=\"md:p-6\">\n\n// Tablet/Desktop: Increase padding\n<Card padding=\"md\" className=\"lg:p-8\">\n\n// Full-width on mobile\n<Card className=\"w-full md:max-w-md lg:max-w-lg\">\n```\n\n---\n\n### 11.9 Atomic Composition\n\n**Level**: Molecule (basic component)\n\n**Composed Of**:\n- Design tokens: colors, spacing, shadows, border-radius\n- Utility classes: `rounded-xl`, `transition-all`, `backdrop-blur-*`\n\n**Used In**:\n- Dashboard (organism): Stats grids, widget layouts\n- Form layouts (organism): Section containers\n- Transaction lists (organism): Item cards\n- Feature cards (organism): Landing page sections\n\n**Composition Example**:\n```tsx\n// Card is used to compose Dashboard widgets\n<div className=\"grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6\">\n  <Card variant=\"default\" padding=\"md\">\n    <StatWidget title=\"Revenue\" value=\"₹12.5L\" />\n  </Card>\n  <Card variant=\"default\" padding=\"md\">\n    <StatWidget title=\"Transactions\" value=\"1,234\" />\n  </Card>\n  {/* More cards... */}\n</div>\n```\n\n---\n\n### 11.10 Decision Tree\n\n```\nShould I use a Card?\n│\n├─ Need to group related content?\n│  └─ YES → Use Card\n│     │\n│     ├─ Is it clickable/interactive?\n│     │  └─ YES → Use hover={true}\n│     │\n│     ├─ What visual style?\n│     │  ├─ Standard grouping → variant=\"default\"\n│     │  ├─ Subtle, background → variant=\"glass\"\n│     │  ├─ Emphasis, highlight → variant=\"gradient\"\n│     │  └─ Flat, minimal → variant=\"outlined\"\n│     │\n│     ├─ How much content?\n│     │  ├─ Compact → padding=\"sm\"\n│     │  ├─ Standard → padding=\"md\"\n│     │  └─ Spacious → padding=\"lg\" or \"xl\"\n│     │\n│     └─ How much elevation?\n│        ├─ Subtle → shadow=\"sm\"\n│        ├─ Standard → shadow=\"md\"\n│        ├─ Prominent → shadow=\"lg\" or \"xl\"\n│        └─ Special effect → shadow=\"glow\"\n│\n└─ NO → Use plain <div> or semantic HTML\n```\n\n---\n\n### 11.11 Anti-Patterns\n\n❌ **Nesting Cards Unnecessarily**\n```tsx\n// WRONG\n<Card variant=\"default\">\n  <Card variant=\"glass\">\n    <p>Content</p>\n  </Card>\n</Card>\n\n// CORRECT: Use one card with appropriate variant\n<Card variant=\"default\">\n  <p>Content</p>\n</Card>\n```\n\n❌ **Using Cards for Single Lines of Text**\n```tsx\n// WRONG: Overkill for simple text\n<Card padding=\"md\">\n  <p>Hello World</p>\n</Card>\n\n// CORRECT: Use card for meaningful content groups\n<Card padding=\"md\">\n  <h3>User Profile</h3>\n  <p>Name: John Doe</p>\n  <p>Email: john@example.com</p>\n  <p>Role: Admin</p>\n</Card>\n```\n\n❌ **Mixing Hover with Non-Clickable Cards**\n```tsx\n// WRONG: hover={true} without onClick\n<Card hover={true}>\n  <p>Static content</p>\n</Card>\n\n// CORRECT: Only use hover with interactive cards\n<Card hover={true} onClick={() => navigate('/details')}>\n  <p>Click to view details</p>\n</Card>\n```\n\n❌ **Inconsistent Padding Across Similar Cards**\n```tsx\n// WRONG: Different padding for similar purpose\n<Card padding=\"sm\">...</Card>\n<Card padding=\"lg\">...</Card>\n<Card padding=\"md\">...</Card>\n\n// CORRECT: Consistent padding for card grid\n<Card padding=\"md\">...</Card>\n<Card padding=\"md\">...</Card>\n<Card padding=\"md\">...</Card>\n```\n\n---\n\n### 11.12 Related Components\n\n- **Button**: Often placed inside cards for actions\n- **TextField**: Form sections use cards as containers\n- **Badge**: Status indicators within cards\n- **Toast**: Similar glassmorphic styling\n\n---\n"
+}

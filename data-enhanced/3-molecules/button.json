@@ -1,0 +1,223 @@
+{
+  "section": 9,
+  "title": "Button Component",
+  "metadata": {
+    "startLine": 1618,
+    "endLine": 2455,
+    "codeBlockCount": 26,
+    "tableCount": 1,
+    "extractedAt": "2025-12-01T16:35:09.302Z"
+  },
+  "codeBlocks": [
+    {
+      "id": "code-9-0",
+      "language": "typescript",
+      "code": "interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {\n  /** Visual style variant */\n  variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'danger';\n\n  /** Size of the button */\n  size?: 'sm' | 'md' | 'lg' | 'xl';\n\n  /** Show loading spinner, disables button */\n  isLoading?: boolean;\n\n  /** Icon to display before text */\n  leftIcon?: React.ReactNode;\n\n  /** Icon to display after text */\n  rightIcon?: React.ReactNode;\n\n  /** Stretch button to full container width */\n  fullWidth?: boolean;\n\n  /** All standard HTML button attributes */\n  disabled?: boolean;\n  type?: 'button' | 'submit' | 'reset';\n  onClick?: React.MouseEventHandler<HTMLButtonElement>;\n  className?: string;\n  children: React.ReactNode;\n}",
+      "lineNumber": 1640
+    },
+    {
+      "id": "code-9-1",
+      "language": "css",
+      "code": "bg-gradient-to-r from-blue-600 to-blue-500 text-white\nhover:from-blue-700 hover:to-blue-600\nfocus:ring-blue-400/50\nshadow-lg hover:shadow-xl hover:shadow-blue-500/25",
+      "lineNumber": 1682
+    },
+    {
+      "id": "code-9-2",
+      "language": "tsx",
+      "code": "import Button from '@/components/ui/Button';\nimport { CreditCard } from 'lucide-react';\n\n<Button\n  variant=\"primary\"\n  size=\"lg\"\n  leftIcon={<CreditCard />}\n  onClick={handlePayment}\n>\n  Pay ₹{amount.toLocaleString('en-IN')}\n</Button>",
+      "lineNumber": 1698
+    },
+    {
+      "id": "code-9-3",
+      "language": "tsx",
+      "code": "<Button\n  variant=\"secondary\"\n  size=\"md\"\n  onClick={handleSaveDraft}\n>\n  Save Draft\n</Button>",
+      "lineNumber": 1734
+    },
+    {
+      "id": "code-9-4",
+      "language": "tsx",
+      "code": "<Button\n  variant=\"outline\"\n  size=\"md\"\n  onClick={handleCancel}\n>\n  Cancel\n</Button>",
+      "lineNumber": 1761
+    },
+    {
+      "id": "code-9-5",
+      "language": "tsx",
+      "code": "<Button\n  variant=\"ghost\"\n  size=\"sm\"\n  leftIcon={<Download />}\n>\n  Download Receipt\n</Button>",
+      "lineNumber": 1788
+    },
+    {
+      "id": "code-9-6",
+      "language": "tsx",
+      "code": "const [showConfirm, setShowConfirm] = useState(false);\n\n<>\n  <Button\n    variant=\"danger\"\n    size=\"md\"\n    onClick={() => setShowConfirm(true)}\n  >\n    Delete Account\n  </Button>\n\n  {showConfirm && (\n    <ConfirmModal\n      title=\"Delete Account\"\n      message=\"This action cannot be undone. Are you sure?\"\n      confirmText=\"Yes, Delete\"\n      onConfirm={handleDelete}\n      onCancel={() => setShowConfirm(false)}\n    />\n  )}\n</>",
+      "lineNumber": 1816
+    },
+    {
+      "id": "code-9-7",
+      "language": "tsx",
+      "code": "// Small button for table actions\n<Button variant=\"ghost\" size=\"sm\" leftIcon={<Edit />}>\n  Edit\n</Button>\n\n// Medium button (default) for forms\n<Button variant=\"primary\" size=\"md\">\n  Submit Form\n</Button>\n\n// Large button for payment\n<Button variant=\"primary\" size=\"lg\" fullWidth>\n  Complete Payment\n</Button>\n\n// Extra large for hero section\n<Button variant=\"primary\" size=\"xl\" rightIcon={<ArrowRight />}>\n  Get Started\n</Button>",
+      "lineNumber": 1852
+    },
+    {
+      "id": "code-9-8",
+      "language": "tsx",
+      "code": "<Button variant=\"primary\" disabled>\n  Disabled Button\n</Button>",
+      "lineNumber": 1903
+    },
+    {
+      "id": "code-9-9",
+      "language": "tsx",
+      "code": "const [loading, setLoading] = useState(false);\n\n<Button\n  variant=\"primary\"\n  isLoading={loading}\n  onClick={async () => {\n    setLoading(true);\n    await processPayment();\n    setLoading(false);\n  }}\n>\n  Process Payment\n</Button>",
+      "lineNumber": 1916
+    },
+    {
+      "id": "code-9-10",
+      "language": "tsx",
+      "code": "const [status, setStatus] = useState<'idle' | 'loading' | 'success'>('idle');\n\n<Button\n  variant={status === 'success' ? 'secondary' : 'primary'}\n  isLoading={status === 'loading'}\n  leftIcon={status === 'success' ? <CheckCircle /> : undefined}\n  onClick={async () => {\n    setStatus('loading');\n    await saveData();\n    setStatus('success');\n    setTimeout(() => setStatus('idle'), 2000);\n  }}\n>\n  {status === 'success' ? 'Saved!' : 'Save Changes'}\n</Button>",
+      "lineNumber": 1938
+    },
+    {
+      "id": "code-9-11",
+      "language": "tsx",
+      "code": "import Button from '@/components/ui/Button';\nimport { CreditCard } from 'lucide-react';\nimport { useState } from 'react';\nimport { toast } from '@/components/ui/Toast';\n\nfunction CheckoutButton({ amount }: { amount: number }) {\n  const [loading, setLoading] = useState(false);\n\n  const handlePayment = async () => {\n    setLoading(true);\n    try {\n      const response = await fetch('/api/payments/process', {\n        method: 'POST',\n        headers: { 'Content-Type': 'application/json' },\n        body: JSON.stringify({ amount }),\n      });\n\n      if (response.ok) {\n        toast.show({\n          type: 'success',\n          title: 'Payment Successful!',\n          message: `₹${amount.toLocaleString('en-IN')} has been processed.`,\n        });\n      } else {\n        throw new Error('Payment failed');\n      }\n    } catch (error) {\n      toast.show({\n        type: 'error',\n        title: 'Payment Failed',\n        message: 'Please try again or contact support.',\n      });\n    } finally {\n      setLoading(false);\n    }\n  };\n\n  return (\n    <Button\n      variant=\"primary\"\n      size=\"lg\"\n      fullWidth\n      isLoading={loading}\n      leftIcon={<CreditCard className=\"w-5 h-5\" />}\n      onClick={handlePayment}\n    >\n      Pay ₹{amount.toLocaleString('en-IN')}\n    </Button>\n  );\n}",
+      "lineNumber": 1966
+    },
+    {
+      "id": "code-9-12",
+      "language": "tsx",
+      "code": "import Button from '@/components/ui/Button';\nimport { Trash2 } from 'lucide-react';\nimport { useState } from 'react';\n\nfunction DeleteAccountButton() {\n  const [showConfirm, setShowConfirm] = useState(false);\n  const [isDeleting, setIsDeleting] = useState(false);\n\n  const handleDelete = async () => {\n    setIsDeleting(true);\n    try {\n      await fetch('/api/account/delete', { method: 'DELETE' });\n      // Redirect to goodbye page\n      window.location.href = '/goodbye';\n    } catch (error) {\n      alert('Failed to delete account. Please try again.');\n      setIsDeleting(false);\n    }\n  };\n\n  return (\n    <>\n      <Button\n        variant=\"danger\"\n        size=\"md\"\n        leftIcon={<Trash2 className=\"w-4 h-4\" />}\n        onClick={() => setShowConfirm(true)}\n      >\n        Delete Account\n      </Button>\n\n      {showConfirm && (\n        <div className=\"fixed inset-0 bg-black/50 flex items-center justify-center z-50\">\n          <div className=\"bg-white rounded-xl p-6 max-w-md\">\n            <h3 className=\"text-xl font-bold text-gray-900 mb-2\">\n              Delete Account?\n            </h3>\n            <p className=\"text-gray-600 mb-6\">\n              This action cannot be undone. All your data will be permanently deleted.\n            </p>\n            <div className=\"flex gap-3\">\n              <Button\n                variant=\"outline\"\n                size=\"md\"\n                onClick={() => setShowConfirm(false)}\n                className=\"flex-1\"\n              >\n                Cancel\n              </Button>\n              <Button\n                variant=\"danger\"\n                size=\"md\"\n                isLoading={isDeleting}\n                onClick={handleDelete}\n                className=\"flex-1\"\n              >\n                Yes, Delete\n              </Button>\n            </div>\n          </div>\n        </div>\n      )}\n    </>\n  );\n}",
+      "lineNumber": 2023
+    },
+    {
+      "id": "code-9-13",
+      "language": "tsx",
+      "code": "import Button from '@/components/ui/Button';\nimport { ArrowLeft, ArrowRight } from 'lucide-react';\n\nfunction WizardNavigation({\n  currentStep,\n  totalSteps,\n  onBack,\n  onNext,\n  isLoading,\n}: {\n  currentStep: number;\n  totalSteps: number;\n  onBack: () => void;\n  onNext: () => void;\n  isLoading: boolean;\n}) {\n  const isFirstStep = currentStep === 0;\n  const isLastStep = currentStep === totalSteps - 1;\n\n  return (\n    <div className=\"flex justify-between items-center mt-8\">\n      <Button\n        variant=\"ghost\"\n        size=\"md\"\n        leftIcon={<ArrowLeft className=\"w-4 h-4\" />}\n        onClick={onBack}\n        disabled={isFirstStep || isLoading}\n      >\n        Back\n      </Button>\n\n      <div className=\"text-sm text-white/60\">\n        Step {currentStep + 1} of {totalSteps}\n      </div>\n\n      <Button\n        variant=\"primary\"\n        size=\"md\"\n        rightIcon={<ArrowRight className=\"w-4 h-4\" />}\n        onClick={onNext}\n        isLoading={isLoading}\n      >\n        {isLastStep ? 'Submit' : 'Continue'}\n      </Button>\n    </div>\n  );\n}",
+      "lineNumber": 2095
+    },
+    {
+      "id": "code-9-14",
+      "language": "tsx",
+      "code": "import Button from '@/components/ui/Button';\nimport { Download } from 'lucide-react';\n\n<Button\n  variant=\"ghost\"\n  size=\"sm\"\n  onClick={handleDownload}\n  aria-label=\"Download receipt\"\n  className=\"!px-2\"\n>\n  <Download className=\"w-4 h-4\" />\n</Button>",
+      "lineNumber": 2149
+    },
+    {
+      "id": "code-9-15",
+      "language": "tsx",
+      "code": "<div className=\"space-y-3\">\n  <Button variant=\"primary\" size=\"lg\" fullWidth>\n    Continue with Email\n  </Button>\n  <Button variant=\"secondary\" size=\"lg\" fullWidth>\n    Continue with Google\n  </Button>\n  <Button variant=\"outline\" size=\"lg\" fullWidth>\n    Sign Up Instead\n  </Button>\n</div>",
+      "lineNumber": 2168
+    },
+    {
+      "id": "code-9-16",
+      "language": "tsx",
+      "code": "// Icon-only button with aria-label\n<Button\n  variant=\"ghost\"\n  size=\"sm\"\n  onClick={handleEdit}\n  aria-label=\"Edit transaction\"\n>\n  <Edit className=\"w-4 h-4\" />\n</Button>\n\n// Button with loading state and screen reader text\n<Button\n  variant=\"primary\"\n  isLoading={loading}\n  aria-busy={loading}\n  aria-label={loading ? 'Processing payment' : 'Pay now'}\n>\n  {loading ? 'Processing...' : 'Pay Now'}\n</Button>",
+      "lineNumber": 2196
+    },
+    {
+      "id": "code-9-17",
+      "language": "text",
+      "code": "Button Molecule\n├── Color Atoms\n│   ├── Primary-600 (bg gradient start)\n│   ├── Primary-500 (bg gradient end)\n│   ├── White (text color)\n│   └── Primary-400/50 (focus ring)\n├── Spacing Atoms\n│   ├── px-6 (horizontal padding)\n│   ├── py-3 (vertical padding)\n│   └── gap-2 (icon-text gap)\n├── Typography Atoms\n│   ├── text-base (font size)\n│   ├── font-medium (font weight)\n│   └── font-body (font family: Inter)\n├── Border Radius Atom\n│   └── rounded-xl (12px)\n├── Shadow Atoms\n│   ├── shadow-lg (default)\n│   └── shadow-xl (hover)\n├── Icon Atom (optional)\n│   └── lucide-react icon component\n├── Loading Spinner Atom (conditional)\n│   └── SVG with animate-spin\n└── Transition Atoms\n    ├── transition-all\n    └── duration-200",
+      "lineNumber": 2252
+    },
+    {
+      "id": "code-9-18",
+      "language": "text",
+      "code": "Which button variant should I use?\n\n├─ Is this the MOST important action on the page?\n│  └─ YES → variant=\"primary\" (MAX 1 per visible area)\n│     └─ Use size=\"lg\" for payment/checkout\n│\n├─ Is this a destructive/dangerous action?\n│  └─ YES → variant=\"danger\"\n│     └─ ALWAYS show confirmation modal\n│\n├─ Is this an alternative/secondary important action?\n│  └─ YES → variant=\"secondary\"\n│     └─ Can have 2-3 on same page\n│\n├─ Is this a cancel/back/dismiss action?\n│  └─ YES → variant=\"outline\" or \"ghost\"\n│     └─ Use \"outline\" if needs more emphasis\n│     └─ Use \"ghost\" for subtle actions\n│\n└─ Is this a pure navigation action (no processing)?\n   └─ YES → Use <Link> component instead, not Button",
+      "lineNumber": 2285
+    },
+    {
+      "id": "code-9-19",
+      "language": "tsx",
+      "code": "// WRONG: Two primary buttons competing for attention\n<div>\n  <Button variant=\"primary\">Save Draft</Button>\n  <Button variant=\"primary\">Submit</Button>\n</div>\n\n// CORRECT: One primary, one secondary\n<div>\n  <Button variant=\"secondary\">Save Draft</Button>\n  <Button variant=\"primary\">Submit</Button>\n</div>",
+      "lineNumber": 2314
+    },
+    {
+      "id": "code-9-20",
+      "language": "tsx",
+      "code": "// WRONG: Direct deletion without confirmation\n<Button variant=\"danger\" onClick={deleteAccount}>\n  Delete Account\n</Button>\n\n// CORRECT: Show confirmation modal first\n<Button variant=\"danger\" onClick={() => setShowConfirm(true)}>\n  Delete Account\n</Button>",
+      "lineNumber": 2329
+    },
+    {
+      "id": "code-9-21",
+      "language": "tsx",
+      "code": "// WRONG: No accessible name\n<Button variant=\"ghost\">\n  <Edit />\n</Button>\n\n// CORRECT: Includes aria-label\n<Button variant=\"ghost\" aria-label=\"Edit transaction\">\n  <Edit />\n</Button>",
+      "lineNumber": 2342
+    },
+    {
+      "id": "code-9-22",
+      "language": "tsx",
+      "code": "// WRONG: Button for navigation\n<Button variant=\"primary\" onClick={() => navigate('/dashboard')}>\n  Go to Dashboard\n</Button>\n\n// CORRECT: Use Link component\n<Link to=\"/dashboard\" className=\"btn-primary\">\n  Go to Dashboard\n</Link>",
+      "lineNumber": 2355
+    },
+    {
+      "id": "code-9-23",
+      "language": "tsx",
+      "code": "// WRONG: User doesn't know why it's disabled\n<Button variant=\"primary\" disabled>\n  Submit\n</Button>\n\n// CORRECT: Show tooltip or helper text\n<Tooltip content=\"Complete all required fields to continue\">\n  <Button variant=\"primary\" disabled>\n    Submit\n  </Button>\n</Tooltip>",
+      "lineNumber": 2368
+    },
+    {
+      "id": "code-9-24",
+      "language": "tsx",
+      "code": "// WRONG: Most important action not visible\n<div className=\"h-screen overflow-auto\">\n  {/* Long content */}\n  <Button variant=\"primary\">Submit</Button>\n</div>\n\n// CORRECT: Sticky footer with primary button\n<div>\n  {/* Long content */}\n  <div className=\"sticky bottom-0 bg-white p-4 border-t\">\n    <Button variant=\"primary\">Submit</Button>\n  </div>\n</div>",
+      "lineNumber": 2383
+    },
+    {
+      "id": "code-9-25",
+      "language": "tsx",
+      "code": "// Unit test with React Testing Library\nimport { render, screen, fireEvent } from '@testing-library/react';\nimport Button from './Button';\n\ndescribe('Button', () => {\n  it('renders children correctly', () => {\n    render(<Button>Click me</Button>);\n    expect(screen.getByText('Click me')).toBeInTheDocument();\n  });\n\n  it('calls onClick when clicked', () => {\n    const handleClick = jest.fn();\n    render(<Button onClick={handleClick}>Click me</Button>);\n    fireEvent.click(screen.getByText('Click me'));\n    expect(handleClick).toHaveBeenCalledTimes(1);\n  });\n\n  it('is disabled when isLoading is true', () => {\n    render(<Button isLoading>Submit</Button>);\n    const button = screen.getByRole('button');\n    expect(button).toBeDisabled();\n  });\n\n  it('shows loading spinner when isLoading', () => {\n    render(<Button isLoading>Submit</Button>);\n    expect(screen.getByRole('button').querySelector('svg')).toBeInTheDocument();\n  });\n\n  it('applies correct variant classes', () => {\n    const { rerender } = render(<Button variant=\"primary\">Test</Button>);\n    let button = screen.getByRole('button');\n    expect(button).toHaveClass('bg-gradient-to-r', 'from-blue-600');\n\n    rerender(<Button variant=\"danger\">Test</Button>);\n    button = screen.getByRole('button');\n    expect(button).toHaveClass('from-red-600');\n  });\n});",
+      "lineNumber": 2413
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-9-0",
+      "headers": [
+        "Size",
+        "Height",
+        "Padding",
+        "Font Size",
+        "Icon Size",
+        "Gap",
+        "Use Case"
+      ],
+      "rows": [
+        [
+          "**sm**",
+          "~38px",
+          "px-4 py-2",
+          "text-sm (14px)",
+          "16px",
+          "gap-2",
+          "Compact UIs, tables, inline actions"
+        ],
+        [
+          "**md**",
+          "~48px",
+          "px-6 py-3",
+          "text-base (16px)",
+          "20px",
+          "gap-2",
+          "**Standard buttons (DEFAULT)**"
+        ],
+        [
+          "**lg**",
+          "~56px",
+          "px-8 py-4",
+          "text-lg (18px)",
+          "24px",
+          "gap-3",
+          "Primary CTAs, payment buttons"
+        ],
+        [
+          "**xl**",
+          "~56px",
+          "px-8 py-4",
+          "text-xl (20px)",
+          "28px",
+          "gap-3",
+          "Hero buttons, landing pages"
+        ]
+      ],
+      "lineNumber": 1844
+    }
+  ],
+  "content": "## Section 9: Button Component\n\n### 9.1 Component Overview\n\n**Description**: A versatile button component with 5 variants, 4 sizes, loading states, and icon support. Used for all CTAs, form submissions, and interactive actions.\n\n**Location**: `src/components/ui/Button.tsx`\n\n**When to Use**:\n- ✅ Actions that trigger immediate changes (submit forms, trigger APIs)\n- ✅ Primary, secondary, and destructive actions\n- ✅ Navigation that performs an action first (save and continue)\n\n**When NOT to Use**:\n- ❌ Pure navigation without actions → Use `<Link>` or `<a>`\n- ❌ Text that needs to be copyable → Use styled text\n- ❌ Toggle switches → Use `<Switch>` component\n\n---\n\n### 9.2 TypeScript Interface\n\n```typescript\ninterface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {\n  /** Visual style variant */\n  variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'danger';\n\n  /** Size of the button */\n  size?: 'sm' | 'md' | 'lg' | 'xl';\n\n  /** Show loading spinner, disables button */\n  isLoading?: boolean;\n\n  /** Icon to display before text */\n  leftIcon?: React.ReactNode;\n\n  /** Icon to display after text */\n  rightIcon?: React.ReactNode;\n\n  /** Stretch button to full container width */\n  fullWidth?: boolean;\n\n  /** All standard HTML button attributes */\n  disabled?: boolean;\n  type?: 'button' | 'submit' | 'reset';\n  onClick?: React.MouseEventHandler<HTMLButtonElement>;\n  className?: string;\n  children: React.ReactNode;\n}\n```\n\n---\n\n### 9.3 All Variants (5 Variants)\n\n#### Variant: Primary\n\n**Visual Specs**:\n- Background: Blue gradient `from-blue-600 to-blue-500`\n- Text: White\n- Shadow: `shadow-lg` with blue glow on hover\n- Focus Ring: `focus:ring-blue-400/50`\n\n**CSS Classes**:\n```css\nbg-gradient-to-r from-blue-600 to-blue-500 text-white\nhover:from-blue-700 hover:to-blue-600\nfocus:ring-blue-400/50\nshadow-lg hover:shadow-xl hover:shadow-blue-500/25\n```\n\n**When to Use**:\n- ✅ **THE most important action on the page**\n- ✅ Form submissions\n- ✅ Payment/checkout buttons\n- ✅ \"Continue\", \"Submit\", \"Complete\" actions\n\n**CRITICAL RULE**: Maximum 1 primary button per visible screen area\n\n**Code Example**:\n```tsx\nimport Button from '@/components/ui/Button';\nimport { CreditCard } from 'lucide-react';\n\n<Button\n  variant=\"primary\"\n  size=\"lg\"\n  leftIcon={<CreditCard />}\n  onClick={handlePayment}\n>\n  Pay ₹{amount.toLocaleString('en-IN')}\n</Button>\n```\n\n**Anti-Patterns**:\n- ❌ Multiple primary buttons on same screen\n- ❌ Primary button for \"Cancel\" or \"Back\"\n- ❌ Primary button hidden below fold\n\n---\n\n#### Variant: Secondary\n\n**Visual Specs**:\n- Background: Teal gradient `from-teal-600 to-teal-500`\n- Text: White\n- Shadow: `shadow-lg` with teal glow on hover\n- Focus Ring: `focus:ring-teal-400/50`\n\n**When to Use**:\n- ✅ Alternative important actions\n- ✅ \"Save Draft\", \"Schedule\", \"Export\"\n- ✅ Actions that support the primary flow\n- ✅ Can have 2-3 secondary buttons on screen\n\n**Code Example**:\n```tsx\n<Button\n  variant=\"secondary\"\n  size=\"md\"\n  onClick={handleSaveDraft}\n>\n  Save Draft\n</Button>\n```\n\n---\n\n#### Variant: Outline\n\n**Visual Specs**:\n- Background: Transparent with glass effect (`backdrop-blur-sm`)\n- Border: `border-2 border-white/30` → `hover:border-white/50`\n- Text: White\n- Hover: `hover:bg-white/10`\n\n**When to Use**:\n- ✅ Cancel actions\n- ✅ Alternative paths\n- ✅ \"Skip\", \"Back\", \"Cancel\"\n- ✅ Secondary navigation\n\n**Code Example**:\n```tsx\n<Button\n  variant=\"outline\"\n  size=\"md\"\n  onClick={handleCancel}\n>\n  Cancel\n</Button>\n```\n\n---\n\n#### Variant: Ghost\n\n**Visual Specs**:\n- Background: Transparent\n- Text: `text-white/80` → `hover:text-white`\n- Hover: `hover:bg-white/10`\n- No border\n\n**When to Use**:\n- ✅ Subtle actions\n- ✅ Inline actions within text\n- ✅ Icon-only buttons\n- ✅ Menu items\n\n**Code Example**:\n```tsx\n<Button\n  variant=\"ghost\"\n  size=\"sm\"\n  leftIcon={<Download />}\n>\n  Download Receipt\n</Button>\n```\n\n---\n\n#### Variant: Danger\n\n**Visual Specs**:\n- Background: Red gradient `from-red-600 to-red-500`\n- Text: White\n- Shadow: `shadow-lg` with red glow on hover\n- Focus Ring: `focus:ring-red-400/50`\n\n**When to Use**:\n- ✅ Destructive actions\n- ✅ \"Delete\", \"Remove\", \"Cancel Subscription\"\n- ✅ Actions that cannot be easily undone\n\n**CRITICAL RULE**: Always show confirmation modal before destructive action\n\n**Code Example**:\n```tsx\nconst [showConfirm, setShowConfirm] = useState(false);\n\n<>\n  <Button\n    variant=\"danger\"\n    size=\"md\"\n    onClick={() => setShowConfirm(true)}\n  >\n    Delete Account\n  </Button>\n\n  {showConfirm && (\n    <ConfirmModal\n      title=\"Delete Account\"\n      message=\"This action cannot be undone. Are you sure?\"\n      confirmText=\"Yes, Delete\"\n      onConfirm={handleDelete}\n      onCancel={() => setShowConfirm(false)}\n    />\n  )}\n</>\n```\n\n---\n\n### 9.4 All Sizes (4 Sizes)\n\n| Size | Height | Padding | Font Size | Icon Size | Gap | Use Case |\n|------|--------|---------|-----------|-----------|-----|----------|\n| **sm** | ~38px | px-4 py-2 | text-sm (14px) | 16px | gap-2 | Compact UIs, tables, inline actions |\n| **md** | ~48px | px-6 py-3 | text-base (16px) | 20px | gap-2 | **Standard buttons (DEFAULT)** |\n| **lg** | ~56px | px-8 py-4 | text-lg (18px) | 24px | gap-3 | Primary CTAs, payment buttons |\n| **xl** | ~56px | px-8 py-4 | text-xl (20px) | 28px | gap-3 | Hero buttons, landing pages |\n\n**Code Examples**:\n```tsx\n// Small button for table actions\n<Button variant=\"ghost\" size=\"sm\" leftIcon={<Edit />}>\n  Edit\n</Button>\n\n// Medium button (default) for forms\n<Button variant=\"primary\" size=\"md\">\n  Submit Form\n</Button>\n\n// Large button for payment\n<Button variant=\"primary\" size=\"lg\" fullWidth>\n  Complete Payment\n</Button>\n\n// Extra large for hero section\n<Button variant=\"primary\" size=\"xl\" rightIcon={<ArrowRight />}>\n  Get Started\n</Button>\n```\n\n---\n\n### 9.5 All States (8 States)\n\n#### State: Default\n- Normal resting state\n- Full color, no opacity reduction\n\n#### State: Hover\n- Gradient shifts to darker shades\n- Shadow increases `shadow-lg` → `shadow-xl`\n- Glow effect appears (`shadow-blue-500/25`)\n\n#### State: Active (Pressed)\n- Slight scale reduction (handled by browser)\n- Darker gradient maintained\n\n#### State: Focus\n- 2px focus ring with color matching variant\n- `focus:ring-2 focus:ring-{color}-400/50`\n- `focus:ring-offset-2` for contrast\n\n#### State: Disabled\n- Opacity: 50% (`disabled:opacity-50`)\n- Cursor: `cursor-not-allowed`\n- No hover effects\n- Cannot be clicked\n\n**Code**:\n```tsx\n<Button variant=\"primary\" disabled>\n  Disabled Button\n</Button>\n```\n\n#### State: Loading\n- Spinner replaces leftIcon\n- Button disabled automatically\n- Text remains visible\n- Spinner animates with `animate-spin`\n\n**Code**:\n```tsx\nconst [loading, setLoading] = useState(false);\n\n<Button\n  variant=\"primary\"\n  isLoading={loading}\n  onClick={async () => {\n    setLoading(true);\n    await processPayment();\n    setLoading(false);\n  }}\n>\n  Process Payment\n</Button>\n```\n\n#### State: Success (Temporary)\n- Not built-in, implement with state change\n- Show checkmark icon briefly\n- Change to success variant\n\n**Code**:\n```tsx\nconst [status, setStatus] = useState<'idle' | 'loading' | 'success'>('idle');\n\n<Button\n  variant={status === 'success' ? 'secondary' : 'primary'}\n  isLoading={status === 'loading'}\n  leftIcon={status === 'success' ? <CheckCircle /> : undefined}\n  onClick={async () => {\n    setStatus('loading');\n    await saveData();\n    setStatus('success');\n    setTimeout(() => setStatus('idle'), 2000);\n  }}\n>\n  {status === 'success' ? 'Saved!' : 'Save Changes'}\n</Button>\n```\n\n#### State: Error (Temporary)\n- Show error icon briefly\n- Change button to danger variant\n\n---\n\n### 9.6 Complete Code Examples\n\n#### Example 1: Payment Button with Amount\n\n```tsx\nimport Button from '@/components/ui/Button';\nimport { CreditCard } from 'lucide-react';\nimport { useState } from 'react';\nimport { toast } from '@/components/ui/Toast';\n\nfunction CheckoutButton({ amount }: { amount: number }) {\n  const [loading, setLoading] = useState(false);\n\n  const handlePayment = async () => {\n    setLoading(true);\n    try {\n      const response = await fetch('/api/payments/process', {\n        method: 'POST',\n        headers: { 'Content-Type': 'application/json' },\n        body: JSON.stringify({ amount }),\n      });\n\n      if (response.ok) {\n        toast.show({\n          type: 'success',\n          title: 'Payment Successful!',\n          message: `₹${amount.toLocaleString('en-IN')} has been processed.`,\n        });\n      } else {\n        throw new Error('Payment failed');\n      }\n    } catch (error) {\n      toast.show({\n        type: 'error',\n        title: 'Payment Failed',\n        message: 'Please try again or contact support.',\n      });\n    } finally {\n      setLoading(false);\n    }\n  };\n\n  return (\n    <Button\n      variant=\"primary\"\n      size=\"lg\"\n      fullWidth\n      isLoading={loading}\n      leftIcon={<CreditCard className=\"w-5 h-5\" />}\n      onClick={handlePayment}\n    >\n      Pay ₹{amount.toLocaleString('en-IN')}\n    </Button>\n  );\n}\n```\n\n---\n\n#### Example 2: Danger Button with Confirmation Modal\n\n```tsx\nimport Button from '@/components/ui/Button';\nimport { Trash2 } from 'lucide-react';\nimport { useState } from 'react';\n\nfunction DeleteAccountButton() {\n  const [showConfirm, setShowConfirm] = useState(false);\n  const [isDeleting, setIsDeleting] = useState(false);\n\n  const handleDelete = async () => {\n    setIsDeleting(true);\n    try {\n      await fetch('/api/account/delete', { method: 'DELETE' });\n      // Redirect to goodbye page\n      window.location.href = '/goodbye';\n    } catch (error) {\n      alert('Failed to delete account. Please try again.');\n      setIsDeleting(false);\n    }\n  };\n\n  return (\n    <>\n      <Button\n        variant=\"danger\"\n        size=\"md\"\n        leftIcon={<Trash2 className=\"w-4 h-4\" />}\n        onClick={() => setShowConfirm(true)}\n      >\n        Delete Account\n      </Button>\n\n      {showConfirm && (\n        <div className=\"fixed inset-0 bg-black/50 flex items-center justify-center z-50\">\n          <div className=\"bg-white rounded-xl p-6 max-w-md\">\n            <h3 className=\"text-xl font-bold text-gray-900 mb-2\">\n              Delete Account?\n            </h3>\n            <p className=\"text-gray-600 mb-6\">\n              This action cannot be undone. All your data will be permanently deleted.\n            </p>\n            <div className=\"flex gap-3\">\n              <Button\n                variant=\"outline\"\n                size=\"md\"\n                onClick={() => setShowConfirm(false)}\n                className=\"flex-1\"\n              >\n                Cancel\n              </Button>\n              <Button\n                variant=\"danger\"\n                size=\"md\"\n                isLoading={isDeleting}\n                onClick={handleDelete}\n                className=\"flex-1\"\n              >\n                Yes, Delete\n              </Button>\n            </div>\n          </div>\n        </div>\n      )}\n    </>\n  );\n}\n```\n\n---\n\n#### Example 3: Form Navigation Buttons\n\n```tsx\nimport Button from '@/components/ui/Button';\nimport { ArrowLeft, ArrowRight } from 'lucide-react';\n\nfunction WizardNavigation({\n  currentStep,\n  totalSteps,\n  onBack,\n  onNext,\n  isLoading,\n}: {\n  currentStep: number;\n  totalSteps: number;\n  onBack: () => void;\n  onNext: () => void;\n  isLoading: boolean;\n}) {\n  const isFirstStep = currentStep === 0;\n  const isLastStep = currentStep === totalSteps - 1;\n\n  return (\n    <div className=\"flex justify-between items-center mt-8\">\n      <Button\n        variant=\"ghost\"\n        size=\"md\"\n        leftIcon={<ArrowLeft className=\"w-4 h-4\" />}\n        onClick={onBack}\n        disabled={isFirstStep || isLoading}\n      >\n        Back\n      </Button>\n\n      <div className=\"text-sm text-white/60\">\n        Step {currentStep + 1} of {totalSteps}\n      </div>\n\n      <Button\n        variant=\"primary\"\n        size=\"md\"\n        rightIcon={<ArrowRight className=\"w-4 h-4\" />}\n        onClick={onNext}\n        isLoading={isLoading}\n      >\n        {isLastStep ? 'Submit' : 'Continue'}\n      </Button>\n    </div>\n  );\n}\n```\n\n---\n\n#### Example 4: Icon-Only Button\n\n```tsx\nimport Button from '@/components/ui/Button';\nimport { Download } from 'lucide-react';\n\n<Button\n  variant=\"ghost\"\n  size=\"sm\"\n  onClick={handleDownload}\n  aria-label=\"Download receipt\"\n  className=\"!px-2\"\n>\n  <Download className=\"w-4 h-4\" />\n</Button>\n```\n\n---\n\n#### Example 5: Full-Width Button Group\n\n```tsx\n<div className=\"space-y-3\">\n  <Button variant=\"primary\" size=\"lg\" fullWidth>\n    Continue with Email\n  </Button>\n  <Button variant=\"secondary\" size=\"lg\" fullWidth>\n    Continue with Google\n  </Button>\n  <Button variant=\"outline\" size=\"lg\" fullWidth>\n    Sign Up Instead\n  </Button>\n</div>\n```\n\n---\n\n### 9.7 Accessibility Checklist\n\n- ✅ **Semantic HTML**: Uses `<button>` element\n- ✅ **Keyboard Navigation**: Responds to Enter and Space keys (native)\n- ✅ **Focus Indicators**: 2px focus ring with appropriate color\n- ✅ **Disabled State**: `disabled` attribute prevents interaction\n- ✅ **ARIA Label**: Use `aria-label` for icon-only buttons\n- ✅ **Loading State**: Button is disabled during loading\n- ✅ **Color Contrast**: All variants meet WCAG AA (white text on colored bg)\n- ✅ **Touch Target**: Minimum 44px height (met by md size and above)\n\n**Accessibility Code Example**:\n```tsx\n// Icon-only button with aria-label\n<Button\n  variant=\"ghost\"\n  size=\"sm\"\n  onClick={handleEdit}\n  aria-label=\"Edit transaction\"\n>\n  <Edit className=\"w-4 h-4\" />\n</Button>\n\n// Button with loading state and screen reader text\n<Button\n  variant=\"primary\"\n  isLoading={loading}\n  aria-busy={loading}\n  aria-label={loading ? 'Processing payment' : 'Pay now'}\n>\n  {loading ? 'Processing...' : 'Pay Now'}\n</Button>\n```\n\n---\n\n### 9.8 Design Specifications\n\n**Spacing**:\n- Padding: Consistent with size scale (sm: px-4 py-2, md: px-6 py-3, lg: px-8 py-4)\n- Gap between icon and text: gap-2 (8px) for sm/md, gap-3 (12px) for lg/xl\n- Min-width: None (content-based)\n- Full-width option: `w-full` class\n\n**Typography**:\n- Font Family: Inter (body font)\n- Font Weight: `font-medium` (500)\n- Font Sizes: Match size prop (sm: 14px, md: 16px, lg: 18px, xl: 20px)\n- Line Height: Normal (1.5)\n- Text Transform: None\n\n**Colors**:\n- Primary: Blue gradient #2563eb → #3b82f6\n- Secondary: Teal gradient #0d9488 → #14b8a6\n- Danger: Red gradient #dc2626 → #ef4444\n- Outline/Ghost: White with transparency\n\n**Effects**:\n- Border Radius: `rounded-xl` (12px) for all sizes\n- Shadow: `shadow-lg` default, `shadow-xl` on hover\n- Glow: Colored shadow matching variant (e.g., `shadow-blue-500/25`)\n- Transition: `transition-all duration-200`\n- Backdrop Blur: `backdrop-blur-sm` for outline/ghost variants\n\n---\n\n### 9.9 Composition Breakdown (Atomic Design)\n\n```\nButton Molecule\n├── Color Atoms\n│   ├── Primary-600 (bg gradient start)\n│   ├── Primary-500 (bg gradient end)\n│   ├── White (text color)\n│   └── Primary-400/50 (focus ring)\n├── Spacing Atoms\n│   ├── px-6 (horizontal padding)\n│   ├── py-3 (vertical padding)\n│   └── gap-2 (icon-text gap)\n├── Typography Atoms\n│   ├── text-base (font size)\n│   ├── font-medium (font weight)\n│   └── font-body (font family: Inter)\n├── Border Radius Atom\n│   └── rounded-xl (12px)\n├── Shadow Atoms\n│   ├── shadow-lg (default)\n│   └── shadow-xl (hover)\n├── Icon Atom (optional)\n│   └── lucide-react icon component\n├── Loading Spinner Atom (conditional)\n│   └── SVG with animate-spin\n└── Transition Atoms\n    ├── transition-all\n    └── duration-200\n```\n\n---\n\n### 9.10 Decision Tree\n\n```\nWhich button variant should I use?\n\n├─ Is this the MOST important action on the page?\n│  └─ YES → variant=\"primary\" (MAX 1 per visible area)\n│     └─ Use size=\"lg\" for payment/checkout\n│\n├─ Is this a destructive/dangerous action?\n│  └─ YES → variant=\"danger\"\n│     └─ ALWAYS show confirmation modal\n│\n├─ Is this an alternative/secondary important action?\n│  └─ YES → variant=\"secondary\"\n│     └─ Can have 2-3 on same page\n│\n├─ Is this a cancel/back/dismiss action?\n│  └─ YES → variant=\"outline\" or \"ghost\"\n│     └─ Use \"outline\" if needs more emphasis\n│     └─ Use \"ghost\" for subtle actions\n│\n└─ Is this a pure navigation action (no processing)?\n   └─ YES → Use <Link> component instead, not Button\n```\n\n---\n\n### 9.11 Anti-Patterns (What NOT to Do)\n\n❌ **Multiple Primary Buttons**\n```tsx\n// WRONG: Two primary buttons competing for attention\n<div>\n  <Button variant=\"primary\">Save Draft</Button>\n  <Button variant=\"primary\">Submit</Button>\n</div>\n\n// CORRECT: One primary, one secondary\n<div>\n  <Button variant=\"secondary\">Save Draft</Button>\n  <Button variant=\"primary\">Submit</Button>\n</div>\n```\n\n❌ **Danger Button Without Confirmation**\n```tsx\n// WRONG: Direct deletion without confirmation\n<Button variant=\"danger\" onClick={deleteAccount}>\n  Delete Account\n</Button>\n\n// CORRECT: Show confirmation modal first\n<Button variant=\"danger\" onClick={() => setShowConfirm(true)}>\n  Delete Account\n</Button>\n```\n\n❌ **Icon-Only Button Without aria-label**\n```tsx\n// WRONG: No accessible name\n<Button variant=\"ghost\">\n  <Edit />\n</Button>\n\n// CORRECT: Includes aria-label\n<Button variant=\"ghost\" aria-label=\"Edit transaction\">\n  <Edit />\n</Button>\n```\n\n❌ **Using Button for Pure Navigation**\n```tsx\n// WRONG: Button for navigation\n<Button variant=\"primary\" onClick={() => navigate('/dashboard')}>\n  Go to Dashboard\n</Button>\n\n// CORRECT: Use Link component\n<Link to=\"/dashboard\" className=\"btn-primary\">\n  Go to Dashboard\n</Link>\n```\n\n❌ **Disabled Button Without Explanation**\n```tsx\n// WRONG: User doesn't know why it's disabled\n<Button variant=\"primary\" disabled>\n  Submit\n</Button>\n\n// CORRECT: Show tooltip or helper text\n<Tooltip content=\"Complete all required fields to continue\">\n  <Button variant=\"primary\" disabled>\n    Submit\n  </Button>\n</Tooltip>\n```\n\n❌ **Primary Button Hidden Below Fold**\n```tsx\n// WRONG: Most important action not visible\n<div className=\"h-screen overflow-auto\">\n  {/* Long content */}\n  <Button variant=\"primary\">Submit</Button>\n</div>\n\n// CORRECT: Sticky footer with primary button\n<div>\n  {/* Long content */}\n  <div className=\"sticky bottom-0 bg-white p-4 border-t\">\n    <Button variant=\"primary\">Submit</Button>\n  </div>\n</div>\n```\n\n---\n\n### 9.12 Related Components\n\n- **Link**: For pure navigation without actions\n- **IconButton**: Specialized icon-only button variant\n- **FloatingActionButton**: Fixed-position primary action\n- **DropdownButton**: Button that opens a menu\n- **SplitButton**: Button with dropdown menu attached\n\n---\n\n### 9.13 Testing Examples\n\n```tsx\n// Unit test with React Testing Library\nimport { render, screen, fireEvent } from '@testing-library/react';\nimport Button from './Button';\n\ndescribe('Button', () => {\n  it('renders children correctly', () => {\n    render(<Button>Click me</Button>);\n    expect(screen.getByText('Click me')).toBeInTheDocument();\n  });\n\n  it('calls onClick when clicked', () => {\n    const handleClick = jest.fn();\n    render(<Button onClick={handleClick}>Click me</Button>);\n    fireEvent.click(screen.getByText('Click me'));\n    expect(handleClick).toHaveBeenCalledTimes(1);\n  });\n\n  it('is disabled when isLoading is true', () => {\n    render(<Button isLoading>Submit</Button>);\n    const button = screen.getByRole('button');\n    expect(button).toBeDisabled();\n  });\n\n  it('shows loading spinner when isLoading', () => {\n    render(<Button isLoading>Submit</Button>);\n    expect(screen.getByRole('button').querySelector('svg')).toBeInTheDocument();\n  });\n\n  it('applies correct variant classes', () => {\n    const { rerender } = render(<Button variant=\"primary\">Test</Button>);\n    let button = screen.getByRole('button');\n    expect(button).toHaveClass('bg-gradient-to-r', 'from-blue-600');\n\n    rerender(<Button variant=\"danger\">Test</Button>);\n    button = screen.getByRole('button');\n    expect(button).toHaveClass('from-red-600');\n  });\n});\n```\n\n---\n"
+}

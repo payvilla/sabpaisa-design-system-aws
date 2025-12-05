@@ -1,0 +1,283 @@
+{
+  "section": 6,
+  "title": "Spacing & Layout Tokens",
+  "metadata": {
+    "startLine": 1159,
+    "endLine": 1232,
+    "codeBlockCount": 1,
+    "tableCount": 4,
+    "extractedAt": "2025-12-01T16:35:09.297Z"
+  },
+  "codeBlocks": [
+    {
+      "id": "code-6-0",
+      "language": "tsx",
+      "code": "<div className=\"grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6\">\n  {/* Responsive grid: 1 col mobile, 2 col sm, 3 col tablet, 4 col desktop */}\n</div>\n\n<div className=\"px-4 sm:px-6 lg:px-8\">\n  {/* Responsive padding: 16px mobile, 24px sm, 32px desktop */}\n</div>",
+      "lineNumber": 1208
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-6-0",
+      "headers": [
+        "Token",
+        "Rem",
+        "Pixels",
+        "Tailwind",
+        "Common Use Case"
+      ],
+      "rows": [
+        [
+          "**0**",
+          "0",
+          "0px",
+          "`p-0`, `m-0`",
+          "Reset spacing"
+        ],
+        [
+          "**1**",
+          "0.25rem",
+          "4px",
+          "`p-1`, `m-1`, `gap-1`",
+          "Micro spacing, tight gaps"
+        ],
+        [
+          "**2**",
+          "0.5rem",
+          "8px",
+          "`p-2`, `m-2`, `gap-2`",
+          "**XS spacing**"
+        ],
+        [
+          "**3**",
+          "0.75rem",
+          "12px",
+          "`p-3`, `m-3`, `gap-3`",
+          "Badge padding, tight padding"
+        ],
+        [
+          "**4**",
+          "1rem",
+          "16px",
+          "`p-4`, `m-4`, `gap-4`",
+          "**Standard padding/margin**"
+        ],
+        [
+          "**5**",
+          "1.25rem",
+          "20px",
+          "`p-5`, `m-5`, `gap-5`",
+          "SM-MD spacing"
+        ],
+        [
+          "**6**",
+          "1.5rem",
+          "24px",
+          "`p-6`, `m-6`, `gap-6`",
+          "**Card padding, standard gaps**"
+        ],
+        [
+          "**8**",
+          "2rem",
+          "32px",
+          "`p-8`, `m-8`, `gap-8`",
+          "**Page/section padding**"
+        ],
+        [
+          "**10**",
+          "2.5rem",
+          "40px",
+          "`p-10`, `m-10`, `gap-10`",
+          "Large spacing"
+        ],
+        [
+          "**12**",
+          "3rem",
+          "48px",
+          "`p-12`, `m-12`, `gap-12`",
+          "**Section spacing**"
+        ],
+        [
+          "**16**",
+          "4rem",
+          "64px",
+          "`p-16`, `m-16`, `gap-16`",
+          "Extra large gaps"
+        ],
+        [
+          "**20**",
+          "5rem",
+          "80px",
+          "`p-20`, `m-20`, `gap-20`",
+          "Hero spacing"
+        ],
+        [
+          "**24**",
+          "6rem",
+          "96px",
+          "`p-24`, `m-24`, `gap-24`",
+          "Large sections"
+        ],
+        [
+          "**32**",
+          "8rem",
+          "128px",
+          "`p-32`, `m-32`, `gap-32`",
+          "Extra large sections"
+        ]
+      ],
+      "lineNumber": 1163
+    },
+    {
+      "id": "table-6-1",
+      "headers": [
+        "Name",
+        "Max Width",
+        "Tailwind",
+        "Usage"
+      ],
+      "rows": [
+        [
+          "**sm**",
+          "640px",
+          "`max-w-sm`",
+          "Small containers, modals"
+        ],
+        [
+          "**md**",
+          "768px",
+          "`max-w-md`",
+          "Medium containers, forms"
+        ],
+        [
+          "**lg**",
+          "1024px",
+          "`max-w-lg`",
+          "Large containers"
+        ],
+        [
+          "**xl**",
+          "1280px",
+          "`max-w-xl`",
+          "Extra large containers"
+        ],
+        [
+          "**2xl**",
+          "1536px",
+          "`max-w-2xl`",
+          "Wide containers"
+        ],
+        [
+          "**Full**",
+          "100%",
+          "`max-w-full`",
+          "Full width"
+        ],
+        [
+          "**Prose**",
+          "65ch",
+          "`max-w-prose`",
+          "Long-form content"
+        ],
+        [
+          "**7xl**",
+          "80rem",
+          "`max-w-7xl`",
+          "**Standard page container**"
+        ]
+      ],
+      "lineNumber": 1184
+    },
+    {
+      "id": "table-6-2",
+      "headers": [
+        "Name",
+        "Min Width",
+        "Tailwind Prefix",
+        "Usage"
+      ],
+      "rows": [
+        [
+          "**sm**",
+          "640px",
+          "`sm:`",
+          "Mobile landscape, small tablets"
+        ],
+        [
+          "**md**",
+          "768px",
+          "`md:`",
+          "**Tablets**"
+        ],
+        [
+          "**lg**",
+          "1024px",
+          "`lg:`",
+          "**Desktops**"
+        ],
+        [
+          "**xl**",
+          "1280px",
+          "`xl:`",
+          "Large desktops"
+        ],
+        [
+          "**2xl**",
+          "1536px",
+          "`2xl:`",
+          "Extra large screens"
+        ]
+      ],
+      "lineNumber": 1199
+    },
+    {
+      "id": "table-6-3",
+      "headers": [
+        "Name",
+        "Value",
+        "Tailwind",
+        "Usage"
+      ],
+      "rows": [
+        [
+          "**dropdown**",
+          "1000",
+          "`z-[1000]`",
+          "Dropdown menus"
+        ],
+        [
+          "**sticky**",
+          "1020",
+          "`z-[1020]`",
+          "Sticky headers"
+        ],
+        [
+          "**fixed**",
+          "1030",
+          "`z-[1030]`",
+          "Fixed elements"
+        ],
+        [
+          "**modal**",
+          "1050",
+          "`z-[1050]`",
+          "Modal overlays"
+        ],
+        [
+          "**popover**",
+          "1060",
+          "`z-[1060]`",
+          "Popovers, tooltips"
+        ],
+        [
+          "**tooltip**",
+          "1070",
+          "`z-[1070]`",
+          "Tooltips (highest)"
+        ]
+      ],
+      "lineNumber": 1222
+    }
+  ],
+  "content": "## Section 6: Spacing & Layout Tokens\n\n### 6.1 Spacing Scale (8pt Grid System)\n\n| Token | Rem | Pixels | Tailwind | Common Use Case |\n|-------|-----|--------|----------|-----------------|\n| **0** | 0 | 0px | `p-0`, `m-0` | Reset spacing |\n| **1** | 0.25rem | 4px | `p-1`, `m-1`, `gap-1` | Micro spacing, tight gaps |\n| **2** | 0.5rem | 8px | `p-2`, `m-2`, `gap-2` | **XS spacing** |\n| **3** | 0.75rem | 12px | `p-3`, `m-3`, `gap-3` | Badge padding, tight padding |\n| **4** | 1rem | 16px | `p-4`, `m-4`, `gap-4` | **Standard padding/margin** |\n| **5** | 1.25rem | 20px | `p-5`, `m-5`, `gap-5` | SM-MD spacing |\n| **6** | 1.5rem | 24px | `p-6`, `m-6`, `gap-6` | **Card padding, standard gaps** |\n| **8** | 2rem | 32px | `p-8`, `m-8`, `gap-8` | **Page/section padding** |\n| **10** | 2.5rem | 40px | `p-10`, `m-10`, `gap-10` | Large spacing |\n| **12** | 3rem | 48px | `p-12`, `m-12`, `gap-12` | **Section spacing** |\n| **16** | 4rem | 64px | `p-16`, `m-16`, `gap-16` | Extra large gaps |\n| **20** | 5rem | 80px | `p-20`, `m-20`, `gap-20` | Hero spacing |\n| **24** | 6rem | 96px | `p-24`, `m-24`, `gap-24` | Large sections |\n| **32** | 8rem | 128px | `p-32`, `m-32`, `gap-32` | Extra large sections |\n\n---\n\n### 6.2 Container Sizes\n\n| Name | Max Width | Tailwind | Usage |\n|------|-----------|----------|-------|\n| **sm** | 640px | `max-w-sm` | Small containers, modals |\n| **md** | 768px | `max-w-md` | Medium containers, forms |\n| **lg** | 1024px | `max-w-lg` | Large containers |\n| **xl** | 1280px | `max-w-xl` | Extra large containers |\n| **2xl** | 1536px | `max-w-2xl` | Wide containers |\n| **Full** | 100% | `max-w-full` | Full width |\n| **Prose** | 65ch | `max-w-prose` | Long-form content |\n| **7xl** | 80rem | `max-w-7xl` | **Standard page container** |\n\n---\n\n### 6.3 Breakpoints (Responsive Design)\n\n| Name | Min Width | Tailwind Prefix | Usage |\n|------|-----------|-----------------|-------|\n| **sm** | 640px | `sm:` | Mobile landscape, small tablets |\n| **md** | 768px | `md:` | **Tablets** |\n| **lg** | 1024px | `lg:` | **Desktops** |\n| **xl** | 1280px | `xl:` | Large desktops |\n| **2xl** | 1536px | `2xl:` | Extra large screens |\n\n**Usage Example**:\n```tsx\n<div className=\"grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6\">\n  {/* Responsive grid: 1 col mobile, 2 col sm, 3 col tablet, 4 col desktop */}\n</div>\n\n<div className=\"px-4 sm:px-6 lg:px-8\">\n  {/* Responsive padding: 16px mobile, 24px sm, 32px desktop */}\n</div>\n```\n\n---\n\n### 6.4 Z-Index Scale\n\n| Name | Value | Tailwind | Usage |\n|------|-------|----------|-------|\n| **dropdown** | 1000 | `z-[1000]` | Dropdown menus |\n| **sticky** | 1020 | `z-[1020]` | Sticky headers |\n| **fixed** | 1030 | `z-[1030]` | Fixed elements |\n| **modal** | 1050 | `z-[1050]` | Modal overlays |\n| **popover** | 1060 | `z-[1060]` | Popovers, tooltips |\n| **tooltip** | 1070 | `z-[1070]` | Tooltips (highest) |\n\n---\n"
+}

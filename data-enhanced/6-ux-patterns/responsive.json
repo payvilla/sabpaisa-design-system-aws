@@ -1,0 +1,33 @@
+{
+  "section": 28,
+  "title": "Responsive Design Patterns",
+  "metadata": {
+    "startLine": 8936,
+    "endLine": 8983,
+    "codeBlockCount": 3,
+    "tableCount": 0,
+    "extractedAt": "2025-12-01T16:35:09.333Z"
+  },
+  "codeBlocks": [
+    {
+      "id": "code-28-0",
+      "language": "css",
+      "code": "/* Tailwind breakpoints used throughout */\nsm: 640px   /* Mobile landscape */\nmd: 768px   /* Tablet */\nlg: 1024px  /* Desktop */\nxl: 1280px  /* Large desktop */\n2xl: 1536px /* Extra large */",
+      "lineNumber": 8940
+    },
+    {
+      "id": "code-28-1",
+      "language": "tsx",
+      "code": "// Stats grid - responsive columns\n<div className=\"grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6\">\n  <StatCard title=\"Revenue\" value=\"₹12.5L\" />\n  <StatCard title=\"Transactions\" value=\"1,234\" />\n  <StatCard title=\"Success Rate\" value=\"98.2%\" />\n  <StatCard title=\"Active MIDs\" value=\"42\" />\n</div>\n\n// Content with sidebar - responsive layout\n<div className=\"grid grid-cols-1 lg:grid-cols-4 gap-6\">\n  {/* Sidebar: full width on mobile, 1/4 on desktop */}\n  <div className=\"lg:col-span-1\">\n    <FilterPanel />\n  </div>\n\n  {/* Main content: full width on mobile, 3/4 on desktop */}\n  <div className=\"lg:col-span-3\">\n    <TransactionsTable />\n  </div>\n</div>",
+      "lineNumber": 8951
+    },
+    {
+      "id": "code-28-2",
+      "language": "tsx",
+      "code": "// Already implemented in Sidebar (Section 17)\n// Mobile: Drawer with overlay\n// Desktop: Fixed sidebar",
+      "lineNumber": 8976
+    }
+  ],
+  "tables": [],
+  "content": "## Section 28: Responsive Design Patterns\n\n### 28.1 Breakpoint Standards\n\n```css\n/* Tailwind breakpoints used throughout */\nsm: 640px   /* Mobile landscape */\nmd: 768px   /* Tablet */\nlg: 1024px  /* Desktop */\nxl: 1280px  /* Large desktop */\n2xl: 1536px /* Extra large */\n```\n\n### 28.2 Mobile-First Grid Pattern\n\n```tsx\n// Stats grid - responsive columns\n<div className=\"grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6\">\n  <StatCard title=\"Revenue\" value=\"₹12.5L\" />\n  <StatCard title=\"Transactions\" value=\"1,234\" />\n  <StatCard title=\"Success Rate\" value=\"98.2%\" />\n  <StatCard title=\"Active MIDs\" value=\"42\" />\n</div>\n\n// Content with sidebar - responsive layout\n<div className=\"grid grid-cols-1 lg:grid-cols-4 gap-6\">\n  {/* Sidebar: full width on mobile, 1/4 on desktop */}\n  <div className=\"lg:col-span-1\">\n    <FilterPanel />\n  </div>\n\n  {/* Main content: full width on mobile, 3/4 on desktop */}\n  <div className=\"lg:col-span-3\">\n    <TransactionsTable />\n  </div>\n</div>\n```\n\n### 28.3 Mobile Navigation Pattern\n\n```tsx\n// Already implemented in Sidebar (Section 17)\n// Mobile: Drawer with overlay\n// Desktop: Fixed sidebar\n```\n\n---\n"
+}

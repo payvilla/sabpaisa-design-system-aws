@@ -1,0 +1,39 @@
+{
+  "section": 1,
+  "title": "How to Use This Document",
+  "metadata": {
+    "startLine": 79,
+    "endLine": 161,
+    "codeBlockCount": 4,
+    "tableCount": 0,
+    "extractedAt": "2025-12-01T16:35:09.284Z"
+  },
+  "codeBlocks": [
+    {
+      "id": "code-1-0",
+      "language": "text",
+      "code": "Search Pattern: \"## Component:\" followed by component name\nExample: Search \"## Component: Button\" to find complete Button documentation",
+      "lineNumber": 88
+    },
+    {
+      "id": "code-1-1",
+      "language": "text",
+      "code": "Search Pattern: \"### Primary-{shade}\" or \"### Secondary-{shade}\"\nExample: \"### Primary-600\" gives you all 7 format variants of primary-600",
+      "lineNumber": 94
+    },
+    {
+      "id": "code-1-2",
+      "language": "text",
+      "code": "Search Pattern: \"### Pattern:\" or \"### Workflow:\"\nExample: \"### Pattern: Multi-Step Wizard\" for complete wizard implementation",
+      "lineNumber": 100
+    },
+    {
+      "id": "code-1-3",
+      "language": "text",
+      "code": "Search Pattern: Look in Section 32 for regex patterns\nExample: PAN validation, IFSC validation, mobile number validation",
+      "lineNumber": 106
+    }
+  ],
+  "tables": [],
+  "content": "## Section 1: How to Use This Document\n\n### Meta-Instructions for Claude (AI Assistants)\n\nThis document is optimized for AI-assisted code generation. Follow these strategies to use it effectively:\n\n#### Query Strategies\n\n**Finding Components**:\n```\nSearch Pattern: \"## Component:\" followed by component name\nExample: Search \"## Component: Button\" to find complete Button documentation\n```\n\n**Finding Color Values**:\n```\nSearch Pattern: \"### Primary-{shade}\" or \"### Secondary-{shade}\"\nExample: \"### Primary-600\" gives you all 7 format variants of primary-600\n```\n\n**Finding Patterns**:\n```\nSearch Pattern: \"### Pattern:\" or \"### Workflow:\"\nExample: \"### Pattern: Multi-Step Wizard\" for complete wizard implementation\n```\n\n**Finding Validation Rules**:\n```\nSearch Pattern: Look in Section 32 for regex patterns\nExample: PAN validation, IFSC validation, mobile number validation\n```\n\n#### Combining Multiple Patterns\n\nWhen user requests: **\"Create a KYC form\"**\n\n1. Check [Section 30: Fintech Workflows](#section-30-fintech-workflows) for KYC workflow pattern\n2. Reference [Section 15: Form Components](#section-15-form-components) for form inputs\n3. Apply [Section 28: Form & Validation Patterns](#section-28-form--validation-patterns) for validation\n4. Use [Section 27: Animation Specifications](#section-27-animation-specifications) for transitions\n5. Check [Section 32: Validation Rules](#section-32-validation-rules) for PAN/GST/IFSC regex\n6. Apply [Section 31: Data Formatting](#section-31-data-formatting-standards) for masking PII\n\n#### Decision-Making Framework\n\n**Component Selection**: Use decision trees in [Section 35](#section-35-decision-trees--when-to-use-guides)\n\n**Color Selection**:\n- Primary actions → Primary-600 (#2563eb)\n- Secondary actions → Secondary-600 (#0d9488)\n- Success → Success base (#22c55e)\n- Error → Error base (#ef4444)\n- Warning → Warning base (#f59e0b)\n\n**Layout Selection**: Reference templates in [Sections 19-23](#part-5-atomic-design-level-4---templates-page-patterns)\n\n#### Context Preservation Across Sessions\n\n**Key Information to Remember**:\n- Color System: Primary (Blue), Secondary (Teal), Semantic (Success/Error/Warning/Info)\n- Typography: Inter font family, 9 size scales (xs to 5xl)\n- Spacing: 8pt grid system (0, 4, 8, 12, 16, 24, 32, 48, 64...)\n- Animations: Framer Motion with 0.5s ease-out as default\n- Fintech: Currency in INR, Indian numbering system (Lakhs/Crores)\n\n**Consistency Rules**:\n1. NEVER hardcode colors - always use design tokens\n2. ALWAYS use Tailwind utility classes over inline styles\n3. ALWAYS mask PII (email, phone, PAN, account numbers)\n4. ALWAYS format currency in Indian format: ₹1,23,456.78\n5. ALWAYS include proper TypeScript types\n\n#### Update Strategy\n\nWhen new components are added:\n1. Follow the same documentation structure as existing components\n2. Include all 7 formats for new colors\n3. Provide 10+ code examples\n4. Document atomic composition\n5. Add decision tree for when to use\n\n---\n"
+}

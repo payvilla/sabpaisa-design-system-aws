@@ -1,0 +1,111 @@
+{
+  "section": 10,
+  "title": "TextField Component",
+  "metadata": {
+    "startLine": 2456,
+    "endLine": 2929,
+    "codeBlockCount": 16,
+    "tableCount": 0,
+    "extractedAt": "2025-12-01T16:35:09.304Z"
+  },
+  "codeBlocks": [
+    {
+      "id": "code-10-0",
+      "language": "typescript",
+      "code": "interface TextFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {\n  /** Field name (required for forms) */\n  name: string;\n\n  /** Label displayed above input */\n  label?: string;\n\n  /** Helper text displayed below input */\n  helperText?: string;\n\n  /** Icon displayed on the left side */\n  leftIcon?: React.ReactNode;\n\n  /** Icon displayed on the right side */\n  rightIcon?: React.ReactNode;\n\n  /** Visual style variant */\n  variant?: 'default' | 'filled' | 'outlined';\n\n  /** Error state (controlled externally) */\n  error?: boolean;\n\n  /** Error message to display */\n  errorMessage?: string;\n\n  /** All standard HTML input attributes */\n  type?: string;\n  placeholder?: string;\n  value?: string;\n  onChange?: React.ChangeEventHandler<HTMLInputElement>;\n  required?: boolean;\n  disabled?: boolean;\n  readOnly?: boolean;\n  autoComplete?: string;\n  autoFocus?: boolean;\n  maxLength?: number;\n  pattern?: string;\n}",
+      "lineNumber": 2479
+    },
+    {
+      "id": "code-10-1",
+      "language": "css",
+      "code": "bg-white/10 backdrop-blur-sm border border-white/20\nrounded-xl focus:ring-blue-400/50 focus:border-blue-400\nhover:border-white/30 text-white placeholder-white/50",
+      "lineNumber": 2534
+    },
+    {
+      "id": "code-10-2",
+      "language": "tsx",
+      "code": "<TextField\n  name=\"email\"\n  label=\"Email Address\"\n  type=\"email\"\n  placeholder=\"you@example.com\"\n  required\n/>",
+      "lineNumber": 2545
+    },
+    {
+      "id": "code-10-3",
+      "language": "tsx",
+      "code": "<TextField\n  name=\"pan\"\n  label=\"PAN Number\"\n  error={true}\n  errorMessage=\"Invalid PAN format. Expected: ABCDE1234F\"\n/>",
+      "lineNumber": 2608
+    },
+    {
+      "id": "code-10-4",
+      "language": "tsx",
+      "code": "<TextField\n  name=\"merchantCode\"\n  label=\"Merchant Code\"\n  value=\"MERCH001\"\n  disabled\n/>",
+      "lineNumber": 2623
+    },
+    {
+      "id": "code-10-5",
+      "language": "tsx",
+      "code": "<TextField\n  name=\"transactionId\"\n  label=\"Transaction ID\"\n  value=\"TXN20250115000123\"\n  readOnly\n  rightIcon={<Copy className=\"cursor-pointer\" onClick={handleCopy} />}\n/>",
+      "lineNumber": 2637
+    },
+    {
+      "id": "code-10-6",
+      "language": "tsx",
+      "code": "import TextField from '@/components/ui/TextField';\n\n<TextField\n  name=\"fullName\"\n  label=\"Full Name\"\n  placeholder=\"Enter your full name\"\n  required\n  helperText=\"As per your official documents\"\n/>",
+      "lineNumber": 2653
+    },
+    {
+      "id": "code-10-7",
+      "language": "tsx",
+      "code": "import TextField from '@/components/ui/TextField';\nimport { Mail } from 'lucide-react';\nimport { useState } from 'react';\n\nfunction EmailField() {\n  const [email, setEmail] = useState('');\n  const [error, setError] = useState('');\n\n  const validateEmail = (value: string) => {\n    const emailRegex = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/;\n    if (!emailRegex.test(value)) {\n      setError('Please enter a valid email address');\n    } else {\n      setError('');\n    }\n  };\n\n  return (\n    <TextField\n      name=\"email\"\n      label=\"Email Address\"\n      type=\"email\"\n      value={email}\n      onChange={(e) => {\n        setEmail(e.target.value);\n        validateEmail(e.target.value);\n      }}\n      leftIcon={<Mail className=\"w-5 h-5\" />}\n      error={!!error}\n      errorMessage={error}\n      required\n    />\n  );\n}",
+      "lineNumber": 2669
+    },
+    {
+      "id": "code-10-8",
+      "language": "tsx",
+      "code": "import TextField from '@/components/ui/TextField';\nimport { Search } from 'lucide-react';\n\n<TextField\n  name=\"search\"\n  placeholder=\"Search transactions...\"\n  leftIcon={<Search className=\"w-5 h-5\" />}\n  variant=\"outlined\"\n/>",
+      "lineNumber": 2710
+    },
+    {
+      "id": "code-10-9",
+      "language": "tsx",
+      "code": "import TextField from '@/components/ui/TextField';\nimport { Phone } from 'lucide-react';\nimport { useState } from 'react';\n\nfunction PhoneField() {\n  const [phone, setPhone] = useState('');\n  const [error, setError] = useState('');\n\n  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {\n    const value = e.target.value.replace(/\\D/g, ''); // Only digits\n    setPhone(value);\n\n    if (value.length === 10) {\n      if (!/^[6-9]/.test(value)) {\n        setError('Indian mobile numbers start with 6-9');\n      } else {\n        setError('');\n      }\n    } else if (value.length > 0) {\n      setError('Mobile number must be 10 digits');\n    } else {\n      setError('');\n    }\n  };\n\n  return (\n    <TextField\n      name=\"mobile\"\n      label=\"Mobile Number\"\n      type=\"tel\"\n      value={phone}\n      onChange={handleChange}\n      leftIcon={<Phone className=\"w-5 h-5\" />}\n      placeholder=\"9876543210\"\n      maxLength={10}\n      error={!!error}\n      errorMessage={error}\n      helperText={!error ? 'Enter 10-digit mobile number' : undefined}\n      required\n    />\n  );\n}",
+      "lineNumber": 2726
+    },
+    {
+      "id": "code-10-10",
+      "language": "tsx",
+      "code": "import TextField from '@/components/ui/TextField';\nimport { Copy, Check } from 'lucide-react';\nimport { useState } from 'react';\n\nfunction TransactionIdField({ transactionId }: { transactionId: string }) {\n  const [copied, setCopied] = useState(false);\n\n  const handleCopy = async () => {\n    await navigator.clipboard.writeText(transactionId);\n    setCopied(true);\n    setTimeout(() => setCopied(false), 2000);\n  };\n\n  return (\n    <TextField\n      name=\"transactionId\"\n      label=\"Transaction ID\"\n      value={transactionId}\n      readOnly\n      rightIcon={\n        <button onClick={handleCopy} className=\"cursor-pointer\">\n          {copied ? (\n            <Check className=\"w-5 h-5 text-green-400\" />\n          ) : (\n            <Copy className=\"w-5 h-5 text-white/60 hover:text-white\" />\n          )}\n        </button>\n      }\n    />\n  );\n}",
+      "lineNumber": 2775
+    },
+    {
+      "id": "code-10-11",
+      "language": "text",
+      "code": "TextField Molecule\n├── Label Atom (optional)\n│   ├── Typography: text-sm font-medium\n│   ├── Color: text-white/90\n│   └── Required indicator (*) in blue-400\n├── Input Container (relative positioning)\n│   ├── Left Icon Atom (optional)\n│   │   └── Position: absolute left-0\n│   ├── Input Atom\n│   │   ├── Background: white/10 + backdrop-blur-sm\n│   │   ├── Border: white/20\n│   │   ├── Typography: text-base\n│   │   ├── Padding: px-4 py-3 (or pl-11/pr-11 with icons)\n│   │   └── Border Radius: rounded-xl\n│   └── Right Icon Atom (optional)\n│       └── Position: absolute right-0\n├── Error Message Atom (conditional)\n│   ├── Color: text-red-400\n│   ├── Typography: text-sm\n│   └── Role: alert\n└── Helper Text Atom (optional)\n    ├── Color: text-white/60\n    └── Typography: text-sm",
+      "lineNumber": 2854
+    },
+    {
+      "id": "code-10-12",
+      "language": "text",
+      "code": "Which TextField variant should I use?\n\n├─ Is this a standard form field?\n│  └─ YES → variant=\"default\" (DEFAULT)\n│\n├─ Do I have many fields in a dense form?\n│  └─ YES → variant=\"filled\" (subtler)\n│\n└─ Do I need to emphasize this field (e.g., search)?\n   └─ YES → variant=\"outlined\" (thicker border)",
+      "lineNumber": 2884
+    },
+    {
+      "id": "code-10-13",
+      "language": "tsx",
+      "code": "// WRONG\n<TextField name=\"email\" placeholder=\"Email\" />\n\n// CORRECT\n<TextField name=\"email\" label=\"Email Address\" placeholder=\"you@example.com\" />",
+      "lineNumber": 2902
+    },
+    {
+      "id": "code-10-14",
+      "language": "tsx",
+      "code": "// WRONG: Placeholder disappears on focus\n<TextField name=\"pan\" placeholder=\"PAN Number\" />\n\n// CORRECT: Label persists\n<TextField name=\"pan\" label=\"PAN Number\" placeholder=\"ABCDE1234F\" />",
+      "lineNumber": 2911
+    },
+    {
+      "id": "code-10-15",
+      "language": "tsx",
+      "code": "// WRONG: User doesn't know what's wrong\n<TextField name=\"pan\" error={true} />\n\n// CORRECT: Clear error message\n<TextField name=\"pan\" error={true} errorMessage=\"Invalid PAN format\" />",
+      "lineNumber": 2920
+    }
+  ],
+  "tables": [],
+  "content": "## Section 10: TextField Component\n\n### 10.1 Component Overview\n\n**Description**: A versatile text input field component with label, helper text, error states, and icon support. Includes glassmorphic styling for SabPaisa's design language.\n\n**Location**: `src/components/ui/TextField.tsx`\n\n**When to Use**:\n- ✅ Single-line text input (name, email, phone, etc.)\n- ✅ Forms requiring user input\n- ✅ Search fields\n\n**When NOT to Use**:\n- ❌ Multi-line text → Use `<TextArea>`\n- ❌ Selecting from options → Use `<Select>` or `<Dropdown>`\n- ❌ Numeric-only input → Use `<NumberInput>`\n- ❌ Date/time → Use `<DatePicker>`\n\n---\n\n### 10.2 TypeScript Interface\n\n```typescript\ninterface TextFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {\n  /** Field name (required for forms) */\n  name: string;\n\n  /** Label displayed above input */\n  label?: string;\n\n  /** Helper text displayed below input */\n  helperText?: string;\n\n  /** Icon displayed on the left side */\n  leftIcon?: React.ReactNode;\n\n  /** Icon displayed on the right side */\n  rightIcon?: React.ReactNode;\n\n  /** Visual style variant */\n  variant?: 'default' | 'filled' | 'outlined';\n\n  /** Error state (controlled externally) */\n  error?: boolean;\n\n  /** Error message to display */\n  errorMessage?: string;\n\n  /** All standard HTML input attributes */\n  type?: string;\n  placeholder?: string;\n  value?: string;\n  onChange?: React.ChangeEventHandler<HTMLInputElement>;\n  required?: boolean;\n  disabled?: boolean;\n  readOnly?: boolean;\n  autoComplete?: string;\n  autoFocus?: boolean;\n  maxLength?: number;\n  pattern?: string;\n}\n```\n\n---\n\n### 10.3 All Variants (3 Variants)\n\n#### Variant: Default\n\n**Visual Specs**:\n- Background: `bg-white/10` with `backdrop-blur-sm`\n- Border: `border border-white/20` → `hover:border-white/30`\n- Focus: `focus:border-blue-400` + `focus:ring-2 focus:ring-blue-400/50`\n- Text: White\n- Placeholder: `placeholder-white/50`\n\n**CSS Classes**:\n```css\nbg-white/10 backdrop-blur-sm border border-white/20\nrounded-xl focus:ring-blue-400/50 focus:border-blue-400\nhover:border-white/30 text-white placeholder-white/50\n```\n\n**When to Use**:\n- ✅ **Standard input fields (DEFAULT)**\n- ✅ Most form fields\n\n**Code Example**:\n```tsx\n<TextField\n  name=\"email\"\n  label=\"Email Address\"\n  type=\"email\"\n  placeholder=\"you@example.com\"\n  required\n/>\n```\n\n---\n\n#### Variant: Filled\n\n**Visual Specs**:\n- Background: `bg-white/10` → `focus:bg-white/15`\n- Border: `border-transparent` → `focus:border-blue-400`\n- More subtle than default\n\n**When to Use**:\n- ✅ Dense forms with many fields\n- ✅ When subtle styling is preferred\n\n---\n\n#### Variant: Outlined\n\n**Visual Specs**:\n- Border: `border-2 border-white/20` (thicker border)\n- Background: `bg-white/10`\n- More prominent border\n\n**When to Use**:\n- ✅ When field needs more emphasis\n- ✅ Single prominent input (like search)\n\n---\n\n### 10.4 All States\n\n#### State: Default\n- Border: `border-white/20`\n- Background: `bg-white/10`\n- Text: `text-white`\n\n#### State: Hover\n- Border: `border-white/30` (increased opacity)\n\n#### State: Focus\n- Border: `border-blue-400` (solid blue)\n- Ring: `ring-2 ring-blue-400/50` (glow effect)\n- Background: Slight brightness increase\n\n#### State: Filled (Has Value)\n- No visual change (same as default)\n- Text displayed in white\n\n#### State: Error\n- Border: `border-red-400`\n- Focus Ring: `ring-red-400/50`\n- Error message shown below in `text-red-400`\n\n**Code**:\n```tsx\n<TextField\n  name=\"pan\"\n  label=\"PAN Number\"\n  error={true}\n  errorMessage=\"Invalid PAN format. Expected: ABCDE1234F\"\n/>\n```\n\n#### State: Disabled\n- Opacity: `opacity-50`\n- Cursor: `cursor-not-allowed`\n- Non-interactive\n\n**Code**:\n```tsx\n<TextField\n  name=\"merchantCode\"\n  label=\"Merchant Code\"\n  value=\"MERCH001\"\n  disabled\n/>\n```\n\n#### State: Read-Only\n- Similar styling to disabled but with full opacity\n- Allows text selection and copying\n\n**Code**:\n```tsx\n<TextField\n  name=\"transactionId\"\n  label=\"Transaction ID\"\n  value=\"TXN20250115000123\"\n  readOnly\n  rightIcon={<Copy className=\"cursor-pointer\" onClick={handleCopy} />}\n/>\n```\n\n---\n\n### 10.5 Code Examples\n\n#### Example 1: Basic Text Input\n\n```tsx\nimport TextField from '@/components/ui/TextField';\n\n<TextField\n  name=\"fullName\"\n  label=\"Full Name\"\n  placeholder=\"Enter your full name\"\n  required\n  helperText=\"As per your official documents\"\n/>\n```\n\n---\n\n#### Example 2: Email Input with Validation\n\n```tsx\nimport TextField from '@/components/ui/TextField';\nimport { Mail } from 'lucide-react';\nimport { useState } from 'react';\n\nfunction EmailField() {\n  const [email, setEmail] = useState('');\n  const [error, setError] = useState('');\n\n  const validateEmail = (value: string) => {\n    const emailRegex = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/;\n    if (!emailRegex.test(value)) {\n      setError('Please enter a valid email address');\n    } else {\n      setError('');\n    }\n  };\n\n  return (\n    <TextField\n      name=\"email\"\n      label=\"Email Address\"\n      type=\"email\"\n      value={email}\n      onChange={(e) => {\n        setEmail(e.target.value);\n        validateEmail(e.target.value);\n      }}\n      leftIcon={<Mail className=\"w-5 h-5\" />}\n      error={!!error}\n      errorMessage={error}\n      required\n    />\n  );\n}\n```\n\n---\n\n#### Example 3: Search Field\n\n```tsx\nimport TextField from '@/components/ui/TextField';\nimport { Search } from 'lucide-react';\n\n<TextField\n  name=\"search\"\n  placeholder=\"Search transactions...\"\n  leftIcon={<Search className=\"w-5 h-5\" />}\n  variant=\"outlined\"\n/>\n```\n\n---\n\n#### Example 4: Phone Number Input\n\n```tsx\nimport TextField from '@/components/ui/TextField';\nimport { Phone } from 'lucide-react';\nimport { useState } from 'react';\n\nfunction PhoneField() {\n  const [phone, setPhone] = useState('');\n  const [error, setError] = useState('');\n\n  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {\n    const value = e.target.value.replace(/\\D/g, ''); // Only digits\n    setPhone(value);\n\n    if (value.length === 10) {\n      if (!/^[6-9]/.test(value)) {\n        setError('Indian mobile numbers start with 6-9');\n      } else {\n        setError('');\n      }\n    } else if (value.length > 0) {\n      setError('Mobile number must be 10 digits');\n    } else {\n      setError('');\n    }\n  };\n\n  return (\n    <TextField\n      name=\"mobile\"\n      label=\"Mobile Number\"\n      type=\"tel\"\n      value={phone}\n      onChange={handleChange}\n      leftIcon={<Phone className=\"w-5 h-5\" />}\n      placeholder=\"9876543210\"\n      maxLength={10}\n      error={!!error}\n      errorMessage={error}\n      helperText={!error ? 'Enter 10-digit mobile number' : undefined}\n      required\n    />\n  );\n}\n```\n\n---\n\n#### Example 5: Copy-able Read-Only Field\n\n```tsx\nimport TextField from '@/components/ui/TextField';\nimport { Copy, Check } from 'lucide-react';\nimport { useState } from 'react';\n\nfunction TransactionIdField({ transactionId }: { transactionId: string }) {\n  const [copied, setCopied] = useState(false);\n\n  const handleCopy = async () => {\n    await navigator.clipboard.writeText(transactionId);\n    setCopied(true);\n    setTimeout(() => setCopied(false), 2000);\n  };\n\n  return (\n    <TextField\n      name=\"transactionId\"\n      label=\"Transaction ID\"\n      value={transactionId}\n      readOnly\n      rightIcon={\n        <button onClick={handleCopy} className=\"cursor-pointer\">\n          {copied ? (\n            <Check className=\"w-5 h-5 text-green-400\" />\n          ) : (\n            <Copy className=\"w-5 h-5 text-white/60 hover:text-white\" />\n          )}\n        </button>\n      }\n    />\n  );\n}\n```\n\n---\n\n### 10.6 Accessibility Checklist\n\n- ✅ **Label**: Always include `label` prop (or use aria-label)\n- ✅ **Required Indicator**: Shows `*` when `required={true}`\n- ✅ **Error Association**: Uses `aria-invalid` and `aria-describedby`\n- ✅ **Helper Text**: Properly associated with input\n- ✅ **Keyboard Navigation**: Tab order maintained\n- ✅ **Focus Indicators**: Clear focus ring\n- ✅ **Autocomplete**: Supports autocomplete attribute\n\n---\n\n### 10.7 Design Specifications\n\n**Spacing**:\n- Height: 48px (py-3 with text-base)\n- Padding: px-4 (horizontal), py-3 (vertical)\n- Icon padding: pl-11 (left icon), pr-11 (right icon)\n- Label margin: mb-2 (8px below label)\n- Helper text margin: mt-2 (8px above helper)\n\n**Typography**:\n- Font Family: Inter (body font)\n- Font Size: text-base (16px)\n- Font Weight: font-normal (400)\n- Label: text-sm font-medium (14px, 500)\n- Helper: text-sm (14px)\n- Error: text-sm (14px)\n\n**Colors**:\n- Background: white/10 with backdrop-blur\n- Border Default: white/20\n- Border Hover: white/30\n- Border Focus: blue-400\n- Text: white\n- Placeholder: white/50\n- Error Border: red-400\n- Error Text: red-400\n\n---\n\n### 10.8 Composition Breakdown\n\n```\nTextField Molecule\n├── Label Atom (optional)\n│   ├── Typography: text-sm font-medium\n│   ├── Color: text-white/90\n│   └── Required indicator (*) in blue-400\n├── Input Container (relative positioning)\n│   ├── Left Icon Atom (optional)\n│   │   └── Position: absolute left-0\n│   ├── Input Atom\n│   │   ├── Background: white/10 + backdrop-blur-sm\n│   │   ├── Border: white/20\n│   │   ├── Typography: text-base\n│   │   ├── Padding: px-4 py-3 (or pl-11/pr-11 with icons)\n│   │   └── Border Radius: rounded-xl\n│   └── Right Icon Atom (optional)\n│       └── Position: absolute right-0\n├── Error Message Atom (conditional)\n│   ├── Color: text-red-400\n│   ├── Typography: text-sm\n│   └── Role: alert\n└── Helper Text Atom (optional)\n    ├── Color: text-white/60\n    └── Typography: text-sm\n```\n\n---\n\n### 10.9 Decision Tree\n\n```\nWhich TextField variant should I use?\n\n├─ Is this a standard form field?\n│  └─ YES → variant=\"default\" (DEFAULT)\n│\n├─ Do I have many fields in a dense form?\n│  └─ YES → variant=\"filled\" (subtler)\n│\n└─ Do I need to emphasize this field (e.g., search)?\n   └─ YES → variant=\"outlined\" (thicker border)\n```\n\n---\n\n### 10.10 Anti-Patterns\n\n❌ **Missing Label**\n```tsx\n// WRONG\n<TextField name=\"email\" placeholder=\"Email\" />\n\n// CORRECT\n<TextField name=\"email\" label=\"Email Address\" placeholder=\"you@example.com\" />\n```\n\n❌ **Using Placeholder as Label**\n```tsx\n// WRONG: Placeholder disappears on focus\n<TextField name=\"pan\" placeholder=\"PAN Number\" />\n\n// CORRECT: Label persists\n<TextField name=\"pan\" label=\"PAN Number\" placeholder=\"ABCDE1234F\" />\n```\n\n❌ **Not Showing Error Message**\n```tsx\n// WRONG: User doesn't know what's wrong\n<TextField name=\"pan\" error={true} />\n\n// CORRECT: Clear error message\n<TextField name=\"pan\" error={true} errorMessage=\"Invalid PAN format\" />\n```\n\n---\n"
+}

@@ -1,0 +1,1113 @@
+{
+  "fintechPatterns": {
+    "version": "2.0.0",
+    "description": "Comprehensive fintech-specific workflows, patterns, and UI components for SabPaisa COB platform",
+    "lastUpdated": "2025-11-25",
+
+    "settlementPatterns": {
+      "description": "Settlement processing and batch payment workflows",
+      "dataModel": {
+        "settlement": {
+          "id": "string (SETL001234)",
+          "batchId": "string (BATCH20250115)",
+          "date": "ISO 8601 datetime",
+          "amount": "number (gross amount)",
+          "transactionCount": "number",
+          "status": ["PENDING", "PROCESSING", "COMPLETED", "FAILED"],
+          "bankAccount": "string (masked)",
+          "utrNumber": "string (UTR123456) - optional",
+          "processingFee": "number (1.99% of amount)",
+          "gst": "number (18% of processing fee)",
+          "netAmount": "number (amount - fees - gst)",
+          "merchantCode": "string"
+        }
+      },
+      "workflow": {
+        "steps": [
+          {
+            "step": 1,
+            "name": "Batch Creation",
+            "description": "System creates settlement batch for eligible transactions",
+            "trigger": "Daily at configured time (e.g., 6 PM)",
+            "criteria": [
+              "Transaction status = SUCCESS",
+              "Transaction date >= T-2 (settlement cycle)",
+              "Not already settled"
+            ]
+          },
+          {
+            "step": 2,
+            "name": "Calculation",
+            "description": "Calculate gross amount, fees, GST, and net amount",
+            "formula": {
+              "grossAmount": "Sum of all transaction amounts",
+              "processingFee": "grossAmount * 0.0199",
+              "gst": "processingFee * 0.18",
+              "netAmount": "grossAmount - processingFee - gst"
+            }
+          },
+          {
+            "step": 3,
+            "name": "Bank Transfer Initiation",
+            "description": "Initiate NEFT/RTGS/IMPS to merchant bank account",
+            "status": "PROCESSING"
+          },
+          {
+            "step": 4,
+            "name": "Confirmation",
+            "description": "Receive UTR number from bank",
+            "status": "COMPLETED",
+            "data": "UTR number, completion timestamp"
+          },
+          {
+            "step": 5,
+            "name": "Notification",
+            "description": "Send email/SMS to merchant with settlement details",
+            "includes": ["Settlement ID", "Amount", "UTR", "PDF receipt"]
+          }
+        ],
+        "errorHandling": {
+          "FAILED": {
+            "reasons": [
+              "Invalid bank account",
+              "Insufficient funds in nodal account",
+              "Bank system downtime",
+              "Beneficiary account frozen"
+            ],
+            "action": "Retry after 1 hour, max 3 attempts, then manual intervention"
+          }
+        }
+      },
+      "uiPatterns": {
+        "listView": {
+          "columns": ["Settlement ID", "Batch ID", "Date", "Transactions", "Gross Amount", "Fees", "GST", "Net Amount", "Status", "UTR", "Actions"],
+          "filters": ["Date Range", "Status", "Bank Account", "Amount Range"],
+          "actions": ["View Details", "Download PDF", "Download Excel", "Retry (if FAILED)"],
+          "statusColors": {
+            "PENDING": "amber-500",
+            "PROCESSING": "blue-500",
+            "COMPLETED": "green-500",
+            "FAILED": "red-500"
+          }
+        },
+        "detailView": {
+          "sections": [
+            "Settlement Summary",
+            "Transaction Breakdown",
+            "Fee Calculation",
+            "Bank Transfer Details",
+            "Timeline/Audit Log"
+          ],
+          "amountDisplay": "Large, prominent display with ₹ symbol",
+          "feeBreakdown": "Visual breakdown showing gross → fees → gst → net",
+          "timeline": "Vertical timeline showing status changes with timestamps"
+        },
+        "exportFormats": ["PDF Receipt", "Excel Spreadsheet", "CSV"]
+      }
+    },
+
+    "reconciliationPatterns": {
+      "description": "Gateway reconciliation and discrepancy resolution workflows",
+      "dataModel": {
+        "reconciliationRecord": {
+          "id": "string (REC001)",
+          "date": "ISO 8601 date",
+          "gateway": "string (Razorpay, PayU, etc.)",
+          "ourTransactions": "number",
+          "gatewayTransactions": "number",
+          "ourAmount": "string (formatted currency)",
+          "gatewayAmount": "string (formatted currency)",
+          "status": ["reconciled", "unreconciled", "processing", "pending"],
+          "discrepancies": "number",
+          "matchPercentage": "number (0-100)",
+          "lastProcessed": "ISO 8601 datetime",
+          "batchId": "string"
+        },
+        "mismatchDetail": {
+          "id": "string",
+          "transactionId": "string",
+          "gateway": "string",
+          "ourAmount": "string",
+          "gatewayAmount": "string",
+          "difference": "string",
+          "type": ["amount_mismatch", "missing_transaction", "extra_transaction"],
+          "reason": "string",
+          "status": ["investigating", "resolved", "ignored"],
+          "merchant": "string"
+        }
+      },
+      "workflow": {
+        "dailyReconciliation": [
+          {
+            "step": 1,
+            "name": "Data Fetch",
+            "description": "Fetch settlement files from all payment gateways",
+            "schedule": "Every day at 2 AM",
+            "format": "CSV/Excel/API"
+          },
+          {
+            "step": 2,
+            "name": "Data Normalization",
+            "description": "Convert gateway data to standard format",
+            "mapping": "Gateway-specific field mapping to standard schema"
+          },
+          {
+            "step": 3,
+            "name": "Matching Algorithm",
+            "description": "Match transactions by Transaction ID, Amount, Date",
+            "rules": [
+              "Exact match: Transaction ID + Amount + Date",
+              "Fuzzy match: Transaction ID + Amount (±₹1)",
+              "Partial match: Amount + Date + Merchant"
+            ]
+          },
+          {
+            "step": 4,
+            "name": "Discrepancy Detection",
+            "description": "Identify unmatched or mismatched transactions",
+            "types": {
+              "amountMismatch": "Same transaction ID but different amounts",
+              "missingTransaction": "In our system but not in gateway report",
+              "extraTransaction": "In gateway report but not in our system"
+            }
+          },
+          {
+            "step": 5,
+            "name": "Alert Generation",
+            "description": "Create alerts for finance team if discrepancies > threshold",
+            "threshold": "Discrepancy count > 10 OR Amount difference > ₹10,000"
+          },
+          {
+            "step": 6,
+            "name": "Manual Review Queue",
+            "description": "Route unresolved discrepancies to manual review",
+            "priority": "High if amount > ₹50,000, Medium if > ₹10,000, Low otherwise"
+          }
+        ],
+        "resolutionWorkflow": [
+          {
+            "status": "investigating",
+            "actions": [
+              "Contact gateway support",
+              "Check merchant transaction logs",
+              "Verify with customer",
+              "Review payment gateway webhooks"
+            ]
+          },
+          {
+            "status": "resolved",
+            "reasons": [
+              "Gateway reporting delay - matched later",
+              "Transaction reversed/refunded",
+              "Duplicate entry - merged",
+              "Gateway error - corrected"
+            ]
+          },
+          {
+            "status": "ignored",
+            "reasons": [
+              "Amount too small to investigate (< ₹10)",
+              "Test transaction",
+              "Known system behavior"
+            ]
+          }
+        ]
+      },
+      "uiPatterns": {
+        "dashboardView": {
+          "metrics": [
+            {
+              "name": "Match Percentage",
+              "display": "Large percentage with trend indicator",
+              "threshold": "Green if > 99%, Amber if 95-99%, Red if < 95%"
+            },
+            {
+              "name": "Total Discrepancies",
+              "display": "Count with amount value",
+              "clickAction": "Navigate to discrepancy list"
+            },
+            {
+              "name": "Unresolved Amount",
+              "display": "Currency amount in red",
+              "highlight": "Flash if > ₹1L"
+            }
+          ],
+          "charts": [
+            "Daily match percentage trend (line chart)",
+            "Discrepancy types breakdown (pie chart)",
+            "Gateway-wise reconciliation status (bar chart)"
+          ]
+        },
+        "reconciliationList": {
+          "groupBy": "Gateway",
+          "sortBy": "Date (descending)",
+          "statusBadges": {
+            "reconciled": "Green with checkmark",
+            "unreconciled": "Red with warning icon",
+            "processing": "Blue with spinner",
+            "pending": "Gray with clock icon"
+          },
+          "actions": {
+            "viewDiscrepancies": "Show mismatch details in drawer",
+            "reprocess": "Rerun matching algorithm",
+            "markResolved": "Manually mark as resolved with reason",
+            "export": "Download reconciliation report"
+          }
+        },
+        "discrepancyManagement": {
+          "bulkActions": [
+            "Mark Multiple as Resolved",
+            "Mark Multiple as Ignored",
+            "Export Selected",
+            "Assign to Investigator"
+          ],
+          "individualActions": [
+            "View Transaction Details",
+            "Contact Gateway Support (pre-filled email)",
+            "View Gateway Portal (deep link)",
+            "Add Investigation Notes",
+            "Upload Supporting Documents"
+          ],
+          "timeline": "Show investigation history with timestamps and actors"
+        }
+      }
+    },
+
+    "refundChargebackPatterns": {
+      "description": "Refund and chargeback processing workflows",
+      "refundWorkflow": {
+        "types": {
+          "full": {
+            "description": "Refund entire transaction amount",
+            "amount": "100% of original transaction",
+            "processingFee": "Not refunded to merchant"
+          },
+          "partial": {
+            "description": "Refund part of transaction amount",
+            "amount": "User-specified amount ≤ original amount",
+            "validation": "Amount > 0 AND Amount ≤ Transaction Amount"
+          }
+        },
+        "reasons": [
+          "Customer request",
+          "Duplicate payment",
+          "Service not provided",
+          "Product not delivered",
+          "Quality issue",
+          "Technical error",
+          "Fraudulent transaction",
+          "Other (requires text input)"
+        ],
+        "process": [
+          {
+            "step": 1,
+            "name": "Initiation",
+            "actor": "Merchant or Admin",
+            "action": "Fill refund form with amount and reason",
+            "validation": [
+              "Transaction must be in SUCCESS state",
+              "Transaction must be < 180 days old",
+              "Amount validation",
+              "Reason is mandatory"
+            ]
+          },
+          {
+            "step": 2,
+            "name": "Approval",
+            "actor": "System or Admin (based on amount threshold)",
+            "autoApprove": "If amount < ₹5,000 AND merchant has good history",
+            "manualApprove": "If amount ≥ ₹5,000 OR merchant has chargeback history",
+            "approvalSLA": "4 hours for amounts > ₹50,000"
+          },
+          {
+            "step": 3,
+            "name": "Gateway Processing",
+            "action": "Send refund request to payment gateway",
+            "status": "PROCESSING"
+          },
+          {
+            "step": 4,
+            "name": "Confirmation",
+            "action": "Receive refund reference number (RRN) from gateway",
+            "status": "REFUNDED",
+            "timeframe": "Instant to 5-7 business days (depends on payment method)"
+          },
+          {
+            "step": 5,
+            "name": "Notification",
+            "recipients": ["Customer", "Merchant"],
+            "channels": ["Email", "SMS", "In-app notification"],
+            "content": "Refund amount, RRN, expected credit date"
+          }
+        ],
+        "statuses": {
+          "INITIATED": "Refund request created",
+          "PENDING_APPROVAL": "Waiting for admin approval",
+          "APPROVED": "Approved, queued for processing",
+          "PROCESSING": "Sent to payment gateway",
+          "REFUNDED": "Successfully refunded",
+          "FAILED": "Refund failed (retry or contact support)",
+          "CANCELLED": "Refund request cancelled"
+        }
+      },
+      "chargebackWorkflow": {
+        "description": "Chargeback dispute management",
+        "statuses": [
+          "CHARGEBACK_INITIATED",
+          "EVIDENCE_REQUIRED",
+          "EVIDENCE_SUBMITTED",
+          "UNDER_REVIEW",
+          "WON",
+          "LOST",
+          "REPRESENTMENT"
+        ],
+        "process": [
+          {
+            "step": 1,
+            "name": "Chargeback Notification",
+            "trigger": "Gateway sends chargeback notification",
+            "immediateAction": "Deduct amount from merchant settlement",
+            "notification": "Email/SMS to merchant with case details"
+          },
+          {
+            "step": 2,
+            "name": "Evidence Collection",
+            "deadline": "Gateway-specific (typically 7-10 days)",
+            "requiredDocuments": [
+              "Proof of delivery (shipping receipt, tracking number)",
+              "Customer communication (emails, chat transcripts)",
+              "Transaction receipt",
+              "Terms & conditions acceptance proof",
+              "Product/service description",
+              "Refund policy"
+            ],
+            "uiFeatures": [
+              "Document upload with drag-drop",
+              "Pre-filled templates for common chargeback reasons",
+              "Countdown timer showing deadline",
+              "Evidence checklist"
+            ]
+          },
+          {
+            "step": 3,
+            "name": "Submission",
+            "action": "Submit evidence package to payment gateway",
+            "validation": "All required documents uploaded",
+            "confirmationEmail": "Send to merchant and internal team"
+          },
+          {
+            "step": 4,
+            "name": "Gateway Review",
+            "status": "UNDER_REVIEW",
+            "duration": "30-60 days",
+            "updates": "Periodic status updates from gateway"
+          },
+          {
+            "step": 5,
+            "name": "Resolution",
+            "outcomes": {
+              "WON": {
+                "action": "Credit amount back to merchant",
+                "notification": "Victory email with details"
+              },
+              "LOST": {
+                "action": "Amount remains debited",
+                "notification": "Email with reason and appeal options"
+              },
+              "REPRESENTMENT": {
+                "action": "Customer re-disputes",
+                "process": "Restart evidence collection"
+              }
+            }
+          }
+        ],
+        "reasonCategories": [
+          "Fraudulent transaction",
+          "Product not received",
+          "Product not as described",
+          "Duplicate processing",
+          "Cancelled recurring billing",
+          "Credit not processed",
+          "General chargeback",
+          "EMV liability shift"
+        ]
+      },
+      "uiPatterns": {
+        "overviewDashboard": {
+          "metrics": [
+            {
+              "name": "Total Refunds (This Month)",
+              "value": "₹X.XX L",
+              "trend": "+X% vs last month",
+              "chart": "Sparkline showing daily trend"
+            },
+            {
+              "name": "Refund Rate",
+              "value": "X.XX%",
+              "calculation": "(Refund Amount / Transaction Amount) * 100",
+              "benchmark": "Industry average: 2-5%"
+            },
+            {
+              "name": "Active Chargebacks",
+              "value": "XX cases",
+              "status": "Red if > 10, Amber if 5-10, Green if < 5"
+            },
+            {
+              "name": "Chargeback Win Rate",
+              "value": "XX%",
+              "trend": "vs previous quarter"
+            },
+            {
+              "name": "Average Refund Time",
+              "value": "X.X days",
+              "target": "< 2 days"
+            }
+          ],
+          "charts": {
+            "trendChart": "Line chart showing refunds and chargebacks over time",
+            "categoryPieChart": "Pie chart of refund reasons",
+            "monthlyComparison": "Bar chart comparing refunds, chargebacks, and resolutions"
+          }
+        },
+        "refundModal": {
+          "layout": "Centered modal, 600px width",
+          "sections": [
+            {
+              "name": "Transaction Details",
+              "display": "Read-only summary of original transaction",
+              "fields": ["Transaction ID", "Amount", "Date", "Customer", "Status"]
+            },
+            {
+              "name": "Refund Type",
+              "control": "Radio buttons (Full / Partial)",
+              "conditional": "If Partial selected, show amount input field"
+            },
+            {
+              "name": "Refund Amount",
+              "control": "Currency input with ₹ prefix",
+              "validation": "Real-time validation with error message below",
+              "display": "Large, prominent display"
+            },
+            {
+              "name": "Reason",
+              "control": "Dropdown with predefined reasons + 'Other' option",
+              "conditional": "If 'Other' selected, show textarea for custom reason"
+            },
+            {
+              "name": "Internal Notes",
+              "control": "Optional textarea",
+              "visibility": "Admin only"
+            },
+            {
+              "name": "Confirmation",
+              "display": "Summary box showing: Original Amount, Refund Amount, Reason",
+              "actions": "Cancel (secondary) | Confirm Refund (primary, danger color)"
+            }
+          ],
+          "loadingState": "Disable form, show spinner on button",
+          "successState": "Show success toast, close modal, refresh list"
+        },
+        "chargebackDetailsView": {
+          "header": {
+            "title": "Chargeback Case #XXX",
+            "status": "Badge with color coding",
+            "deadline": "Countdown timer if evidence pending"
+          },
+          "sections": [
+            {
+              "name": "Case Overview",
+              "fields": ["Chargeback ID", "Reason", "Amount", "Initiated Date", "Deadline", "Current Status"]
+            },
+            {
+              "name": "Transaction Details",
+              "fields": ["Transaction ID", "Date", "Customer", "Payment Method", "Amount"]
+            },
+            {
+              "name": "Evidence Documents",
+              "display": "List of uploaded documents with preview",
+              "actions": ["Upload", "Download", "Delete"],
+              "dragDrop": true
+            },
+            {
+              "name": "Communication Log",
+              "display": "Timeline of emails, notes, status changes",
+              "addNote": "Textarea to add internal notes"
+            },
+            {
+              "name": "Gateway Updates",
+              "display": "Status updates from payment gateway",
+              "refresh": "Auto-refresh every 5 minutes"
+            }
+          ],
+          "actions": {
+            "primary": "Submit Evidence (if pending)",
+            "secondary": ["Add Note", "Upload Document", "Contact Support", "Export Case"]
+          }
+        }
+      },
+      "analytics": {
+        "kpis": [
+          "Total refund amount and count",
+          "Refund rate (% of transaction volume)",
+          "Average refund processing time",
+          "Refund reason distribution",
+          "Chargeback count and amount",
+          "Chargeback win rate",
+          "Chargeback reason distribution",
+          "Average evidence submission time"
+        ],
+        "reports": [
+          "Daily refund summary",
+          "Monthly chargeback report",
+          "Merchant-wise refund analysis",
+          "Product/category-wise refund analysis",
+          "Gateway-wise chargeback comparison"
+        ]
+      }
+    },
+
+    "approvalQueuePatterns": {
+      "description": "Merchant onboarding and document approval workflows",
+      "approvalTypes": [
+        "New Merchant Onboarding",
+        "Document Updates",
+        "Profile Changes",
+        "KYC Re-verification",
+        "Risk Category Change",
+        "MID Activation",
+        "Settlement Account Change"
+      ],
+      "workflow": {
+        "submission": {
+          "actor": "Merchant or Sales Team",
+          "documents": [
+            "Business registration certificate",
+            "PAN card",
+            "GST certificate",
+            "Bank account proof",
+            "Address proof",
+            "Director/Owner ID proof",
+            "Financial statements",
+            "Board resolution"
+          ],
+          "validation": "System validates document types, sizes, completeness"
+        },
+        "queueManagement": {
+          "prioritization": {
+            "HIGH": "Estimated turnover > ₹1Cr/month OR VIP merchant",
+            "MEDIUM": "Estimated turnover ₹25L-₹1Cr/month",
+            "LOW": "Estimated turnover < ₹25L/month"
+          },
+          "assignment": {
+            "automatic": "Round-robin to available reviewers",
+            "manual": "Admin can reassign to specific reviewer",
+            "workload": "Balance based on pending count per reviewer"
+          },
+          "sla": {
+            "HIGH": "Review within 4 hours",
+            "MEDIUM": "Review within 24 hours",
+            "LOW": "Review within 48 hours"
+          }
+        },
+        "reviewProcess": [
+          {
+            "step": 1,
+            "name": "Document Verification",
+            "checks": [
+              "All required documents uploaded",
+              "Documents are clear and readable",
+              "Information matches across documents",
+              "Documents are within validity period"
+            ],
+            "tools": [
+              "Side-by-side document viewer",
+              "Zoom and rotate capabilities",
+              "OCR for text extraction",
+              "Checklist for required fields"
+            ]
+          },
+          {
+            "step": 2,
+            "name": "KYC Checks",
+            "automated": [
+              "PAN verification via government API",
+              "GST verification via government API",
+              "Bank account penny drop verification",
+              "Negative list screening (fraud database)",
+              "Credit bureau check"
+            ],
+            "manual": [
+              "Business legitimacy assessment",
+              "Website/social media verification",
+              "Contact verification call"
+            ]
+          },
+          {
+            "step": 3,
+            "name": "Risk Assessment",
+            "factors": [
+              "Business type (high-risk categories)",
+              "Transaction volume projections",
+              "Previous payment processing history",
+              "Credit score",
+              "Negative news screening"
+            ],
+            "categories": {
+              "LOW": "Standard approval, normal settlement cycle",
+              "MEDIUM": "Approval with enhanced monitoring",
+              "HIGH": "Additional documentation required or rejection"
+            }
+          },
+          {
+            "step": 4,
+            "name": "Decision",
+            "outcomes": {
+              "APPROVED": {
+                "action": "Activate merchant account",
+                "notification": "Welcome email with next steps",
+                "provisioning": "Create MID, setup settlement account"
+              },
+              "REJECTED": {
+                "action": "Mark application as rejected",
+                "reason": "Mandatory rejection reason",
+                "notification": "Rejection email with reason and appeal process"
+              },
+              "MORE_INFO_REQUIRED": {
+                "action": "Send back to merchant for clarification",
+                "specifics": "List specific documents or information needed",
+                "deadline": "7 days to respond"
+              }
+            }
+          }
+        ]
+      },
+      "uiPatterns": {
+        "queueDashboard": {
+          "stats": [
+            "Pending Approvals (count with urgency indicator)",
+            "Approved Today (count with trend)",
+            "Rejected Today (count)",
+            "Average Review Time (hours with trend)"
+          ],
+          "filters": [
+            "Priority (High/Medium/Low)",
+            "Type (New Merchant/Document Update/etc.)",
+            "Assigned To (Reviewer name)",
+            "Date Range",
+            "Risk Score (Low/Medium/High)"
+          ],
+          "sorting": [
+            "Priority (High → Low)",
+            "Submission Date (Oldest → Newest)",
+            "Estimated Turnover (High → Low)",
+            "SLA Deadline (Urgent → Normal)"
+          ],
+          "layout": "Table or card view toggle"
+        },
+        "reviewInterface": {
+          "layout": "3-column layout",
+          "leftPanel": {
+            "title": "Merchant Information",
+            "sections": [
+              "Business Details",
+              "Contact Information",
+              "Financial Projections",
+              "Submission Timeline"
+            ]
+          },
+          "centerPanel": {
+            "title": "Documents",
+            "features": [
+              "Tabbed interface for each document type",
+              "Full-screen document viewer",
+              "Zoom, rotate, download actions",
+              "OCR text overlay toggle",
+              "Mark as 'Verified' checkbox for each document"
+            ]
+          },
+          "rightPanel": {
+            "title": "Verification Status",
+            "sections": [
+              "Automated Checks (PAN, GST, Bank) with status indicators",
+              "Risk Assessment Score with breakdown",
+              "Reviewer Notes (textarea)",
+              "Decision Actions (Approve/Reject/Request More Info)"
+            ]
+          }
+        },
+        "bulkActions": {
+          "selection": "Checkbox for each queue item",
+          "actions": [
+            "Assign to Reviewer",
+            "Change Priority",
+            "Export Selected",
+            "Send Bulk Notification"
+          ]
+        }
+      }
+    },
+
+    "kycManagementPatterns": {
+      "description": "KYC document management and verification workflows",
+      "documentTypes": {
+        "mandatory": [
+          "PAN Card",
+          "Business Registration Certificate",
+          "Bank Account Proof (Cancelled Cheque or Bank Statement)",
+          "Address Proof (Utility Bill, Rent Agreement)"
+        ],
+        "conditional": {
+          "ifGSTApplicable": "GST Certificate",
+          "ifCompany": "Certificate of Incorporation, MOA, AOA",
+          "ifPartnership": "Partnership Deed",
+          "ifProprietorship": "Proprietor Identity Proof"
+        },
+        "optional": [
+          "Udyam Registration",
+          "FSSAI License (for food businesses)",
+          "Professional License (for services)",
+          "Previous Bank Statements (3-6 months)"
+        ]
+      },
+      "verificationWorkflow": {
+        "automated": {
+          "pan": {
+            "api": "Income Tax Department PAN Verification API",
+            "checks": ["Valid PAN format", "PAN exists", "Name match"],
+            "response": "Real-time (< 2 seconds)"
+          },
+          "gst": {
+            "api": "GST Network (GSTN) API",
+            "checks": ["Valid GSTIN format", "GST active", "Business name match", "Address match"],
+            "response": "Real-time (< 5 seconds)"
+          },
+          "bankAccount": {
+            "method": "Penny Drop (send Re. 1, verify account name)",
+            "checks": ["Account exists", "Account holder name match", "Account active"],
+            "response": "2-5 minutes"
+          },
+          "udyam": {
+            "api": "Udyam Registration Verification API",
+            "checks": ["Valid UAM number", "Active registration", "Business details"],
+            "response": "Real-time"
+          }
+        },
+        "manual": {
+          "documentReview": [
+            "Visual inspection for tampering",
+            "Validity date check",
+            "Information consistency across documents",
+            "Signature verification"
+          ],
+          "additionalChecks": [
+            "Google business/website verification",
+            "Social media presence check",
+            "Reference calls",
+            "Physical site visit (for high-value merchants)"
+          ]
+        },
+        "statuses": {
+          "PENDING": "Documents uploaded, awaiting verification",
+          "IN_PROGRESS": "Verification in progress",
+          "VERIFIED": "All checks passed",
+          "REJECTED": "Failed verification",
+          "EXPIRED": "Documents expired, re-submission required",
+          "FLAGGED": "Suspicious activity, escalated to compliance team"
+        }
+      },
+      "complianceChecks": {
+        "negativeListing": {
+          "databases": [
+            "RBI Caution List",
+            "NPCI Fraud Database",
+            "Internal Blacklist",
+            "Industry Shared Fraud List"
+          ],
+          "checks": [
+            "PAN in negative list",
+            "Business name in negative list",
+            "Director/Owner in negative list",
+            "Bank account in negative list"
+          ],
+          "action": "Auto-reject if found, escalate to compliance"
+        },
+        "amlScreening": {
+          "checks": [
+            "Politically Exposed Person (PEP) check",
+            "Sanctions list screening",
+            "Adverse media screening",
+            "High-risk country check"
+          ],
+          "tools": "Third-party AML screening service",
+          "action": "Enhanced due diligence if flagged"
+        },
+        "riskScoring": {
+          "factors": [
+            { "factor": "Business Category", "weightage": 30, "highRisk": ["Crypto", "Gambling", "Adult Content"] },
+            { "factor": "Transaction Volume", "weightage": 20, "highRisk": "> ₹1Cr/month for new merchant" },
+            { "factor": "KYC Completeness", "weightage": 15, "highRisk": "Missing documents or failed verifications" },
+            { "factor": "Credit History", "weightage": 15, "highRisk": "Poor credit score or defaults" },
+            { "factor": "Time in Business", "weightage": 10, "highRisk": "< 6 months operational" },
+            { "factor": "Geographic Risk", "weightage": 10, "highRisk": "High fraud regions" }
+          ],
+          "scoring": {
+            "0-30": "LOW - Standard processing",
+            "31-60": "MEDIUM - Enhanced monitoring",
+            "61-100": "HIGH - Additional verification required or rejection"
+          }
+        }
+      },
+      "uiPatterns": {
+        "kycDashboard": {
+          "merchantView": {
+            "sections": [
+              {
+                "name": "Verification Status",
+                "display": "Progress bar showing completion %",
+                "breakdown": "Individual status for each document type"
+              },
+              {
+                "name": "Pending Actions",
+                "alerts": [
+                  "Documents expiring in 30 days",
+                  "Failed verifications requiring resubmission",
+                  "Additional documents requested"
+                ]
+              }
+            ]
+          },
+          "adminView": {
+            "filters": [
+              "Verification Status",
+              "Risk Category",
+              "Document Type",
+              "Submission Date",
+              "Assigned Reviewer"
+            ],
+            "bulkActions": [
+              "Approve Selected",
+              "Request More Info",
+              "Assign to Reviewer",
+              "Export Report"
+            ]
+          }
+        },
+        "documentUploader": {
+          "features": [
+            "Drag and drop or click to upload",
+            "Multi-file upload support",
+            "File type validation (PDF, JPEG, PNG)",
+            "File size limit (5MB per document)",
+            "Preview before upload",
+            "Camera capture option (for mobile KYC)",
+            "OCR extraction of key fields",
+            "Auto-fill form fields from OCR data"
+          ],
+          "feedback": [
+            "Upload progress bar",
+            "Success/error messages",
+            "Thumbnail preview of uploaded documents",
+            "Edit/delete uploaded documents"
+          ]
+        },
+        "verificationInterface": {
+          "layout": "Split view - Document on left, Verification form on right",
+          "documentViewer": {
+            "features": [
+              "Zoom in/out",
+              "Rotate",
+              "Full screen mode",
+              "Download original",
+              "OCR text overlay"
+            ]
+          },
+          "verificationForm": {
+            "fields": [
+              "Document Type (dropdown)",
+              "Document Number (extracted via OCR, editable)",
+              "Issue Date",
+              "Expiry Date",
+              "Verification Status (dropdown)",
+              "Rejection Reason (if rejected)",
+              "Reviewer Notes (textarea)"
+            ],
+            "automatedChecks": {
+              "display": "Real-time status of API verifications",
+              "icons": "Green checkmark (passed), Red X (failed), Yellow spinner (in progress)",
+              "details": "Expandable section showing API response"
+            }
+          },
+          "actions": [
+            "Save Draft (save without submitting)",
+            "Verify & Approve",
+            "Reject",
+            "Request More Info"
+          ]
+        }
+      }
+    },
+
+    "midManagementPatterns": {
+      "description": "Merchant ID (MID) provisioning and management",
+      "workflow": {
+        "midRequest": {
+          "trigger": "Merchant onboarding approved OR merchant requests additional MID",
+          "inputs": [
+            "Business Category",
+            "Expected Monthly Volume",
+            "Payment Methods Required (Cards, UPI, Netbanking, Wallets)",
+            "Settlement Preference (T+1, T+2, T+7)",
+            "Preferred Acquiring Bank"
+          ],
+          "validation": "Risk assessment, volume projections, category restrictions"
+        },
+        "midProvisioning": {
+          "steps": [
+            {
+              "step": 1,
+              "name": "Bank Selection",
+              "logic": "Route to bank based on business category, volume, geography",
+              "considerations": ["Bank's category appetite", "Available MID pool", "Routing optimization"]
+            },
+            {
+              "step": 2,
+              "name": "MID Creation",
+              "action": "Generate unique MID, register with acquiring bank",
+              "format": "BANK_PREFIX_MERCHANT_ID (e.g., HDFC_MERCH001_MID001)"
+            },
+            {
+              "step": 3,
+              "name": "Gateway Configuration",
+              "setup": ["Payment gateway API credentials", "Webhook URLs", "Success/failure redirect URLs"],
+              "testing": "Test transaction to verify MID activation"
+            },
+            {
+              "step": 4,
+              "name": "Settlement Setup",
+              "config": ["Bank account mapping", "Settlement schedule", "Fee structure"],
+              "validation": "Penny drop to verify settlement account"
+            }
+          ]
+        },
+        "midLifecycle": {
+          "statuses": {
+            "REQUESTED": "MID request submitted, pending approval",
+            "PROVISIONING": "MID being created and configured",
+            "ACTIVE": "MID live and accepting transactions",
+            "SUSPENDED": "Temporarily disabled (risk/compliance issue)",
+            "CLOSED": "Permanently deactivated"
+          },
+          "monitoring": {
+            "healthChecks": [
+              "Transaction success rate",
+              "Average response time",
+              "Decline rate",
+              "Chargeback rate",
+              "Settlement timeliness"
+            ],
+            "alerts": [
+              "Success rate < 80%",
+              "Decline rate > 20%",
+              "Chargeback rate > 1%",
+              "Settlement delayed > SLA"
+            ]
+          }
+        }
+      },
+      "uiPatterns": {
+        "midOverview": {
+          "merchantView": {
+            "display": "Card-based layout, one card per MID",
+            "cardContent": [
+              "MID Identifier",
+              "Status Badge",
+              "Payment Methods (icons)",
+              "Transaction Count (This Month)",
+              "Success Rate %",
+              "Quick Actions (View Details, Generate API Keys, Settings)"
+            ]
+          },
+          "adminView": {
+            "display": "Table or kanban board (grouped by status)",
+            "columns": ["MID", "Merchant", "Bank", "Status", "Health Score", "Volume", "Actions"],
+            "filters": ["Status", "Bank", "Merchant", "Health Score", "Date Range"]
+          }
+        },
+        "midRequestWizard": {
+          "steps": [
+            {
+              "step": 1,
+              "title": "Business Information",
+              "fields": ["Category", "Sub-category", "Website URL"]
+            },
+            {
+              "step": 2,
+              "title": "Volume Projections",
+              "fields": ["Expected Monthly Transactions", "Average Ticket Size", "Peak Season Months"]
+            },
+            {
+              "step": 3,
+              "title": "Payment Methods",
+              "control": "Checkboxes with icons (Credit Card, Debit Card, UPI, Netbanking, Wallets)"
+            },
+            {
+              "step": 4,
+              "title": "Settlement Preferences",
+              "fields": ["Settlement Cycle (T+1/T+2/T+7)", "Bank Account Selection"]
+            },
+            {
+              "step": 5,
+              "title": "Review & Submit",
+              "display": "Summary of all selections",
+              "estimation": "Show estimated MCC code, fees, settlement timeline"
+            }
+          ]
+        },
+        "midDetailView": {
+          "tabs": [
+            {
+              "name": "Overview",
+              "widgets": [
+                "Transaction Metrics",
+                "Success/Decline Chart",
+                "Payment Method Breakdown",
+                "Recent Transactions"
+              ]
+            },
+            {
+              "name": "Configuration",
+              "sections": [
+                "API Credentials (masked, with copy button)",
+                "Webhook URLs",
+                "Redirect URLs",
+                "Payment Methods Enabled"
+              ]
+            },
+            {
+              "name": "Settlement",
+              "info": [
+                "Settlement Schedule",
+                "Bank Account Details",
+                "Fee Structure",
+                "Settlement History (table)"
+              ]
+            },
+            {
+              "name": "Health & SLOs",
+              "charts": [
+                "Uptime %",
+                "Response Time Trend",
+                "Success Rate Trend",
+                "SLO Compliance"
+              ]
+            },
+            {
+              "name": "Audit Log",
+              "display": "Timeline of all changes (status changes, config updates, etc.)"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "section": 22,
+  "title": "Animation & Motion Patterns",
+  "metadata": {
+    "startLine": 8137,
+    "endLine": 8232,
+    "codeBlockCount": 3,
+    "tableCount": 0,
+    "extractedAt": "2025-12-01T16:35:09.325Z"
+  },
+  "codeBlocks": [
+    {
+      "id": "code-22-0",
+      "language": "tsx",
+      "code": "import { motion } from 'framer-motion';\n\nconst pageVariants = {\n  initial: { opacity: 0, y: 20 },\n  animate: { opacity: 1, y: 0 },\n  exit: { opacity: 0, y: -20 },\n};\n\nconst Page = ({ children }) => (\n  <motion.div\n    variants={pageVariants}\n    initial=\"initial\"\n    animate=\"animate\"\n    exit=\"exit\"\n    transition={{ duration: 0.4, ease: 'easeOut' }}\n  >\n    {children}\n  </motion.div>\n);",
+      "lineNumber": 8158
+    },
+    {
+      "id": "code-22-1",
+      "language": "tsx",
+      "code": "const containerVariants = {\n  hidden: { opacity: 0 },\n  show: {\n    opacity: 1,\n    transition: {\n      staggerChildren: 0.1,\n    },\n  },\n};\n\nconst itemVariants = {\n  hidden: { opacity: 0, y: 20 },\n  show: { opacity: 1, y: 0 },\n};\n\n<motion.div variants={containerVariants} initial=\"hidden\" animate=\"show\">\n  {items.map((item) => (\n    <motion.div key={item.id} variants={itemVariants}>\n      {item.content}\n    </motion.div>\n  ))}\n</motion.div>",
+      "lineNumber": 8181
+    },
+    {
+      "id": "code-22-2",
+      "language": "tsx",
+      "code": "const SuccessCheckmark = () => (\n  <motion.div\n    initial={{ scale: 0 }}\n    animate={{ scale: 1 }}\n    transition={{\n      type: 'spring',\n      stiffness: 200,\n      damping: 15\n    }}\n    className=\"w-16 h-16 bg-green-500/20 rounded-full flex items-center justify-center\"\n  >\n    <motion.svg\n      initial={{ pathLength: 0 }}\n      animate={{ pathLength: 1 }}\n      transition={{ duration: 0.5, delay: 0.2 }}\n      className=\"w-8 h-8 text-green-400\"\n    >\n      <path d=\"M5 13l4 4L19 7\" />\n    </motion.svg>\n  </motion.div>\n);",
+      "lineNumber": 8207
+    }
+  ],
+  "tables": [],
+  "content": "## Section 22: Animation & Motion Patterns\n\n### 22.1 Animation Principles\n\n**Philosophy**: Animations should be purposeful, not decorative. Every animation serves to:\n1. Guide user attention\n2. Provide feedback\n3. Maintain context during transitions\n4. Reduce perceived loading time\n\n**Timing Standards**:\n- **Micro-interactions**: 150-200ms (hover, focus)\n- **Component transitions**: 300ms (modals, drawers)\n- **Page transitions**: 400-600ms (route changes)\n- **Loading states**: Infinite (until data arrives)\n\n---\n\n### 22.2 Framer Motion Patterns\n\n#### Page Entrance Animation\n```tsx\nimport { motion } from 'framer-motion';\n\nconst pageVariants = {\n  initial: { opacity: 0, y: 20 },\n  animate: { opacity: 1, y: 0 },\n  exit: { opacity: 0, y: -20 },\n};\n\nconst Page = ({ children }) => (\n  <motion.div\n    variants={pageVariants}\n    initial=\"initial\"\n    animate=\"animate\"\n    exit=\"exit\"\n    transition={{ duration: 0.4, ease: 'easeOut' }}\n  >\n    {children}\n  </motion.div>\n);\n```\n\n#### Stagger Children Animation\n```tsx\nconst containerVariants = {\n  hidden: { opacity: 0 },\n  show: {\n    opacity: 1,\n    transition: {\n      staggerChildren: 0.1,\n    },\n  },\n};\n\nconst itemVariants = {\n  hidden: { opacity: 0, y: 20 },\n  show: { opacity: 1, y: 0 },\n};\n\n<motion.div variants={containerVariants} initial=\"hidden\" animate=\"show\">\n  {items.map((item) => (\n    <motion.div key={item.id} variants={itemVariants}>\n      {item.content}\n    </motion.div>\n  ))}\n</motion.div>\n```\n\n#### Success Animation Pattern\n```tsx\nconst SuccessCheckmark = () => (\n  <motion.div\n    initial={{ scale: 0 }}\n    animate={{ scale: 1 }}\n    transition={{\n      type: 'spring',\n      stiffness: 200,\n      damping: 15\n    }}\n    className=\"w-16 h-16 bg-green-500/20 rounded-full flex items-center justify-center\"\n  >\n    <motion.svg\n      initial={{ pathLength: 0 }}\n      animate={{ pathLength: 1 }}\n      transition={{ duration: 0.5, delay: 0.2 }}\n      className=\"w-8 h-8 text-green-400\"\n    >\n      <path d=\"M5 13l4 4L19 7\" />\n    </motion.svg>\n  </motion.div>\n);\n```\n\n---\n"
+}

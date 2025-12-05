@@ -1,0 +1,258 @@
+{
+  "section": 5,
+  "title": "Typography Token System",
+  "metadata": {
+    "startLine": 954,
+    "endLine": 1158,
+    "codeBlockCount": 3,
+    "tableCount": 4,
+    "extractedAt": "2025-12-01T16:35:09.296Z"
+  },
+  "codeBlocks": [
+    {
+      "id": "code-5-0",
+      "language": "css",
+      "code": "/* Headings */\n.heading-1 {\n  @apply text-5xl font-bold font-heading leading-tight;\n}\n\n.heading-2 {\n  @apply text-4xl font-bold font-heading leading-tight;\n}\n\n.heading-3 {\n  @apply text-3xl font-semibold font-heading leading-snug;\n}\n\n.heading-4 {\n  @apply text-2xl font-semibold font-heading leading-snug;\n}\n\n.heading-5 {\n  @apply text-xl font-medium font-heading leading-normal;\n}\n\n.heading-6 {\n  @apply text-lg font-medium font-heading leading-normal;\n}\n\n/* Body Text */\n.body-large {\n  @apply text-lg font-normal font-body leading-relaxed;\n}\n\n.body-base {\n  @apply text-base font-normal font-body leading-normal;\n}\n\n.body-small {\n  @apply text-sm font-normal font-body leading-normal;\n}\n\n/* Special Text */\n.caption {\n  @apply text-xs font-normal font-body leading-normal tracking-wide;\n}\n\n.label {\n  @apply text-sm font-medium font-body leading-normal uppercase tracking-wide;\n}\n\n/* Code */\n.code-inline {\n  @apply font-mono text-sm bg-neutral-100 dark:bg-neutral-800 px-1.5 py-0.5 rounded;\n}\n\n.code-block {\n  @apply font-mono text-sm bg-neutral-100 dark:bg-neutral-800 p-4 rounded-lg overflow-x-auto;\n}\n\n/* Text Modifiers */\n.text-emphasis {\n  @apply font-semibold;\n}\n\n.text-subtle {\n  @apply text-neutral-600 dark:text-neutral-400;\n}\n\n.link {\n  @apply text-primary-600 hover:text-primary-700 underline transition-colors;\n}",
+      "lineNumber": 1029
+    },
+    {
+      "id": "code-5-1",
+      "language": "tsx",
+      "code": "<h1 className=\"heading-1\">Complete Your KYC</h1>\n<h2 className=\"heading-2\">Business Information</h2>\n<p className=\"body-base\">Enter your business details below.</p>\n<label className=\"label\">PAN Number</label>\n<p className=\"caption\">Format: ABCDE1234F</p>\n<code className=\"code-inline\">TXN20250115000123</code>",
+      "lineNumber": 1101
+    },
+    {
+      "id": "code-5-2",
+      "language": "css",
+      "code": ":root {\n  /* Font Families */\n  --font-heading: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;\n  --font-body: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;\n  --font-mono: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;\n\n  /* Font Sizes */\n  --font-size-xs: 0.75rem;\n  --font-size-sm: 0.875rem;\n  --font-size-base: 1rem;\n  --font-size-lg: 1.125rem;\n  --font-size-xl: 1.25rem;\n  --font-size-2xl: 1.5rem;\n  --font-size-3xl: 1.875rem;\n  --font-size-4xl: 2.25rem;\n  --font-size-5xl: 3rem;\n\n  /* Line Heights */\n  --line-height-none: 1;\n  --line-height-tight: 1.25;\n  --line-height-snug: 1.375;\n  --line-height-normal: 1.5;\n  --line-height-relaxed: 1.625;\n  --line-height-loose: 2;\n\n  /* Letter Spacing */\n  --letter-spacing-tighter: -0.05em;\n  --letter-spacing-tight: -0.025em;\n  --letter-spacing-normal: 0em;\n  --letter-spacing-wide: 0.025em;\n  --letter-spacing-wider: 0.05em;\n  --letter-spacing-widest: 0.1em;\n\n  /* Font Weights */\n  --font-weight-normal: 400;\n  --font-weight-medium: 500;\n  --font-weight-semibold: 600;\n  --font-weight-bold: 700;\n  --font-weight-extrabold: 800;\n}",
+      "lineNumber": 1114
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-5-0",
+      "headers": [
+        "Name",
+        "Rem",
+        "Pixels",
+        "Tailwind",
+        "Line Height (Default)",
+        "Usage Context"
+      ],
+      "rows": [
+        [
+          "**xs**",
+          "0.75rem",
+          "12px",
+          "`text-xs`",
+          "1rem (16px)",
+          "Helper text, captions, meta info"
+        ],
+        [
+          "**sm**",
+          "0.875rem",
+          "14px",
+          "`text-sm`",
+          "1.25rem (20px)",
+          "Small text, labels, compact UIs"
+        ],
+        [
+          "**base**",
+          "1rem",
+          "16px",
+          "`text-base`",
+          "1.5rem (24px)",
+          "**Body text (DEFAULT)**"
+        ],
+        [
+          "**lg**",
+          "1.125rem",
+          "18px",
+          "`text-lg`",
+          "1.75rem (28px)",
+          "Large body text, emphasis"
+        ],
+        [
+          "**xl**",
+          "1.25rem",
+          "20px",
+          "`text-xl`",
+          "1.75rem (28px)",
+          "H5, small headings"
+        ],
+        [
+          "**2xl**",
+          "1.5rem",
+          "24px",
+          "`text-2xl`",
+          "2rem (32px)",
+          "**H4**, card headers"
+        ],
+        [
+          "**3xl**",
+          "1.875rem",
+          "30px",
+          "`text-3xl`",
+          "2.25rem (36px)",
+          "**H3**, section titles"
+        ],
+        [
+          "**4xl**",
+          "2.25rem",
+          "36px",
+          "`text-4xl`",
+          "2.5rem (40px)",
+          "**H2**, page titles"
+        ],
+        [
+          "**5xl**",
+          "3rem",
+          "48px",
+          "`text-5xl`",
+          "3rem (48px)",
+          "**H1**, hero headings"
+        ]
+      ],
+      "lineNumber": 973
+    },
+    {
+      "id": "table-5-1",
+      "headers": [
+        "Name",
+        "Weight",
+        "Tailwind",
+        "Usage"
+      ],
+      "rows": [
+        [
+          "**normal**",
+          "400",
+          "`font-normal`",
+          "Body text, default weight"
+        ],
+        [
+          "**medium**",
+          "500",
+          "`font-medium`",
+          "Emphasis, buttons, labels"
+        ],
+        [
+          "**semibold**",
+          "600",
+          "`font-semibold`",
+          "Subheadings, strong emphasis"
+        ],
+        [
+          "**bold**",
+          "700",
+          "`font-bold`",
+          "Headings, strong emphasis"
+        ],
+        [
+          "**extrabold**",
+          "800",
+          "`font-extrabold`",
+          "Display text, hero headings"
+        ]
+      ],
+      "lineNumber": 989
+    },
+    {
+      "id": "table-5-2",
+      "headers": [
+        "Name",
+        "Value",
+        "Tailwind",
+        "Usage"
+      ],
+      "rows": [
+        [
+          "**none**",
+          "1",
+          "`leading-none`",
+          "Tight line height, logos"
+        ],
+        [
+          "**tight**",
+          "1.25",
+          "`leading-tight`",
+          "Tight spacing, headings"
+        ],
+        [
+          "**snug**",
+          "1.375",
+          "`leading-snug`",
+          "Snug spacing, subheadings"
+        ],
+        [
+          "**normal**",
+          "1.5",
+          "`leading-normal`",
+          "**Normal spacing (DEFAULT)**"
+        ],
+        [
+          "**relaxed**",
+          "1.625",
+          "`leading-relaxed`",
+          "Relaxed spacing, long-form text"
+        ],
+        [
+          "**loose**",
+          "2",
+          "`leading-loose`",
+          "Loose spacing, poetry, special cases"
+        ]
+      ],
+      "lineNumber": 1001
+    },
+    {
+      "id": "table-5-3",
+      "headers": [
+        "Name",
+        "Value",
+        "Tailwind",
+        "Usage"
+      ],
+      "rows": [
+        [
+          "**tighter**",
+          "-0.05em",
+          "`tracking-tighter`",
+          "Very tight tracking"
+        ],
+        [
+          "**tight**",
+          "-0.025em",
+          "`tracking-tight`",
+          "Tight tracking, headings"
+        ],
+        [
+          "**normal**",
+          "0em",
+          "`tracking-normal`",
+          "**Normal tracking (DEFAULT)**"
+        ],
+        [
+          "**wide**",
+          "0.025em",
+          "`tracking-wide`",
+          "Wide tracking, labels"
+        ],
+        [
+          "**wider**",
+          "0.05em",
+          "`tracking-wider`",
+          "Wider tracking, uppercase"
+        ],
+        [
+          "**widest**",
+          "0.1em",
+          "`tracking-widest`",
+          "Widest tracking, all-caps"
+        ]
+      ],
+      "lineNumber": 1014
+    }
+  ],
+  "content": "## Section 5: Typography Token System\n\n### 5.1 Overview\n\nThe SabPaisa COB typography system uses **Inter** as the primary font family with a complete scale of sizes, weights, line heights, and letter spacing values.\n\n**Font Stack**:\n- **Heading**: `Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif`\n- **Body**: `Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif`\n- **Monospace**: `source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace`\n\n**Future Enhancement**: When licenses are acquired:\n- Heading Font → `Neusharp Bold`\n- Body Font → `Sofia Pro`\n\n---\n\n### 5.2 Font Size Scale\n\n| Name | Rem | Pixels | Tailwind | Line Height (Default) | Usage Context |\n|------|-----|--------|----------|----------------------|---------------|\n| **xs** | 0.75rem | 12px | `text-xs` | 1rem (16px) | Helper text, captions, meta info |\n| **sm** | 0.875rem | 14px | `text-sm` | 1.25rem (20px) | Small text, labels, compact UIs |\n| **base** | 1rem | 16px | `text-base` | 1.5rem (24px) | **Body text (DEFAULT)** |\n| **lg** | 1.125rem | 18px | `text-lg` | 1.75rem (28px) | Large body text, emphasis |\n| **xl** | 1.25rem | 20px | `text-xl` | 1.75rem (28px) | H5, small headings |\n| **2xl** | 1.5rem | 24px | `text-2xl` | 2rem (32px) | **H4**, card headers |\n| **3xl** | 1.875rem | 30px | `text-3xl` | 2.25rem (36px) | **H3**, section titles |\n| **4xl** | 2.25rem | 36px | `text-4xl` | 2.5rem (40px) | **H2**, page titles |\n| **5xl** | 3rem | 48px | `text-5xl` | 3rem (48px) | **H1**, hero headings |\n\n---\n\n### 5.3 Font Weight Scale\n\n| Name | Weight | Tailwind | Usage |\n|------|--------|----------|-------|\n| **normal** | 400 | `font-normal` | Body text, default weight |\n| **medium** | 500 | `font-medium` | Emphasis, buttons, labels |\n| **semibold** | 600 | `font-semibold` | Subheadings, strong emphasis |\n| **bold** | 700 | `font-bold` | Headings, strong emphasis |\n| **extrabold** | 800 | `font-extrabold` | Display text, hero headings |\n\n---\n\n### 5.4 Line Height Scale\n\n| Name | Value | Tailwind | Usage |\n|------|-------|----------|-------|\n| **none** | 1 | `leading-none` | Tight line height, logos |\n| **tight** | 1.25 | `leading-tight` | Tight spacing, headings |\n| **snug** | 1.375 | `leading-snug` | Snug spacing, subheadings |\n| **normal** | 1.5 | `leading-normal` | **Normal spacing (DEFAULT)** |\n| **relaxed** | 1.625 | `leading-relaxed` | Relaxed spacing, long-form text |\n| **loose** | 2 | `leading-loose` | Loose spacing, poetry, special cases |\n\n---\n\n### 5.5 Letter Spacing Scale\n\n| Name | Value | Tailwind | Usage |\n|------|-------|----------|-------|\n| **tighter** | -0.05em | `tracking-tighter` | Very tight tracking |\n| **tight** | -0.025em | `tracking-tight` | Tight tracking, headings |\n| **normal** | 0em | `tracking-normal` | **Normal tracking (DEFAULT)** |\n| **wide** | 0.025em | `tracking-wide` | Wide tracking, labels |\n| **wider** | 0.05em | `tracking-wider` | Wider tracking, uppercase |\n| **widest** | 0.1em | `tracking-widest` | Widest tracking, all-caps |\n\n---\n\n### 5.6 Typography Utility Classes\n\nDefined in `src/index.css`:\n\n```css\n/* Headings */\n.heading-1 {\n  @apply text-5xl font-bold font-heading leading-tight;\n}\n\n.heading-2 {\n  @apply text-4xl font-bold font-heading leading-tight;\n}\n\n.heading-3 {\n  @apply text-3xl font-semibold font-heading leading-snug;\n}\n\n.heading-4 {\n  @apply text-2xl font-semibold font-heading leading-snug;\n}\n\n.heading-5 {\n  @apply text-xl font-medium font-heading leading-normal;\n}\n\n.heading-6 {\n  @apply text-lg font-medium font-heading leading-normal;\n}\n\n/* Body Text */\n.body-large {\n  @apply text-lg font-normal font-body leading-relaxed;\n}\n\n.body-base {\n  @apply text-base font-normal font-body leading-normal;\n}\n\n.body-small {\n  @apply text-sm font-normal font-body leading-normal;\n}\n\n/* Special Text */\n.caption {\n  @apply text-xs font-normal font-body leading-normal tracking-wide;\n}\n\n.label {\n  @apply text-sm font-medium font-body leading-normal uppercase tracking-wide;\n}\n\n/* Code */\n.code-inline {\n  @apply font-mono text-sm bg-neutral-100 dark:bg-neutral-800 px-1.5 py-0.5 rounded;\n}\n\n.code-block {\n  @apply font-mono text-sm bg-neutral-100 dark:bg-neutral-800 p-4 rounded-lg overflow-x-auto;\n}\n\n/* Text Modifiers */\n.text-emphasis {\n  @apply font-semibold;\n}\n\n.text-subtle {\n  @apply text-neutral-600 dark:text-neutral-400;\n}\n\n.link {\n  @apply text-primary-600 hover:text-primary-700 underline transition-colors;\n}\n```\n\n**Usage Example**:\n```tsx\n<h1 className=\"heading-1\">Complete Your KYC</h1>\n<h2 className=\"heading-2\">Business Information</h2>\n<p className=\"body-base\">Enter your business details below.</p>\n<label className=\"label\">PAN Number</label>\n<p className=\"caption\">Format: ABCDE1234F</p>\n<code className=\"code-inline\">TXN20250115000123</code>\n```\n\n---\n\n### 5.7 CSS Custom Properties\n\n```css\n:root {\n  /* Font Families */\n  --font-heading: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;\n  --font-body: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;\n  --font-mono: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;\n\n  /* Font Sizes */\n  --font-size-xs: 0.75rem;\n  --font-size-sm: 0.875rem;\n  --font-size-base: 1rem;\n  --font-size-lg: 1.125rem;\n  --font-size-xl: 1.25rem;\n  --font-size-2xl: 1.5rem;\n  --font-size-3xl: 1.875rem;\n  --font-size-4xl: 2.25rem;\n  --font-size-5xl: 3rem;\n\n  /* Line Heights */\n  --line-height-none: 1;\n  --line-height-tight: 1.25;\n  --line-height-snug: 1.375;\n  --line-height-normal: 1.5;\n  --line-height-relaxed: 1.625;\n  --line-height-loose: 2;\n\n  /* Letter Spacing */\n  --letter-spacing-tighter: -0.05em;\n  --letter-spacing-tight: -0.025em;\n  --letter-spacing-normal: 0em;\n  --letter-spacing-wide: 0.025em;\n  --letter-spacing-wider: 0.05em;\n  --letter-spacing-widest: 0.1em;\n\n  /* Font Weights */\n  --font-weight-normal: 400;\n  --font-weight-medium: 500;\n  --font-weight-semibold: 600;\n  --font-weight-bold: 700;\n  --font-weight-extrabold: 800;\n}\n```\n\n---\n"
+}

@@ -1,0 +1,39 @@
+{
+  "section": 24,
+  "title": "Error Handling UX",
+  "metadata": {
+    "startLine": 8323,
+    "endLine": 8426,
+    "codeBlockCount": 4,
+    "tableCount": 0,
+    "extractedAt": "2025-12-01T16:35:09.327Z"
+  },
+  "codeBlocks": [
+    {
+      "id": "code-24-0",
+      "language": "tsx",
+      "code": "<TextField\n  name=\"email\"\n  label=\"Email\"\n  error={true}\n  errorMessage=\"Invalid email format\"\n/>\n// Visual: Red border, red text below field",
+      "lineNumber": 8328
+    },
+    {
+      "id": "code-24-1",
+      "language": "tsx",
+      "code": "const FormErrorBanner = ({ errors }) => (\n  <div className=\"p-4 bg-red-500/10 border border-red-500/20 rounded-xl mb-6\">\n    <div className=\"flex items-start space-x-3\">\n      <AlertCircle className=\"w-5 h-5 text-red-400 mt-0.5\" />\n      <div>\n        <p className=\"text-sm font-medium text-red-400 mb-2\">\n          Please fix the following errors:\n        </p>\n        <ul className=\"list-disc list-inside space-y-1 text-sm text-red-400/80\">\n          {errors.map((error, i) => (\n            <li key={i}>{error}</li>\n          ))}\n        </ul>\n      </div>\n    </div>\n  </div>\n);",
+      "lineNumber": 8339
+    },
+    {
+      "id": "code-24-2",
+      "language": "tsx",
+      "code": "const EmptyState = ({ title, description, action }) => (\n  <div className=\"text-center py-16\">\n    <div className=\"w-24 h-24 mx-auto mb-6 bg-white/5 rounded-full flex items-center justify-center\">\n      <Inbox className=\"w-12 h-12 text-white/40\" />\n    </div>\n    <h3 className=\"text-xl font-semibold text-white mb-2\">{title}</h3>\n    <p className=\"text-white/60 mb-6 max-w-md mx-auto\">{description}</p>\n    {action && <Button variant=\"primary\" onClick={action.onClick}>{action.label}</Button>}\n  </div>\n);\n\n// Usage\n{transactions.length === 0 && (\n  <EmptyState\n    title=\"No Transactions Yet\"\n    description=\"You haven't received any payments yet. Start by sharing your payment link with customers.\"\n    action={{ label: \"View Payment Link\", onClick: () => navigate('/payment-link') }}\n  />\n)}",
+      "lineNumber": 8360
+    },
+    {
+      "id": "code-24-3",
+      "language": "tsx",
+      "code": "const TransactionsList = () => {\n  const [error, setError] = useState(null);\n  const [retrying, setRetrying] = useState(false);\n\n  const fetchData = async () => {\n    try {\n      setError(null);\n      const data = await api.getTransactions();\n      setTransactions(data);\n    } catch (err) {\n      setError(err);\n    }\n  };\n\n  const handleRetry = async () => {\n    setRetrying(true);\n    await fetchData();\n    setRetrying(false);\n  };\n\n  if (error) {\n    return (\n      <Card variant=\"default\" padding=\"lg\">\n        <div className=\"text-center py-12\">\n          <div className=\"w-16 h-16 mx-auto mb-4 bg-red-500/20 rounded-full flex items-center justify-center\">\n            <AlertCircle className=\"w-8 h-8 text-red-400\" />\n          </div>\n          <h3 className=\"text-lg font-semibold text-white mb-2\">Failed to Load Transactions</h3>\n          <p className=\"text-white/60 mb-6\">{error.message}</p>\n          <Button variant=\"primary\" onClick={handleRetry} isLoading={retrying}>\n            Try Again\n          </Button>\n        </div>\n      </Card>\n    );\n  }\n\n  return <TransactionsTable />;\n};",
+      "lineNumber": 8383
+    }
+  ],
+  "tables": [],
+  "content": "## Section 24: Error Handling UX\n\n### 24.1 Error State Patterns\n\n#### Inline Field Error\n```tsx\n<TextField\n  name=\"email\"\n  label=\"Email\"\n  error={true}\n  errorMessage=\"Invalid email format\"\n/>\n// Visual: Red border, red text below field\n```\n\n#### Form-Level Error Banner\n```tsx\nconst FormErrorBanner = ({ errors }) => (\n  <div className=\"p-4 bg-red-500/10 border border-red-500/20 rounded-xl mb-6\">\n    <div className=\"flex items-start space-x-3\">\n      <AlertCircle className=\"w-5 h-5 text-red-400 mt-0.5\" />\n      <div>\n        <p className=\"text-sm font-medium text-red-400 mb-2\">\n          Please fix the following errors:\n        </p>\n        <ul className=\"list-disc list-inside space-y-1 text-sm text-red-400/80\">\n          {errors.map((error, i) => (\n            <li key={i}>{error}</li>\n          ))}\n        </ul>\n      </div>\n    </div>\n  </div>\n);\n```\n\n#### Empty State Pattern\n```tsx\nconst EmptyState = ({ title, description, action }) => (\n  <div className=\"text-center py-16\">\n    <div className=\"w-24 h-24 mx-auto mb-6 bg-white/5 rounded-full flex items-center justify-center\">\n      <Inbox className=\"w-12 h-12 text-white/40\" />\n    </div>\n    <h3 className=\"text-xl font-semibold text-white mb-2\">{title}</h3>\n    <p className=\"text-white/60 mb-6 max-w-md mx-auto\">{description}</p>\n    {action && <Button variant=\"primary\" onClick={action.onClick}>{action.label}</Button>}\n  </div>\n);\n\n// Usage\n{transactions.length === 0 && (\n  <EmptyState\n    title=\"No Transactions Yet\"\n    description=\"You haven't received any payments yet. Start by sharing your payment link with customers.\"\n    action={{ label: \"View Payment Link\", onClick: () => navigate('/payment-link') }}\n  />\n)}\n```\n\n#### API Error Recovery\n```tsx\nconst TransactionsList = () => {\n  const [error, setError] = useState(null);\n  const [retrying, setRetrying] = useState(false);\n\n  const fetchData = async () => {\n    try {\n      setError(null);\n      const data = await api.getTransactions();\n      setTransactions(data);\n    } catch (err) {\n      setError(err);\n    }\n  };\n\n  const handleRetry = async () => {\n    setRetrying(true);\n    await fetchData();\n    setRetrying(false);\n  };\n\n  if (error) {\n    return (\n      <Card variant=\"default\" padding=\"lg\">\n        <div className=\"text-center py-12\">\n          <div className=\"w-16 h-16 mx-auto mb-4 bg-red-500/20 rounded-full flex items-center justify-center\">\n            <AlertCircle className=\"w-8 h-8 text-red-400\" />\n          </div>\n          <h3 className=\"text-lg font-semibold text-white mb-2\">Failed to Load Transactions</h3>\n          <p className=\"text-white/60 mb-6\">{error.message}</p>\n          <Button variant=\"primary\" onClick={handleRetry} isLoading={retrying}>\n            Try Again\n          </Button>\n        </div>\n      </Card>\n    );\n  }\n\n  return <TransactionsTable />;\n};\n```\n\n---\n"
+}

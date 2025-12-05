@@ -1,0 +1,248 @@
+{
+  "section": 7,
+  "title": "Effect Tokens",
+  "metadata": {
+    "startLine": 1233,
+    "endLine": 1296,
+    "codeBlockCount": 1,
+    "tableCount": 4,
+    "extractedAt": "2025-12-01T16:35:09.299Z"
+  },
+  "codeBlocks": [
+    {
+      "id": "code-7-0",
+      "language": "tsx",
+      "code": "<div className=\"backdrop-blur-lg bg-white/10 border border-white/20 rounded-2xl\">\n  {/* Glassmorphic card */}\n</div>",
+      "lineNumber": 1289
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-7-0",
+      "headers": [
+        "Name",
+        "Value",
+        "Tailwind",
+        "Usage"
+      ],
+      "rows": [
+        [
+          "**sm**",
+          "`0 1px 2px 0 rgb(0 0 0 / 0.05)`",
+          "`shadow-sm`",
+          "Subtle elevation"
+        ],
+        [
+          "**base**",
+          "`0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)`",
+          "`shadow`",
+          "Default shadow"
+        ],
+        [
+          "**md**",
+          "`0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)`",
+          "`shadow-md`",
+          "Cards, panels"
+        ],
+        [
+          "**lg**",
+          "`0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)`",
+          "`shadow-lg`",
+          "**Primary buttons, elevated cards**"
+        ],
+        [
+          "**xl**",
+          "`0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)`",
+          "`shadow-xl`",
+          "Modals, drawers"
+        ],
+        [
+          "**2xl**",
+          "`0 25px 50px -12px rgb(0 0 0 / 0.25)`",
+          "`shadow-2xl`",
+          "Large modals"
+        ],
+        [
+          "**glow**",
+          "`0 0 20px rgba(59, 130, 246, 0.5)`",
+          "Custom",
+          "Glowing effects"
+        ]
+      ],
+      "lineNumber": 1237
+    },
+    {
+      "id": "table-7-1",
+      "headers": [
+        "Name",
+        "Value",
+        "Rem",
+        "Pixels",
+        "Tailwind",
+        "Usage"
+      ],
+      "rows": [
+        [
+          "**sm**",
+          "0.125rem",
+          "0.125",
+          "2px",
+          "`rounded-sm`",
+          "Small elements, badges"
+        ],
+        [
+          "**md**",
+          "0.375rem",
+          "0.375",
+          "6px",
+          "`rounded-md`",
+          "Inputs, small buttons"
+        ],
+        [
+          "**lg**",
+          "0.5rem",
+          "0.5",
+          "8px",
+          "`rounded-lg`",
+          "Cards, panels"
+        ],
+        [
+          "**xl**",
+          "0.75rem",
+          "0.75",
+          "12px",
+          "`rounded-xl`",
+          "**Buttons, modals (DEFAULT)**"
+        ],
+        [
+          "**2xl**",
+          "1rem",
+          "1",
+          "16px",
+          "`rounded-2xl`",
+          "Large cards"
+        ],
+        [
+          "**3xl**",
+          "1.5rem",
+          "1.5",
+          "24px",
+          "`rounded-3xl`",
+          "Hero sections"
+        ],
+        [
+          "**full**",
+          "9999px",
+          "-",
+          "-",
+          "`rounded-full`",
+          "Pills, avatars, badges"
+        ]
+      ],
+      "lineNumber": 1251
+    },
+    {
+      "id": "table-7-2",
+      "headers": [
+        "Name",
+        "Value",
+        "Tailwind",
+        "Usage"
+      ],
+      "rows": [
+        [
+          "0",
+          "0",
+          "`opacity-0`",
+          "Hidden"
+        ],
+        [
+          "10",
+          "0.1",
+          "`opacity-10`",
+          "Very faint"
+        ],
+        [
+          "20",
+          "0.2",
+          "`opacity-20`",
+          "Faint overlays"
+        ],
+        [
+          "50",
+          "0.5",
+          "`opacity-50`",
+          "Disabled states"
+        ],
+        [
+          "80",
+          "0.8",
+          "`opacity-80`",
+          "Muted elements"
+        ],
+        [
+          "90",
+          "0.9",
+          "`opacity-90`",
+          "Nearly opaque"
+        ],
+        [
+          "100",
+          "1",
+          "`opacity-100`",
+          "**Fully opaque (DEFAULT)**"
+        ]
+      ],
+      "lineNumber": 1265
+    },
+    {
+      "id": "table-7-3",
+      "headers": [
+        "Name",
+        "Value",
+        "Tailwind",
+        "Usage"
+      ],
+      "rows": [
+        [
+          "**xs**",
+          "2px",
+          "`backdrop-blur-xs`",
+          "Subtle blur"
+        ],
+        [
+          "**sm**",
+          "4px",
+          "`backdrop-blur-sm`",
+          "Small blur"
+        ],
+        [
+          "**md**",
+          "12px",
+          "`backdrop-blur-md`",
+          "Medium blur"
+        ],
+        [
+          "**lg**",
+          "16px",
+          "`backdrop-blur-lg`",
+          "**Glass effect (DEFAULT)**"
+        ],
+        [
+          "**xl**",
+          "24px",
+          "`backdrop-blur-xl`",
+          "Strong glass effect"
+        ],
+        [
+          "**2xl**",
+          "40px",
+          "`backdrop-blur-2xl`",
+          "Very strong blur"
+        ]
+      ],
+      "lineNumber": 1279
+    }
+  ],
+  "content": "## Section 7: Effect Tokens\n\n### 7.1 Box Shadows\n\n| Name | Value | Tailwind | Usage |\n|------|-------|----------|-------|\n| **sm** | `0 1px 2px 0 rgb(0 0 0 / 0.05)` | `shadow-sm` | Subtle elevation |\n| **base** | `0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)` | `shadow` | Default shadow |\n| **md** | `0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)` | `shadow-md` | Cards, panels |\n| **lg** | `0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)` | `shadow-lg` | **Primary buttons, elevated cards** |\n| **xl** | `0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)` | `shadow-xl` | Modals, drawers |\n| **2xl** | `0 25px 50px -12px rgb(0 0 0 / 0.25)` | `shadow-2xl` | Large modals |\n| **glow** | `0 0 20px rgba(59, 130, 246, 0.5)` | Custom | Glowing effects |\n\n---\n\n### 7.2 Border Radius\n\n| Name | Value | Rem | Pixels | Tailwind | Usage |\n|------|-------|-----|--------|----------|-------|\n| **sm** | 0.125rem | 0.125 | 2px | `rounded-sm` | Small elements, badges |\n| **md** | 0.375rem | 0.375 | 6px | `rounded-md` | Inputs, small buttons |\n| **lg** | 0.5rem | 0.5 | 8px | `rounded-lg` | Cards, panels |\n| **xl** | 0.75rem | 0.75 | 12px | `rounded-xl` | **Buttons, modals (DEFAULT)** |\n| **2xl** | 1rem | 1 | 16px | `rounded-2xl` | Large cards |\n| **3xl** | 1.5rem | 1.5 | 24px | `rounded-3xl` | Hero sections |\n| **full** | 9999px | - | - | `rounded-full` | Pills, avatars, badges |\n\n---\n\n### 7.3 Opacity Scale\n\n| Name | Value | Tailwind | Usage |\n|------|-------|----------|-------|\n| 0 | 0 | `opacity-0` | Hidden |\n| 10 | 0.1 | `opacity-10` | Very faint |\n| 20 | 0.2 | `opacity-20` | Faint overlays |\n| 50 | 0.5 | `opacity-50` | Disabled states |\n| 80 | 0.8 | `opacity-80` | Muted elements |\n| 90 | 0.9 | `opacity-90` | Nearly opaque |\n| 100 | 1 | `opacity-100` | **Fully opaque (DEFAULT)** |\n\n---\n\n### 7.4 Backdrop Blur\n\n| Name | Value | Tailwind | Usage |\n|------|-------|----------|-------|\n| **xs** | 2px | `backdrop-blur-xs` | Subtle blur |\n| **sm** | 4px | `backdrop-blur-sm` | Small blur |\n| **md** | 12px | `backdrop-blur-md` | Medium blur |\n| **lg** | 16px | `backdrop-blur-lg` | **Glass effect (DEFAULT)** |\n| **xl** | 24px | `backdrop-blur-xl` | Strong glass effect |\n| **2xl** | 40px | `backdrop-blur-2xl` | Very strong blur |\n\n**Glass Effect Pattern**:\n```tsx\n<div className=\"backdrop-blur-lg bg-white/10 border border-white/20 rounded-2xl\">\n  {/* Glassmorphic card */}\n</div>\n```\n\n---\n"
+}

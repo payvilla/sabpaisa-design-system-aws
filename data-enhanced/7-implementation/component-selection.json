@@ -1,0 +1,33 @@
+{
+  "section": 31,
+  "title": "Component Selection Guide",
+  "metadata": {
+    "startLine": 9131,
+    "endLine": 9207,
+    "codeBlockCount": 3,
+    "tableCount": 0,
+    "extractedAt": "2025-12-01T16:35:09.337Z"
+  },
+  "codeBlocks": [
+    {
+      "id": "code-31-0",
+      "language": "text",
+      "code": "Need to structure page content?\n│\n├─ Fixed navigation needed?\n│  └─ YES → Use DashboardLayout (Section 20)\n│     - Includes Sidebar + TopBar + Content area\n│     - Auto-handles responsive behavior\n│\n├─ Centered auth/onboarding page?\n│  └─ YES → Use centered container pattern\n│     <div className=\"min-h-screen flex items-center justify-center\">\n│       <Card variant=\"glass\" padding=\"xl\">...</Card>\n│     </div>\n│\n└─ Custom layout needed?\n   └─ Use Grid system (Section 20.2)\n      - grid-cols-1 md:grid-cols-2 lg:grid-cols-4\n      - Responsive breakpoints built-in",
+      "lineNumber": 9135
+    },
+    {
+      "id": "code-31-1",
+      "language": "text",
+      "code": "Building a form?\n│\n├─ Text input needed?\n│  ├─ Standard text → TextField (Section 10)\n│  ├─ OTP verification → OtpInput (Section 14)\n│  └─ File upload → FileUpload (Section 16)\n│\n├─ Single-page form?\n│  └─ Use Form Pattern (Section 18.2)\n│     - react-hook-form for validation\n│     - Error states per field\n│     - Toast for success/error\n│\n└─ Multi-step wizard?\n   └─ Use Multi-Step Pattern (Section 18.3)\n      - Progress indicator\n      - State persistence (sessionStorage)\n      - Back/Next navigation",
+      "lineNumber": 9157
+    },
+    {
+      "id": "code-31-2",
+      "language": "text",
+      "code": "Need to show user feedback?\n│\n├─ Immediate action feedback?\n│  ├─ Success/Error/Info → Toast (Section 13)\n│  │  - Auto-dismisses\n│  │  - Non-blocking\n│  │  - Top-right position\n│  │\n│  └─ Confirmation required → Modal (Section 15)\n│     - Blocks interaction\n│     - Requires explicit action\n│     - Backdrop overlay\n│\n├─ Status indicator needed?\n│  └─ Badge (Section 12)\n│     - Transaction status\n│     - KYC status\n│     - Notification counts\n│\n└─ Loading state?\n   ├─ Button action → isLoading prop (Section 9)\n   ├─ Page content → Skeleton (Section 23)\n   └─ Data operation → Progress bar",
+      "lineNumber": 9180
+    }
+  ],
+  "tables": [],
+  "content": "## Section 31: Component Selection Guide\n\n### 31.1 Layout Selection Decision Tree\n\n```\nNeed to structure page content?\n│\n├─ Fixed navigation needed?\n│  └─ YES → Use DashboardLayout (Section 20)\n│     - Includes Sidebar + TopBar + Content area\n│     - Auto-handles responsive behavior\n│\n├─ Centered auth/onboarding page?\n│  └─ YES → Use centered container pattern\n│     <div className=\"min-h-screen flex items-center justify-center\">\n│       <Card variant=\"glass\" padding=\"xl\">...</Card>\n│     </div>\n│\n└─ Custom layout needed?\n   └─ Use Grid system (Section 20.2)\n      - grid-cols-1 md:grid-cols-2 lg:grid-cols-4\n      - Responsive breakpoints built-in\n```\n\n### 31.2 Form Component Selection\n\n```\nBuilding a form?\n│\n├─ Text input needed?\n│  ├─ Standard text → TextField (Section 10)\n│  ├─ OTP verification → OtpInput (Section 14)\n│  └─ File upload → FileUpload (Section 16)\n│\n├─ Single-page form?\n│  └─ Use Form Pattern (Section 18.2)\n│     - react-hook-form for validation\n│     - Error states per field\n│     - Toast for success/error\n│\n└─ Multi-step wizard?\n   └─ Use Multi-Step Pattern (Section 18.3)\n      - Progress indicator\n      - State persistence (sessionStorage)\n      - Back/Next navigation\n```\n\n### 31.3 Feedback Component Selection\n\n```\nNeed to show user feedback?\n│\n├─ Immediate action feedback?\n│  ├─ Success/Error/Info → Toast (Section 13)\n│  │  - Auto-dismisses\n│  │  - Non-blocking\n│  │  - Top-right position\n│  │\n│  └─ Confirmation required → Modal (Section 15)\n│     - Blocks interaction\n│     - Requires explicit action\n│     - Backdrop overlay\n│\n├─ Status indicator needed?\n│  └─ Badge (Section 12)\n│     - Transaction status\n│     - KYC status\n│     - Notification counts\n│\n└─ Loading state?\n   ├─ Button action → isLoading prop (Section 9)\n   ├─ Page content → Skeleton (Section 23)\n   └─ Data operation → Progress bar\n```\n\n---\n"
+}

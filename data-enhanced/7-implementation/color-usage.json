@@ -1,0 +1,27 @@
+{
+  "section": 32,
+  "title": "Color Usage Guide",
+  "metadata": {
+    "startLine": 9208,
+    "endLine": 9267,
+    "codeBlockCount": 2,
+    "tableCount": 0,
+    "extractedAt": "2025-12-01T16:35:09.338Z"
+  },
+  "codeBlocks": [
+    {
+      "id": "code-32-0",
+      "language": "text",
+      "code": "Choosing a color?\n│\n├─ Primary actions / CTAs\n│  └─ Blue (Primary-600: #2563eb)\n│     - Buttons\n│     - Links\n│     - Active states\n│\n├─ Success states\n│  └─ Green (Green-400: #4ade80)\n│     - Success badges\n│     - Checkmarks\n│     - Positive indicators\n│\n├─ Warning states\n│  └─ Yellow (Yellow-400: #facc15)\n│     - Pending badges\n│     - Warning banners\n│     - Caution indicators\n│\n├─ Error states\n│  └─ Red (Red-400: #f87171)\n│     - Error badges\n│     - Failed states\n│     - Destructive actions\n│\n└─ Secondary actions\n   └─ Teal (Secondary-600: #0d9488)\n      - Secondary buttons\n      - Alternative CTAs\n      - Accent elements",
+      "lineNumber": 9212
+    },
+    {
+      "id": "code-32-1",
+      "language": "typescript",
+      "code": "// Glassmorphism backgrounds (most common)\n'bg-white/10 backdrop-blur-lg border border-white/20'  // Default cards\n'bg-white/5 backdrop-blur-xl border border-white/10'   // Glass variant\n'bg-slate-900/95 backdrop-blur-2xl'                    // Sidebar\n\n// Gradient backgrounds\n'bg-gradient-to-br from-gray-900 via-slate-900 to-gray-900'  // Page background\n'bg-gradient-to-r from-blue-600 to-blue-500'                  // Primary button\n'bg-gradient-to-r from-teal-500 via-blue-500 to-purple-500'  // Progress bar\n\n// Status backgrounds\n'bg-green-500/10'   // Success context\n'bg-red-500/10'     // Error context\n'bg-yellow-500/10'  // Warning context\n'bg-blue-500/10'    // Info context",
+      "lineNumber": 9248
+    }
+  ],
+  "tables": [],
+  "content": "## Section 32: Color Usage Guide\n\n### 32.1 Color Application Decision Tree\n\n```\nChoosing a color?\n│\n├─ Primary actions / CTAs\n│  └─ Blue (Primary-600: #2563eb)\n│     - Buttons\n│     - Links\n│     - Active states\n│\n├─ Success states\n│  └─ Green (Green-400: #4ade80)\n│     - Success badges\n│     - Checkmarks\n│     - Positive indicators\n│\n├─ Warning states\n│  └─ Yellow (Yellow-400: #facc15)\n│     - Pending badges\n│     - Warning banners\n│     - Caution indicators\n│\n├─ Error states\n│  └─ Red (Red-400: #f87171)\n│     - Error badges\n│     - Failed states\n│     - Destructive actions\n│\n└─ Secondary actions\n   └─ Teal (Secondary-600: #0d9488)\n      - Secondary buttons\n      - Alternative CTAs\n      - Accent elements\n```\n\n### 32.2 Background Color Standards\n\n```typescript\n// Glassmorphism backgrounds (most common)\n'bg-white/10 backdrop-blur-lg border border-white/20'  // Default cards\n'bg-white/5 backdrop-blur-xl border border-white/10'   // Glass variant\n'bg-slate-900/95 backdrop-blur-2xl'                    // Sidebar\n\n// Gradient backgrounds\n'bg-gradient-to-br from-gray-900 via-slate-900 to-gray-900'  // Page background\n'bg-gradient-to-r from-blue-600 to-blue-500'                  // Primary button\n'bg-gradient-to-r from-teal-500 via-blue-500 to-purple-500'  // Progress bar\n\n// Status backgrounds\n'bg-green-500/10'   // Success context\n'bg-red-500/10'     // Error context\n'bg-yellow-500/10'  // Warning context\n'bg-blue-500/10'    // Info context\n```\n\n---\n"
+}

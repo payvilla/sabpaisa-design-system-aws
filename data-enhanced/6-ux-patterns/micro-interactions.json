@@ -1,0 +1,39 @@
+{
+  "section": 25,
+  "title": "Micro-Interactions",
+  "metadata": {
+    "startLine": 8427,
+    "endLine": 8523,
+    "codeBlockCount": 4,
+    "tableCount": 0,
+    "extractedAt": "2025-12-01T16:35:09.329Z"
+  },
+  "codeBlocks": [
+    {
+      "id": "code-25-0",
+      "language": "css",
+      "code": "/* Button hover - already defined in Section 9 */\n.button {\n  transition: all 0.3s ease;\n}\n.button:hover {\n  transform: translateY(-2px);\n  box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3);\n}\n\n/* Card hover */\n.card-hover {\n  transition: all 0.3s ease;\n}\n.card-hover:hover {\n  transform: scale(1.02);\n  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);\n}",
+      "lineNumber": 8431
+    },
+    {
+      "id": "code-25-1",
+      "language": "css",
+      "code": "/* Keyboard focus - WCAG 2.2 AA compliant */\n.interactive-element:focus-visible {\n  outline: 2px solid #3b82f6;\n  outline-offset: 2px;\n  border-radius: 0.5rem;\n}\n\n/* Focus within forms */\n.input:focus-within {\n  ring: 2px;\n  ring-color: rgba(59, 130, 246, 0.5);\n  border-color: #3b82f6;\n}",
+      "lineNumber": 8453
+    },
+    {
+      "id": "code-25-2",
+      "language": "tsx",
+      "code": "const ClickableCard = ({ onClick, children }) => {\n  const [isPressed, setIsPressed] = useState(false);\n\n  return (\n    <motion.div\n      whileTap={{ scale: 0.98 }}\n      onMouseDown={() => setIsPressed(true)}\n      onMouseUp={() => setIsPressed(false)}\n      onClick={onClick}\n      className=\"cursor-pointer\"\n    >\n      {children}\n    </motion.div>\n  );\n};",
+      "lineNumber": 8471
+    },
+    {
+      "id": "code-25-3",
+      "language": "tsx",
+      "code": "const CopyButton = ({ text }) => {\n  const [copied, setCopied] = useState(false);\n\n  const handleCopy = async () => {\n    await navigator.clipboard.writeText(text);\n    setCopied(true);\n    setTimeout(() => setCopied(false), 2000);\n  };\n\n  return (\n    <button\n      onClick={handleCopy}\n      className=\"p-2 hover:bg-white/10 rounded-lg transition-colors relative\"\n    >\n      {copied ? (\n        <motion.div\n          initial={{ scale: 0 }}\n          animate={{ scale: 1 }}\n          className=\"text-green-400\"\n        >\n          <CheckCircle className=\"w-5 h-5\" />\n        </motion.div>\n      ) : (\n        <Copy className=\"w-5 h-5 text-white/60\" />\n      )}\n    </button>\n  );\n};",
+      "lineNumber": 8491
+    }
+  ],
+  "tables": [],
+  "content": "## Section 25: Micro-Interactions\n\n### 25.1 Hover Effects\n\n```css\n/* Button hover - already defined in Section 9 */\n.button {\n  transition: all 0.3s ease;\n}\n.button:hover {\n  transform: translateY(-2px);\n  box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3);\n}\n\n/* Card hover */\n.card-hover {\n  transition: all 0.3s ease;\n}\n.card-hover:hover {\n  transform: scale(1.02);\n  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);\n}\n```\n\n### 25.2 Focus Indicators\n\n```css\n/* Keyboard focus - WCAG 2.2 AA compliant */\n.interactive-element:focus-visible {\n  outline: 2px solid #3b82f6;\n  outline-offset: 2px;\n  border-radius: 0.5rem;\n}\n\n/* Focus within forms */\n.input:focus-within {\n  ring: 2px;\n  ring-color: rgba(59, 130, 246, 0.5);\n  border-color: #3b82f6;\n}\n```\n\n### 25.3 Click Feedback\n\n```tsx\nconst ClickableCard = ({ onClick, children }) => {\n  const [isPressed, setIsPressed] = useState(false);\n\n  return (\n    <motion.div\n      whileTap={{ scale: 0.98 }}\n      onMouseDown={() => setIsPressed(true)}\n      onMouseUp={() => setIsPressed(false)}\n      onClick={onClick}\n      className=\"cursor-pointer\"\n    >\n      {children}\n    </motion.div>\n  );\n};\n```\n\n### 25.4 Copy to Clipboard Feedback\n\n```tsx\nconst CopyButton = ({ text }) => {\n  const [copied, setCopied] = useState(false);\n\n  const handleCopy = async () => {\n    await navigator.clipboard.writeText(text);\n    setCopied(true);\n    setTimeout(() => setCopied(false), 2000);\n  };\n\n  return (\n    <button\n      onClick={handleCopy}\n      className=\"p-2 hover:bg-white/10 rounded-lg transition-colors relative\"\n    >\n      {copied ? (\n        <motion.div\n          initial={{ scale: 0 }}\n          animate={{ scale: 1 }}\n          className=\"text-green-400\"\n        >\n          <CheckCircle className=\"w-5 h-5\" />\n        </motion.div>\n      ) : (\n        <Copy className=\"w-5 h-5 text-white/60\" />\n      )}\n    </button>\n  );\n};\n```\n\n---\n"
+}

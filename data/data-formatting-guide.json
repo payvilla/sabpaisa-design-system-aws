@@ -1,0 +1,537 @@
+{
+  "dataFormattingGuide": {
+    "version": "2.0.0",
+    "description": "Comprehensive guide for formatting financial data, dates, masking sensitive information, and displaying receipts in SabPaisa COB platform",
+    "lastUpdated": "2025-11-25",
+
+    "currencyFormatting": {
+      "description": "Indian Rupee (INR) formatting standards",
+      "locale": "en-IN",
+      "currency": "INR",
+      "implementation": {
+        "function": "formatCurrency(amount: number, currency: string = 'INR'): string",
+        "library": "Intl.NumberFormat",
+        "example": "formatCurrency(123456.78) → ₹1,23,456.78"
+      },
+      "rules": {
+        "symbol": "₹ (Indian Rupee Sign U+20B9)",
+        "symbolPosition": "Prefix (before amount)",
+        "decimalSeparator": ".",
+        "groupingSeparator": ",",
+        "groupingStyle": "Indian numbering system (Lakhs and Crores)",
+        "minimumDecimals": 2,
+        "maximumDecimals": 2,
+        "examples": [
+          { "input": 1234.5, "output": "₹1,234.50", "context": "Small amounts" },
+          { "input": 123456, "output": "₹1,23,456.00", "context": "Lakhs" },
+          { "input": 12345678, "output": "₹1,23,45,678.00", "context": "Crores" },
+          { "input": 0.5, "output": "₹0.50", "context": "Sub-rupee amounts" }
+        ]
+      },
+      "displayRules": {
+        "largeAmounts": {
+          "description": "Display prominent amounts in transactions, settlements",
+          "fontSize": "text-2xl or larger",
+          "fontWeight": "font-bold or font-semibold",
+          "color": {
+            "positive": "text-emerald-500 (green for credit)",
+            "negative": "text-red-500 (red for debit)",
+            "neutral": "text-white or text-gray-900"
+          }
+        },
+        "smallAmounts": {
+          "description": "Fees, taxes, or supporting amounts",
+          "fontSize": "text-sm",
+          "fontWeight": "font-normal or font-medium",
+          "color": "text-gray-500 or text-white/70"
+        },
+        "amountBreakdown": {
+          "pattern": "Visual hierarchy showing calculation",
+          "example": [
+            { "label": "Gross Amount", "value": "₹1,00,000.00", "style": "large, bold" },
+            { "label": "- Processing Fee (1.99%)", "value": "₹1,990.00", "style": "medium, muted" },
+            { "label": "- GST (18%)", "value": "₹358.20", "style": "medium, muted" },
+            { "label": "= Net Amount", "value": "₹97,651.80", "style": "large, bold, success color" }
+          ]
+        }
+      },
+      "compactFormatting": {
+        "description": "Abbreviated format for large numbers in dashboards",
+        "rules": {
+          "thousands": "Use 'K' (e.g., ₹12.5K for ₹12,500)",
+          "lakhs": "Use 'L' (e.g., ₹1.5L for ₹1,50,000)",
+          "crores": "Use 'Cr' (e.g., ₹2.3Cr for ₹2,30,00,000)"
+        },
+        "implementation": "Conditional based on magnitude",
+        "examples": [
+          { "input": 12500, "output": "₹12.5K" },
+          { "input": 150000, "output": "₹1.5L" },
+          { "input": 23000000, "output": "₹2.3Cr" }
+        ]
+      }
+    },
+
+    "dateTimeFormatting": {
+      "description": "Date and time display standards",
+      "timezone": "Asia/Kolkata (IST - Indian Standard Time)",
+      "locale": "en-IN",
+      "formats": {
+        "fullDateTime": {
+          "pattern": "DD MMM YYYY, HH:mm IST",
+          "example": "15 Jan 2025, 14:30 IST",
+          "function": "formatDate(date: string | Date): string",
+          "usage": "Transaction timestamps, settlement dates, audit logs"
+        },
+        "shortDateTime": {
+          "pattern": "DD MMM, HH:mm",
+          "example": "15 Jan, 14:30",
+          "function": "formatShortDate(date: string | Date): string",
+          "usage": "List views, tables where space is limited"
+        },
+        "dateOnly": {
+          "pattern": "DD MMM YYYY",
+          "example": "15 Jan 2025",
+          "usage": "Reports, filters, date pickers"
+        },
+        "relativeTime": {
+          "pattern": "Relative to current time",
+          "examples": [
+            { "diff": "< 1 minute", "output": "Just now" },
+            { "diff": "< 60 minutes", "output": "X minutes ago" },
+            { "diff": "< 24 hours", "output": "X hours ago" },
+            { "diff": "< 7 days", "output": "X days ago" },
+            { "diff": "> 7 days", "output": "DD MMM YYYY" }
+          ],
+          "usage": "Recent activity feeds, notifications"
+        },
+        "businessDay": {
+          "description": "Settlement date calculation excluding weekends",
+          "function": "calculateSettlementDate(createdDate: string, tDays: number = 2): string",
+          "rules": [
+            "Skip Saturdays (day === 6)",
+            "Skip Sundays (day === 0)",
+            "For T+2, add 2 business days to transaction date",
+            "If calculated date falls on weekend, move to next Monday"
+          ],
+          "example": "Transaction on Friday → Settlement on Tuesday (T+2)"
+        }
+      },
+      "displayRules": {
+        "alwaysShowTimezone": true,
+        "use24HourFormat": true,
+        "monthFormat": "Short name (Jan, Feb, Mar)",
+        "yearFormat": "Full (2025, not '25)",
+        "dayFormat": "2-digit (01, 02, 15, not 1, 2, 15)"
+      }
+    },
+
+    "dataMasking": {
+      "description": "Privacy protection by masking sensitive data",
+      "purpose": "Comply with PCI-DSS, DPDP Act 2023, and data privacy regulations",
+      "fields": {
+        "email": {
+          "function": "maskEmail(email: string): string",
+          "algorithm": "Show first character of local part + *** + first character of domain + *",
+          "examples": [
+            { "input": "john.doe@example.com", "output": "j***@e*.com" },
+            { "input": "merchant@sabpaisa.in", "output": "m***@s*.in" }
+          ],
+          "usage": "Transaction lists, exports, customer displays"
+        },
+        "phone": {
+          "function": "maskPhone(phone: string): string",
+          "algorithm": "Show first 2 digits + **** + last 2 digits + **",
+          "examples": [
+            { "input": "9876543210", "output": "98****10**" },
+            { "input": "+919876543210", "output": "+919****10**" }
+          ],
+          "usage": "Customer information, KYC displays"
+        },
+        "panCard": {
+          "function": "maskPAN(pan: string): string",
+          "algorithm": "Show first 5 characters + X + last 4 digits",
+          "examples": [
+            { "input": "ABCDE1234F", "output": "ABCDEX234F" },
+            { "input": "XYZAB9876C", "output": "XYZABX876C" }
+          ],
+          "usage": "KYC documents, merchant profiles",
+          "regulation": "Required by Income Tax Department"
+        },
+        "cardNumber": {
+          "function": "maskCardNumber(cardNumber: string): string",
+          "algorithm": "**** + last 4 digits",
+          "examples": [
+            { "input": "4111111111111111", "output": "****1111" },
+            { "input": "5500000000000004", "output": "****0004" }
+          ],
+          "usage": "Payment method displays, transaction details",
+          "regulation": "PCI-DSS compliance"
+        },
+        "bankAccount": {
+          "algorithm": "**** + last 4 digits",
+          "examples": [
+            { "input": "12345678901234", "output": "****1234" },
+            { "input": "9876543210", "output": "****3210" }
+          ],
+          "usage": "Settlement information, bank details"
+        },
+        "upiId": {
+          "algorithm": "Show first 3 characters + *** + last 3 characters",
+          "examples": [
+            { "input": "user@paytm", "output": "use***ytm" },
+            { "input": "merchant@upi", "output": "mer***upi" }
+          ]
+        }
+      },
+      "unmaskingRules": {
+        "whoCanUnmask": "Admin users with 'view_full_data' permission",
+        "auditLog": "All unmasking actions logged with user, timestamp, reason",
+        "userInterface": [
+          "Show mask by default",
+          "Eye icon to reveal (requires permission)",
+          "Copy icon to copy unmasked value to clipboard (requires permission)"
+        ]
+      }
+    },
+
+    "statusIndicators": {
+      "description": "Visual representation of transaction and process statuses",
+      "implementation": {
+        "function": "getStatusColor(status: TransactionStatus): string",
+        "returns": "Tailwind CSS classes for background, text, border"
+      },
+      "statuses": {
+        "success": {
+          "color": "emerald-500",
+          "bg": "bg-emerald-500/10",
+          "text": "text-emerald-400",
+          "border": "border-emerald-500/20",
+          "icon": "CheckCircle",
+          "usage": "Completed transactions, approved requests, passed verifications"
+        },
+        "pending": {
+          "color": "amber-500",
+          "bg": "bg-amber-500/10",
+          "text": "text-amber-400",
+          "border": "border-amber-500/20",
+          "icon": "Clock",
+          "usage": "Processing transactions, pending approvals, awaiting verification"
+        },
+        "failed": {
+          "color": "red-500",
+          "bg": "bg-red-500/10",
+          "text": "text-red-400",
+          "border": "border-red-500/20",
+          "icon": "XCircle",
+          "usage": "Failed payments, rejected applications, verification failures"
+        },
+        "refunded": {
+          "color": "blue-500",
+          "bg": "bg-blue-500/10",
+          "text": "text-blue-400",
+          "border": "border-blue-500/20",
+          "icon": "RefreshCw",
+          "usage": "Refunded transactions"
+        },
+        "chargeback": {
+          "color": "purple-500",
+          "bg": "bg-purple-500/10",
+          "text": "text-purple-400",
+          "border": "border-purple-500/20",
+          "icon": "AlertCircle",
+          "usage": "Disputed transactions"
+        },
+        "cancelled": {
+          "color": "gray-500",
+          "bg": "bg-gray-500/10",
+          "text": "text-gray-400",
+          "border": "border-gray-500/20",
+          "icon": "XCircle",
+          "usage": "Cancelled transactions, inactive records"
+        }
+      },
+      "badgeComponent": {
+        "structure": "<span className='px-3 py-1 rounded-full text-xs font-medium {color-classes}'>{status}</span>",
+        "variants": [
+          "Small: px-2 py-0.5 text-xs",
+          "Medium: px-3 py-1 text-sm",
+          "Large: px-4 py-2 text-base"
+        ]
+      }
+    },
+
+    "paymentMethodIcons": {
+      "description": "Visual icons for payment methods",
+      "implementation": {
+        "function": "getMethodIcon(method: PaymentMethod): string",
+        "returns": "Emoji or icon component"
+      },
+      "methods": {
+        "upi": { "icon": "📱", "label": "UPI", "color": "text-purple-500" },
+        "card": { "icon": "💳", "label": "Card", "color": "text-blue-500" },
+        "netbanking": { "icon": "🏦", "label": "Net Banking", "color": "text-teal-500" },
+        "wallet": { "icon": "👛", "label": "Wallet", "color": "text-amber-500" },
+        "bnpl": { "icon": "📊", "label": "Buy Now Pay Later", "color": "text-indigo-500" },
+        "emi": { "icon": "📈", "label": "EMI", "color": "text-green-500" }
+      },
+      "alternativeImplementation": {
+        "library": "Lucide React or custom SVG icons",
+        "components": ["CreditCard", "Smartphone", "Building", "Wallet", "TrendingUp"]
+      }
+    },
+
+    "receiptFormatting": {
+      "description": "Transaction receipt and invoice generation",
+      "types": {
+        "transactionReceipt": {
+          "sections": [
+            {
+              "name": "Header",
+              "content": ["Company Logo", "Company Name: SabPaisa", "Receipt Title", "Date & Time"]
+            },
+            {
+              "name": "Transaction Details",
+              "fields": [
+                { "label": "Transaction ID", "value": "Unmasked, with copy button" },
+                { "label": "Order ID", "value": "Merchant's order reference" },
+                { "label": "Date & Time", "value": "DD MMM YYYY, HH:mm IST" },
+                { "label": "Status", "value": "Badge with color" },
+                { "label": "Payment Method", "value": "Icon + label" }
+              ]
+            },
+            {
+              "name": "Amount Breakdown",
+              "fields": [
+                { "label": "Amount", "value": "₹X,XX,XXX.XX (large, bold)" },
+                { "label": "Processing Fee", "value": "₹XXX.XX" },
+                { "label": "GST", "value": "₹XX.XX" },
+                { "label": "Total", "value": "₹X,XX,XXX.XX (large, bold)" }
+              ]
+            },
+            {
+              "name": "Customer Information",
+              "fields": [
+                { "label": "Name", "value": "Full name" },
+                { "label": "Email", "value": "Masked" },
+                { "label": "Phone", "value": "Masked" }
+              ]
+            },
+            {
+              "name": "Merchant Information",
+              "fields": [
+                { "label": "Merchant Name", "value": "Business name" },
+                { "label": "Merchant Code", "value": "Unique identifier" },
+                { "label": "GST Number", "value": "If applicable" }
+              ]
+            },
+            {
+              "name": "Footer",
+              "content": [
+                "Thank you message",
+                "Support contact information",
+                "Terms & conditions link",
+                "Disclaimer: 'This is a computer-generated receipt'"
+              ]
+            }
+          ],
+          "exportFormats": ["PDF", "Email HTML", "Print-friendly HTML"]
+        },
+        "settlementReport": {
+          "sections": [
+            {
+              "name": "Header",
+              "content": ["Company Logo", "Report Title: Settlement Report", "Period", "Generated Date"]
+            },
+            {
+              "name": "Summary",
+              "metrics": [
+                { "label": "Total Transactions", "value": "Count" },
+                { "label": "Gross Amount", "value": "₹X,XX,XXX.XX" },
+                { "label": "Processing Fees", "value": "₹X,XXX.XX" },
+                { "label": "GST", "value": "₹XXX.XX" },
+                { "label": "Net Settlement Amount", "value": "₹X,XX,XXX.XX (highlighted)" }
+              ]
+            },
+            {
+              "name": "Transaction Table",
+              "columns": ["Date", "Transaction ID", "Amount", "Fee", "GST", "Net", "Status"],
+              "pagination": "50 rows per page",
+              "totals": "Show sum at bottom of each column"
+            },
+            {
+              "name": "Bank Details",
+              "fields": [
+                { "label": "Account Number", "value": "Masked" },
+                { "label": "IFSC Code", "value": "Unmasked" },
+                { "label": "UTR Number", "value": "Unmasked" },
+                { "label": "Settlement Date", "value": "DD MMM YYYY" }
+              ]
+            }
+          ],
+          "exportFormats": ["PDF", "Excel", "CSV"]
+        }
+      },
+      "pdfStyling": {
+        "font": "Roboto or Inter",
+        "colors": {
+          "primary": "#2563eb (SabPaisa Blue)",
+          "secondary": "#0d9488 (SabPaisa Teal)",
+          "text": "#111827 (Dark gray)",
+          "muted": "#6b7280 (Gray)"
+        },
+        "spacing": "Consistent margins and padding",
+        "branding": "Header with logo, footer with company info"
+      }
+    },
+
+    "exportFormatting": {
+      "description": "Data sanitization and formatting for exports",
+      "csvExport": {
+        "function": "generateTransactionCSV(transactions: Transaction[]): string",
+        "headers": [
+          "Transaction ID",
+          "Order ID",
+          "Date",
+          "Amount",
+          "Status",
+          "Method",
+          "Customer Email (Masked)",
+          "Customer Phone (Masked)",
+          "Bank",
+          "UTR/RRN",
+          "Settlement Batch",
+          "Net Amount"
+        ],
+        "rules": {
+          "dateFormat": "DD MMM YYYY, HH:mm IST",
+          "amountFormat": "₹X,XX,XXX.XX",
+          "maskingSensitive": "Always mask PII (email, phone)",
+          "encoding": "UTF-8 with BOM for Excel compatibility",
+          "separator": "Comma (,)",
+          "quoteFields": "Quote fields containing commas or newlines"
+        }
+      },
+      "excelExport": {
+        "library": "xlsx or exceljs",
+        "features": [
+          "Multiple sheets (Summary, Transactions, Fees)",
+          "Formatted cells (currency, date)",
+          "Conditional formatting (color-coded statuses)",
+          "Frozen header row",
+          "Auto-fit column widths",
+          "Formulas for totals"
+        ]
+      },
+      "sanitization": {
+        "function": "sanitizeExportData(transaction: Transaction): Partial<Transaction>",
+        "removedFields": ["customer object", "auditTrail", "internal notes"],
+        "maskedFields": ["email", "phone", "card number", "bank account"],
+        "purpose": "Prevent accidental PII leakage in exports"
+      }
+    },
+
+    "riskScoring": {
+      "description": "Risk level calculation and display",
+      "function": "getRiskLevel(score: number): { level: string; color: string }",
+      "scoring": {
+        "0-30": { "level": "Low", "color": "text-emerald-400", "action": "Standard processing" },
+        "31-70": { "level": "Medium", "color": "text-amber-400", "action": "Enhanced monitoring" },
+        "71-100": { "level": "High", "color": "text-red-400", "action": "Additional verification or reject" }
+      },
+      "visualization": {
+        "progressBar": "Horizontal bar with color gradient",
+        "badge": "Pill-shaped badge with level and color",
+        "chart": "Gauge chart showing score on 0-100 scale"
+      }
+    },
+
+    "idGeneration": {
+      "description": "Unique identifier format standards",
+      "formats": {
+        "transactionId": {
+          "pattern": "TXN{YYYYMMDD}{6-digit-sequence}",
+          "example": "TXN20250115000123",
+          "length": 17,
+          "uniqueness": "Global unique across all merchants"
+        },
+        "settlementId": {
+          "pattern": "SETL{6-digit-sequence}",
+          "example": "SETL001234",
+          "length": 10
+        },
+        "batchId": {
+          "pattern": "BATCH{YYYYMMDD}",
+          "example": "BATCH20250115",
+          "length": 13
+        },
+        "merchantCode": {
+          "pattern": "MERCH{3-digit-sequence}",
+          "example": "MERCH001",
+          "length": 8
+        },
+        "midIdentifier": {
+          "pattern": "{BANK_PREFIX}_{MERCHANT_ID}_MID{sequence}",
+          "example": "HDFC_MERCH001_MID001",
+          "length": "Variable"
+        }
+      }
+    },
+
+    "validationPatterns": {
+      "description": "Input validation and formatting",
+      "patterns": {
+        "pan": {
+          "regex": "^[A-Z]{5}[0-9]{4}[A-Z]{1}$",
+          "example": "ABCDE1234F",
+          "validation": "5 uppercase letters + 4 digits + 1 uppercase letter"
+        },
+        "gstin": {
+          "regex": "^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$",
+          "example": "22ABCDE1234F1Z5",
+          "length": 15
+        },
+        "ifsc": {
+          "regex": "^[A-Z]{4}0[A-Z0-9]{6}$",
+          "example": "HDFC0001234",
+          "length": 11
+        },
+        "upiId": {
+          "regex": "^[a-zA-Z0-9.\\-_]+@[a-zA-Z]+$",
+          "example": "user@paytm",
+          "validation": "username + @ + bank/provider"
+        },
+        "mobile": {
+          "regex": "^[6-9][0-9]{9}$",
+          "example": "9876543210",
+          "length": 10,
+          "note": "Indian mobile numbers start with 6-9"
+        },
+        "email": {
+          "regex": "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$",
+          "validation": "Standard RFC 5322 email format"
+        }
+      }
+    },
+
+    "utilityFunctions": {
+      "description": "Helper functions for data manipulation",
+      "functions": {
+        "debounce": {
+          "signature": "debounce<T>(func: T, delay: number): (...args) => void",
+          "usage": "Delay search API calls until user stops typing",
+          "delay": "300-500ms recommended"
+        },
+        "throttle": {
+          "signature": "throttle<T>(func: T, limit: number): (...args) => void",
+          "usage": "Limit rate of scroll/resize event handlers",
+          "limit": "100-200ms recommended"
+        },
+        "copyToClipboard": {
+          "signature": "copyToClipboard(text: string): Promise<boolean>",
+          "usage": "Copy transaction IDs, UPI IDs, etc.",
+          "feedback": "Show toast notification on success/failure"
+        }
+      }
+    }
+  }
+}

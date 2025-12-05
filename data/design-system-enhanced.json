@@ -1,0 +1,754 @@
+{
+  "designSystem": {
+    "name": "SabPaisa COB Design System - Enhanced",
+    "version": "2.0.0",
+    "description": "A comprehensive design system for building consistent, accessible, and beautiful financial applications for SabPaisa's Core Banking platform - Enhanced with multi-format colors, expanded components, and fintech patterns",
+    "lastUpdated": "2025-11-25",
+    "brandName": "SabPaisa",
+    "industry": "FinTech / Core Banking",
+    "enhancements": {
+      "v2.0.0": [
+        "Added HSL color format for all colors",
+        "Added RGBA variants with opacity levels (10%, 20%, 50%, 80%, 90%)",
+        "Added CSS custom properties format",
+        "Added Tailwind CSS class names",
+        "Added WCAG contrast ratios for all color combinations",
+        "Expanded button component documentation",
+        "Added fintech-specific workflow patterns",
+        "Expanded component library with modals, dropdowns, tabs, etc.",
+        "Added data formatting patterns for amounts, dates, masking"
+      ]
+    }
+  },
+
+  "colorFormats": {
+    "description": "All colors are provided in multiple formats for maximum flexibility",
+    "formats": {
+      "hex": "Hexadecimal format (#RRGGBB)",
+      "rgb": "RGB format rgb(r, g, b)",
+      "hsl": "HSL format hsl(h, s%, l%)",
+      "rgba": "RGBA with opacity variants (10%, 20%, 50%, 80%, 90%)",
+      "cssVar": "CSS custom property format (--color-name-shade)",
+      "tailwind": "Tailwind CSS class name (color-name-shade)"
+    }
+  },
+
+  "designTokens": {
+    "colors": {
+      "primary": {
+        "name": "Blue Gradient",
+        "usage": "Main CTAs, primary navigation, key interactive elements, primary actions",
+        "cssVarPrefix": "--color-primary",
+        "tailwindPrefix": "primary",
+        "shades": {
+          "50": {
+            "hex": "#eff6ff",
+            "rgb": "rgb(239, 246, 255)",
+            "hsl": "hsl(214, 100%, 97%)",
+            "rgba": {
+              "10": "rgba(239, 246, 255, 0.1)",
+              "20": "rgba(239, 246, 255, 0.2)",
+              "50": "rgba(239, 246, 255, 0.5)",
+              "80": "rgba(239, 246, 255, 0.8)",
+              "90": "rgba(239, 246, 255, 0.9)"
+            },
+            "cssVar": "--color-primary-50",
+            "tailwind": "primary-50",
+            "usage": "Lightest backgrounds, subtle highlights",
+            "contrastRatios": {
+              "black": 18.5,
+              "white": 1.13
+            }
+          },
+          "100": {
+            "hex": "#dbeafe",
+            "rgb": "rgb(219, 234, 254)",
+            "hsl": "hsl(214, 95%, 93%)",
+            "rgba": {
+              "10": "rgba(219, 234, 254, 0.1)",
+              "20": "rgba(219, 234, 254, 0.2)",
+              "50": "rgba(219, 234, 254, 0.5)",
+              "80": "rgba(219, 234, 254, 0.8)",
+              "90": "rgba(219, 234, 254, 0.9)"
+            },
+            "cssVar": "--color-primary-100",
+            "tailwind": "primary-100",
+            "usage": "Light backgrounds, disabled states",
+            "contrastRatios": {
+              "black": 16.2,
+              "white": 1.29
+            }
+          },
+          "200": {
+            "hex": "#bfdbfe",
+            "rgb": "rgb(191, 219, 254)",
+            "hsl": "hsl(213, 97%, 87%)",
+            "rgba": {
+              "10": "rgba(191, 219, 254, 0.1)",
+              "20": "rgba(191, 219, 254, 0.2)",
+              "50": "rgba(191, 219, 254, 0.5)",
+              "80": "rgba(191, 219, 254, 0.8)",
+              "90": "rgba(191, 219, 254, 0.9)"
+            },
+            "cssVar": "--color-primary-200",
+            "tailwind": "primary-200",
+            "usage": "Hover backgrounds, selected states",
+            "contrastRatios": {
+              "black": 13.1,
+              "white": 1.6
+            }
+          },
+          "300": {
+            "hex": "#93c5fd",
+            "rgb": "rgb(147, 197, 253)",
+            "hsl": "hsl(212, 96%, 78%)",
+            "rgba": {
+              "10": "rgba(147, 197, 253, 0.1)",
+              "20": "rgba(147, 197, 253, 0.2)",
+              "50": "rgba(147, 197, 253, 0.5)",
+              "80": "rgba(147, 197, 253, 0.8)",
+              "90": "rgba(147, 197, 253, 0.9)"
+            },
+            "cssVar": "--color-primary-300",
+            "tailwind": "primary-300",
+            "usage": "Disabled states, subtle accents",
+            "contrastRatios": {
+              "black": 9.2,
+              "white": 2.28
+            }
+          },
+          "400": {
+            "hex": "#60a5fa",
+            "rgb": "rgb(96, 165, 250)",
+            "hsl": "hsl(213, 94%, 68%)",
+            "rgba": {
+              "10": "rgba(96, 165, 250, 0.1)",
+              "20": "rgba(96, 165, 250, 0.2)",
+              "50": "rgba(96, 165, 250, 0.5)",
+              "80": "rgba(96, 165, 250, 0.8)",
+              "90": "rgba(96, 165, 250, 0.9)"
+            },
+            "cssVar": "--color-primary-400",
+            "tailwind": "primary-400",
+            "usage": "Borders, icons, lighter interactive elements",
+            "contrastRatios": {
+              "black": 5.8,
+              "white": 3.62
+            }
+          },
+          "500": {
+            "hex": "#3b82f6",
+            "rgb": "rgb(59, 130, 246)",
+            "hsl": "hsl(217, 91%, 60%)",
+            "rgba": {
+              "10": "rgba(59, 130, 246, 0.1)",
+              "20": "rgba(59, 130, 246, 0.2)",
+              "50": "rgba(59, 130, 246, 0.5)",
+              "80": "rgba(59, 130, 246, 0.8)",
+              "90": "rgba(59, 130, 246, 0.9)"
+            },
+            "cssVar": "--color-primary-500",
+            "tailwind": "primary-500",
+            "usage": "Base color, main actions, links",
+            "wcagAA": true,
+            "contrastRatios": {
+              "black": 3.94,
+              "white": 5.33
+            }
+          },
+          "600": {
+            "hex": "#2563eb",
+            "rgb": "rgb(37, 99, 235)",
+            "hsl": "hsl(221, 83%, 53%)",
+            "rgba": {
+              "10": "rgba(37, 99, 235, 0.1)",
+              "20": "rgba(37, 99, 235, 0.2)",
+              "50": "rgba(37, 99, 235, 0.5)",
+              "80": "rgba(37, 99, 235, 0.8)",
+              "90": "rgba(37, 99, 235, 0.9)"
+            },
+            "cssVar": "--color-primary-600",
+            "tailwind": "primary-600",
+            "usage": "Hover states, emphasized actions",
+            "default": true,
+            "wcagAA": true,
+            "contrastRatios": {
+              "black": 3.05,
+              "white": 6.87
+            }
+          },
+          "700": {
+            "hex": "#1d4ed8",
+            "rgb": "rgb(29, 78, 216)",
+            "hsl": "hsl(224, 76%, 48%)",
+            "rgba": {
+              "10": "rgba(29, 78, 216, 0.1)",
+              "20": "rgba(29, 78, 216, 0.2)",
+              "50": "rgba(29, 78, 216, 0.5)",
+              "80": "rgba(29, 78, 216, 0.8)",
+              "90": "rgba(29, 78, 216, 0.9)"
+            },
+            "cssVar": "--color-primary-700",
+            "tailwind": "primary-700",
+            "usage": "Active/pressed states, dark hover",
+            "wcagAAA": true,
+            "contrastRatios": {
+              "black": 2.38,
+              "white": 8.81
+            }
+          },
+          "800": {
+            "hex": "#1e40af",
+            "rgb": "rgb(30, 64, 175)",
+            "hsl": "hsl(226, 71%, 40%)",
+            "rgba": {
+              "10": "rgba(30, 64, 175, 0.1)",
+              "20": "rgba(30, 64, 175, 0.2)",
+              "50": "rgba(30, 64, 175, 0.5)",
+              "80": "rgba(30, 64, 175, 0.8)",
+              "90": "rgba(30, 64, 175, 0.9)"
+            },
+            "cssVar": "--color-primary-800",
+            "tailwind": "primary-800",
+            "usage": "Dark text on light backgrounds",
+            "wcagAAA": true,
+            "contrastRatios": {
+              "black": 1.83,
+              "white": 11.46
+            }
+          },
+          "900": {
+            "hex": "#1e3a8a",
+            "rgb": "rgb(30, 58, 138)",
+            "hsl": "hsl(226, 64%, 33%)",
+            "rgba": {
+              "10": "rgba(30, 58, 138, 0.1)",
+              "20": "rgba(30, 58, 138, 0.2)",
+              "50": "rgba(30, 58, 138, 0.5)",
+              "80": "rgba(30, 58, 138, 0.8)",
+              "90": "rgba(30, 58, 138, 0.9)"
+            },
+            "cssVar": "--color-primary-900",
+            "tailwind": "primary-900",
+            "usage": "Darkest, high contrast text, headings",
+            "wcagAAA": true,
+            "contrastRatios": {
+              "black": 1.48,
+              "white": 14.17
+            }
+          }
+        },
+        "gradients": {
+          "primary": {
+            "css": "linear-gradient(to right, #60a5fa, #3b82f6)",
+            "stops": ["#60a5fa", "#3b82f6"],
+            "tailwind": "bg-gradient-to-r from-primary-400 to-primary-500"
+          },
+          "primaryHover": {
+            "css": "linear-gradient(to right, #2563eb, #1d4ed8)",
+            "stops": ["#2563eb", "#1d4ed8"],
+            "tailwind": "bg-gradient-to-r from-primary-600 to-primary-700"
+          },
+          "primaryVertical": {
+            "css": "linear-gradient(to bottom, #3b82f6, #2563eb)",
+            "stops": ["#3b82f6", "#2563eb"],
+            "tailwind": "bg-gradient-to-b from-primary-500 to-primary-600"
+          },
+          "primaryRadial": {
+            "css": "radial-gradient(circle, #60a5fa, #1d4ed8)",
+            "stops": ["#60a5fa", "#1d4ed8"],
+            "tailwind": "bg-radial from-primary-400 to-primary-700"
+          }
+        },
+        "accessibilityMatrix": {
+          "description": "WCAG 2.2 compliance for text on colored backgrounds",
+          "textOnPrimary500": {
+            "white": { "ratio": 5.33, "level": "AA", "usage": "Recommended for body text" },
+            "black": { "ratio": 3.94, "level": "AA", "usage": "Use 600+ for better contrast" }
+          },
+          "textOnPrimary600": {
+            "white": { "ratio": 6.87, "level": "AAA", "usage": "Excellent for all text sizes" },
+            "black": { "ratio": 3.05, "level": "AA", "usage": "Minimum for large text" }
+          }
+        }
+      },
+
+      "secondary": {
+        "name": "Teal/Cyan",
+        "usage": "Secondary actions, accents, highlights, supporting elements",
+        "cssVarPrefix": "--color-secondary",
+        "tailwindPrefix": "secondary",
+        "shades": {
+          "50": {
+            "hex": "#f0fdfa",
+            "rgb": "rgb(240, 253, 250)",
+            "hsl": "hsl(166, 76%, 97%)",
+            "rgba": {
+              "10": "rgba(240, 253, 250, 0.1)",
+              "20": "rgba(240, 253, 250, 0.2)",
+              "50": "rgba(240, 253, 250, 0.5)",
+              "80": "rgba(240, 253, 250, 0.8)",
+              "90": "rgba(240, 253, 250, 0.9)"
+            },
+            "cssVar": "--color-secondary-50",
+            "tailwind": "secondary-50"
+          },
+          "100": {
+            "hex": "#ccfbf1",
+            "rgb": "rgb(204, 251, 241)",
+            "hsl": "hsl(167, 85%, 89%)",
+            "rgba": {
+              "10": "rgba(204, 251, 241, 0.1)",
+              "20": "rgba(204, 251, 241, 0.2)",
+              "50": "rgba(204, 251, 241, 0.5)",
+              "80": "rgba(204, 251, 241, 0.8)",
+              "90": "rgba(204, 251, 241, 0.9)"
+            },
+            "cssVar": "--color-secondary-100",
+            "tailwind": "secondary-100"
+          },
+          "200": {
+            "hex": "#99f6e4",
+            "rgb": "rgb(153, 246, 228)",
+            "hsl": "hsl(168, 84%, 78%)",
+            "rgba": {
+              "10": "rgba(153, 246, 228, 0.1)",
+              "20": "rgba(153, 246, 228, 0.2)",
+              "50": "rgba(153, 246, 228, 0.5)",
+              "80": "rgba(153, 246, 228, 0.8)",
+              "90": "rgba(153, 246, 228, 0.9)"
+            },
+            "cssVar": "--color-secondary-200",
+            "tailwind": "secondary-200"
+          },
+          "300": {
+            "hex": "#5eead4",
+            "rgb": "rgb(94, 234, 212)",
+            "hsl": "hsl(171, 76%, 64%)",
+            "rgba": {
+              "10": "rgba(94, 234, 212, 0.1)",
+              "20": "rgba(94, 234, 212, 0.2)",
+              "50": "rgba(94, 234, 212, 0.5)",
+              "80": "rgba(94, 234, 212, 0.8)",
+              "90": "rgba(94, 234, 212, 0.9)"
+            },
+            "cssVar": "--color-secondary-300",
+            "tailwind": "secondary-300"
+          },
+          "400": {
+            "hex": "#2dd4bf",
+            "rgb": "rgb(45, 212, 191)",
+            "hsl": "hsl(172, 66%, 50%)",
+            "rgba": {
+              "10": "rgba(45, 212, 191, 0.1)",
+              "20": "rgba(45, 212, 191, 0.2)",
+              "50": "rgba(45, 212, 191, 0.5)",
+              "80": "rgba(45, 212, 191, 0.8)",
+              "90": "rgba(45, 212, 191, 0.9)"
+            },
+            "cssVar": "--color-secondary-400",
+            "tailwind": "secondary-400"
+          },
+          "500": {
+            "hex": "#14b8a6",
+            "rgb": "rgb(20, 184, 166)",
+            "hsl": "hsl(173, 80%, 40%)",
+            "rgba": {
+              "10": "rgba(20, 184, 166, 0.1)",
+              "20": "rgba(20, 184, 166, 0.2)",
+              "50": "rgba(20, 184, 166, 0.5)",
+              "80": "rgba(20, 184, 166, 0.8)",
+              "90": "rgba(20, 184, 166, 0.9)"
+            },
+            "cssVar": "--color-secondary-500",
+            "tailwind": "secondary-500",
+            "default": true,
+            "wcagAA": true
+          },
+          "600": {
+            "hex": "#0d9488",
+            "rgb": "rgb(13, 148, 136)",
+            "hsl": "hsl(175, 84%, 32%)",
+            "rgba": {
+              "10": "rgba(13, 148, 136, 0.1)",
+              "20": "rgba(13, 148, 136, 0.2)",
+              "50": "rgba(13, 148, 136, 0.5)",
+              "80": "rgba(13, 148, 136, 0.8)",
+              "90": "rgba(13, 148, 136, 0.9)"
+            },
+            "cssVar": "--color-secondary-600",
+            "tailwind": "secondary-600",
+            "wcagAA": true
+          },
+          "700": {
+            "hex": "#0f766e",
+            "rgb": "rgb(15, 118, 110)",
+            "hsl": "hsl(175, 77%, 26%)",
+            "rgba": {
+              "10": "rgba(15, 118, 110, 0.1)",
+              "20": "rgba(15, 118, 110, 0.2)",
+              "50": "rgba(15, 118, 110, 0.5)",
+              "80": "rgba(15, 118, 110, 0.8)",
+              "90": "rgba(15, 118, 110, 0.9)"
+            },
+            "cssVar": "--color-secondary-700",
+            "tailwind": "secondary-700",
+            "wcagAAA": true
+          },
+          "800": {
+            "hex": "#115e59",
+            "rgb": "rgb(17, 94, 89)",
+            "hsl": "hsl(176, 69%, 22%)",
+            "rgba": {
+              "10": "rgba(17, 94, 89, 0.1)",
+              "20": "rgba(17, 94, 89, 0.2)",
+              "50": "rgba(17, 94, 89, 0.5)",
+              "80": "rgba(17, 94, 89, 0.8)",
+              "90": "rgba(17, 94, 89, 0.9)"
+            },
+            "cssVar": "--color-secondary-800",
+            "tailwind": "secondary-800",
+            "wcagAAA": true
+          },
+          "900": {
+            "hex": "#134e4a",
+            "rgb": "rgb(19, 78, 74)",
+            "hsl": "hsl(176, 61%, 19%)",
+            "rgba": {
+              "10": "rgba(19, 78, 74, 0.1)",
+              "20": "rgba(19, 78, 74, 0.2)",
+              "50": "rgba(19, 78, 74, 0.5)",
+              "80": "rgba(19, 78, 74, 0.8)",
+              "90": "rgba(19, 78, 74, 0.9)"
+            },
+            "cssVar": "--color-secondary-900",
+            "tailwind": "secondary-900",
+            "wcagAAA": true
+          }
+        },
+        "gradients": {
+          "secondary": {
+            "css": "linear-gradient(to right, #2dd4bf, #14b8a6)",
+            "stops": ["#2dd4bf", "#14b8a6"],
+            "tailwind": "bg-gradient-to-r from-secondary-400 to-secondary-500"
+          },
+          "secondaryHover": {
+            "css": "linear-gradient(to right, #0d9488, #0f766e)",
+            "stops": ["#0d9488", "#0f766e"],
+            "tailwind": "bg-gradient-to-r from-secondary-600 to-secondary-700"
+          }
+        }
+      },
+
+      "semantic": {
+        "success": {
+          "name": "Green",
+          "usage": "Successful operations, positive feedback, confirmations, completed transactions",
+          "cssVarPrefix": "--color-success",
+          "tailwindPrefix": "success",
+          "base": {
+            "hex": "#22c55e",
+            "rgb": "rgb(34, 197, 94)",
+            "hsl": "hsl(142, 71%, 45%)",
+            "rgba": {
+              "10": "rgba(34, 197, 94, 0.1)",
+              "20": "rgba(34, 197, 94, 0.2)",
+              "50": "rgba(34, 197, 94, 0.5)",
+              "80": "rgba(34, 197, 94, 0.8)",
+              "90": "rgba(34, 197, 94, 0.9)"
+            },
+            "cssVar": "--color-success",
+            "tailwind": "success"
+          },
+          "light": {
+            "hex": "#dcfce7",
+            "rgb": "rgb(220, 252, 231)",
+            "hsl": "hsl(141, 84%, 93%)",
+            "cssVar": "--color-success-light",
+            "tailwind": "success-light"
+          },
+          "dark": {
+            "hex": "#15803d",
+            "rgb": "rgb(21, 128, 61)",
+            "hsl": "hsl(142, 72%, 29%)",
+            "cssVar": "--color-success-dark",
+            "tailwind": "success-dark"
+          }
+        },
+        "error": {
+          "name": "Red",
+          "usage": "Errors, destructive actions, critical alerts, failed transactions",
+          "cssVarPrefix": "--color-error",
+          "tailwindPrefix": "error",
+          "base": {
+            "hex": "#ef4444",
+            "rgb": "rgb(239, 68, 68)",
+            "hsl": "hsl(0, 84%, 60%)",
+            "rgba": {
+              "10": "rgba(239, 68, 68, 0.1)",
+              "20": "rgba(239, 68, 68, 0.2)",
+              "50": "rgba(239, 68, 68, 0.5)",
+              "80": "rgba(239, 68, 68, 0.8)",
+              "90": "rgba(239, 68, 68, 0.9)"
+            },
+            "cssVar": "--color-error",
+            "tailwind": "error"
+          },
+          "light": {
+            "hex": "#fee2e2",
+            "rgb": "rgb(254, 226, 226)",
+            "hsl": "hsl(0, 93%, 94%)",
+            "cssVar": "--color-error-light",
+            "tailwind": "error-light"
+          },
+          "dark": {
+            "hex": "#b91c1c",
+            "rgb": "rgb(185, 28, 28)",
+            "hsl": "hsl(0, 74%, 42%)",
+            "cssVar": "--color-error-dark",
+            "tailwind": "error-dark"
+          }
+        },
+        "warning": {
+          "name": "Amber",
+          "usage": "Warnings, cautions, important notices, pending states",
+          "cssVarPrefix": "--color-warning",
+          "tailwindPrefix": "warning",
+          "base": {
+            "hex": "#f59e0b",
+            "rgb": "rgb(245, 158, 11)",
+            "hsl": "hsl(38, 92%, 50%)",
+            "rgba": {
+              "10": "rgba(245, 158, 11, 0.1)",
+              "20": "rgba(245, 158, 11, 0.2)",
+              "50": "rgba(245, 158, 11, 0.5)",
+              "80": "rgba(245, 158, 11, 0.8)",
+              "90": "rgba(245, 158, 11, 0.9)"
+            },
+            "cssVar": "--color-warning",
+            "tailwind": "warning"
+          },
+          "light": {
+            "hex": "#fef3c7",
+            "rgb": "rgb(254, 243, 199)",
+            "hsl": "hsl(48, 96%, 89%)",
+            "cssVar": "--color-warning-light",
+            "tailwind": "warning-light"
+          },
+          "dark": {
+            "hex": "#b45309",
+            "rgb": "rgb(180, 83, 9)",
+            "hsl": "hsl(26, 90%, 37%)",
+            "cssVar": "--color-warning-dark",
+            "tailwind": "warning-dark"
+          }
+        },
+        "info": {
+          "name": "Blue",
+          "usage": "Informational messages, neutral notifications",
+          "cssVarPrefix": "--color-info",
+          "tailwindPrefix": "info",
+          "base": {
+            "hex": "#3b82f6",
+            "rgb": "rgb(59, 130, 246)",
+            "hsl": "hsl(217, 91%, 60%)",
+            "rgba": {
+              "10": "rgba(59, 130, 246, 0.1)",
+              "20": "rgba(59, 130, 246, 0.2)",
+              "50": "rgba(59, 130, 246, 0.5)",
+              "80": "rgba(59, 130, 246, 0.8)",
+              "90": "rgba(59, 130, 246, 0.9)"
+            },
+            "cssVar": "--color-info",
+            "tailwind": "info"
+          },
+          "light": {
+            "hex": "#dbeafe",
+            "rgb": "rgb(219, 234, 254)",
+            "hsl": "hsl(214, 95%, 93%)",
+            "cssVar": "--color-info-light",
+            "tailwind": "info-light"
+          },
+          "dark": {
+            "hex": "#1d4ed8",
+            "rgb": "rgb(29, 78, 216)",
+            "hsl": "hsl(224, 76%, 48%)",
+            "cssVar": "--color-info-dark",
+            "tailwind": "info-dark"
+          }
+        }
+      },
+
+      "transaction": {
+        "description": "Colors for financial transaction states and types",
+        "credit": {
+          "hex": "#22c55e",
+          "rgb": "rgb(34, 197, 94)",
+          "hsl": "hsl(142, 71%, 45%)",
+          "rgba": {
+            "10": "rgba(34, 197, 94, 0.1)",
+            "20": "rgba(34, 197, 94, 0.2)",
+            "50": "rgba(34, 197, 94, 0.5)"
+          },
+          "cssVar": "--color-transaction-credit",
+          "tailwind": "transaction-credit",
+          "usage": "Money received/credited, positive cash flow"
+        },
+        "debit": {
+          "hex": "#ef4444",
+          "rgb": "rgb(239, 68, 68)",
+          "hsl": "hsl(0, 84%, 60%)",
+          "rgba": {
+            "10": "rgba(239, 68, 68, 0.1)",
+            "20": "rgba(239, 68, 68, 0.2)",
+            "50": "rgba(239, 68, 68, 0.5)"
+          },
+          "cssVar": "--color-transaction-debit",
+          "tailwind": "transaction-debit",
+          "usage": "Money sent/debited, negative cash flow"
+        },
+        "pending": {
+          "hex": "#f59e0b",
+          "rgb": "rgb(245, 158, 11)",
+          "hsl": "hsl(38, 92%, 50%)",
+          "rgba": {
+            "10": "rgba(245, 158, 11, 0.1)",
+            "20": "rgba(245, 158, 11, 0.2)",
+            "50": "rgba(245, 158, 11, 0.5)"
+          },
+          "cssVar": "--color-transaction-pending",
+          "tailwind": "transaction-pending",
+          "usage": "Pending transactions, awaiting confirmation"
+        },
+        "settled": {
+          "hex": "#06b6d4",
+          "rgb": "rgb(6, 182, 212)",
+          "hsl": "hsl(189, 94%, 43%)",
+          "rgba": {
+            "10": "rgba(6, 182, 212, 0.1)",
+            "20": "rgba(6, 182, 212, 0.2)",
+            "50": "rgba(6, 182, 212, 0.5)"
+          },
+          "cssVar": "--color-transaction-settled",
+          "tailwind": "transaction-settled",
+          "usage": "Settled transactions, completed and reconciled"
+        },
+        "refunded": {
+          "hex": "#a855f7",
+          "rgb": "rgb(168, 85, 247)",
+          "hsl": "hsl(271, 91%, 65%)",
+          "rgba": {
+            "10": "rgba(168, 85, 247, 0.1)",
+            "20": "rgba(168, 85, 247, 0.2)",
+            "50": "rgba(168, 85, 247, 0.5)"
+          },
+          "cssVar": "--color-transaction-refunded",
+          "tailwind": "transaction-refunded",
+          "usage": "Refunded transactions, money returned"
+        },
+        "failed": {
+          "hex": "#dc2626",
+          "rgb": "rgb(220, 38, 38)",
+          "hsl": "hsl(0, 73%, 51%)",
+          "rgba": {
+            "10": "rgba(220, 38, 38, 0.1)",
+            "20": "rgba(220, 38, 38, 0.2)",
+            "50": "rgba(220, 38, 38, 0.5)"
+          },
+          "cssVar": "--color-transaction-failed",
+          "tailwind": "transaction-failed",
+          "usage": "Failed transactions, payment declined"
+        }
+      }
+    },
+
+    "cssCustomProperties": {
+      "description": "CSS custom properties (variables) for use in stylesheets",
+      "usage": "Add to :root selector in your CSS",
+      "properties": {
+        "primary": {
+          "--color-primary-50": "#eff6ff",
+          "--color-primary-100": "#dbeafe",
+          "--color-primary-200": "#bfdbfe",
+          "--color-primary-300": "#93c5fd",
+          "--color-primary-400": "#60a5fa",
+          "--color-primary-500": "#3b82f6",
+          "--color-primary-600": "#2563eb",
+          "--color-primary-700": "#1d4ed8",
+          "--color-primary-800": "#1e40af",
+          "--color-primary-900": "#1e3a8a"
+        },
+        "secondary": {
+          "--color-secondary-50": "#f0fdfa",
+          "--color-secondary-100": "#ccfbf1",
+          "--color-secondary-200": "#99f6e4",
+          "--color-secondary-300": "#5eead4",
+          "--color-secondary-400": "#2dd4bf",
+          "--color-secondary-500": "#14b8a6",
+          "--color-secondary-600": "#0d9488",
+          "--color-secondary-700": "#0f766e",
+          "--color-secondary-800": "#115e59",
+          "--color-secondary-900": "#134e4a"
+        },
+        "semantic": {
+          "--color-success": "#22c55e",
+          "--color-success-light": "#dcfce7",
+          "--color-success-dark": "#15803d",
+          "--color-error": "#ef4444",
+          "--color-error-light": "#fee2e2",
+          "--color-error-dark": "#b91c1c",
+          "--color-warning": "#f59e0b",
+          "--color-warning-light": "#fef3c7",
+          "--color-warning-dark": "#b45309",
+          "--color-info": "#3b82f6",
+          "--color-info-light": "#dbeafe",
+          "--color-info-dark": "#1d4ed8"
+        }
+      },
+      "exampleUsage": ".button-primary { background-color: var(--color-primary-600); }"
+    },
+
+    "tailwindConfig": {
+      "description": "Tailwind CSS theme configuration",
+      "usage": "Add to tailwind.config.js under theme.extend.colors",
+      "config": {
+        "primary": {
+          "50": "#eff6ff",
+          "100": "#dbeafe",
+          "200": "#bfdbfe",
+          "300": "#93c5fd",
+          "400": "#60a5fa",
+          "500": "#3b82f6",
+          "600": "#2563eb",
+          "700": "#1d4ed8",
+          "800": "#1e40af",
+          "900": "#1e3a8a",
+          "DEFAULT": "#2563eb"
+        },
+        "secondary": {
+          "50": "#f0fdfa",
+          "100": "#ccfbf1",
+          "200": "#99f6e4",
+          "300": "#5eead4",
+          "400": "#2dd4bf",
+          "500": "#14b8a6",
+          "600": "#0d9488",
+          "700": "#0f766e",
+          "800": "#115e59",
+          "900": "#134e4a",
+          "DEFAULT": "#14b8a6"
+        },
+        "success": "#22c55e",
+        "error": "#ef4444",
+        "warning": "#f59e0b",
+        "info": "#3b82f6"
+      },
+      "classExamples": {
+        "background": "bg-primary-600",
+        "text": "text-primary-600",
+        "border": "border-primary-600",
+        "gradient": "bg-gradient-to-r from-primary-400 to-primary-500"
+      }
+    }
+  }
+}

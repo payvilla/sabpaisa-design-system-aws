@@ -1,0 +1,33 @@
+{
+  "section": 23,
+  "title": "Loading States & Skeletons",
+  "metadata": {
+    "startLine": 8233,
+    "endLine": 8322,
+    "codeBlockCount": 3,
+    "tableCount": 0,
+    "extractedAt": "2025-12-01T16:35:09.326Z"
+  },
+  "codeBlocks": [
+    {
+      "id": "code-23-0",
+      "language": "tsx",
+      "code": "const TransactionSkeleton = () => (\n  <div className=\"animate-pulse space-y-4\">\n    {[1, 2, 3, 4, 5].map((i) => (\n      <div key={i} className=\"flex items-center justify-between p-4 bg-white/5 rounded-xl\">\n        <div className=\"flex items-center space-x-4\">\n          <div className=\"w-10 h-10 bg-white/10 rounded-full\" />\n          <div className=\"space-y-2\">\n            <div className=\"h-4 w-32 bg-white/10 rounded\" />\n            <div className=\"h-3 w-24 bg-white/10 rounded\" />\n          </div>\n        </div>\n        <div className=\"h-6 w-20 bg-white/10 rounded\" />\n      </div>\n    ))}\n  </div>\n);\n\nconst TransactionsList = () => {\n  const { data, loading } = useTransactions();\n\n  if (loading) return <TransactionSkeleton />;\n\n  return data.map(txn => <TransactionRow key={txn.id} {...txn} />);\n};",
+      "lineNumber": 8245
+    },
+    {
+      "id": "code-23-1",
+      "language": "tsx",
+      "code": "// Already implemented in Button component (Section 9)\n<Button variant=\"primary\" isLoading={true}>\n  Processing...\n</Button>\n\n// Renders as:\n<button className=\"...\">\n  <Loader className=\"h-4 w-4 animate-spin mr-2\" />\n  <span>Processing...</span>\n</button>",
+      "lineNumber": 8274
+    },
+    {
+      "id": "code-23-2",
+      "language": "tsx",
+      "code": "const DashboardPage = () => {\n  const [statsLoaded, setStatsLoaded] = useState(false);\n  const [chartsLoaded, setChartsLoaded] = useState(false);\n  const [transactionsLoaded, setTransactionsLoaded] = useState(false);\n\n  useEffect(() => {\n    // Load critical data first\n    loadStats().then(() => setStatsLoaded(true));\n\n    // Then load secondary data\n    loadCharts().then(() => setChartsLoaded(true));\n\n    // Finally load heavy data\n    loadTransactions().then(() => setTransactionsLoaded(true));\n  }, []);\n\n  return (\n    <div>\n      {/* Critical stats load first */}\n      {statsLoaded ? <StatsGrid /> : <StatsSkeleton />}\n\n      {/* Charts load second */}\n      {chartsLoaded ? <RevenueChart /> : <ChartSkeleton />}\n\n      {/* Heavy table loads last */}\n      {transactionsLoaded ? <TransactionsTable /> : <TableSkeleton />}\n    </div>\n  );\n};",
+      "lineNumber": 8289
+    }
+  ],
+  "tables": [],
+  "content": "## Section 23: Loading States & Skeletons\n\n### 23.1 Loading State Hierarchy\n\n**Principles**:\n1. **Skeleton screens** for predictable layouts\n2. **Spinners** for indeterminate operations\n3. **Progress bars** for tracked operations\n4. **Optimistic updates** for instant feedback\n\n### 23.2 Skeleton Loader Pattern\n\n```tsx\nconst TransactionSkeleton = () => (\n  <div className=\"animate-pulse space-y-4\">\n    {[1, 2, 3, 4, 5].map((i) => (\n      <div key={i} className=\"flex items-center justify-between p-4 bg-white/5 rounded-xl\">\n        <div className=\"flex items-center space-x-4\">\n          <div className=\"w-10 h-10 bg-white/10 rounded-full\" />\n          <div className=\"space-y-2\">\n            <div className=\"h-4 w-32 bg-white/10 rounded\" />\n            <div className=\"h-3 w-24 bg-white/10 rounded\" />\n          </div>\n        </div>\n        <div className=\"h-6 w-20 bg-white/10 rounded\" />\n      </div>\n    ))}\n  </div>\n);\n\nconst TransactionsList = () => {\n  const { data, loading } = useTransactions();\n\n  if (loading) return <TransactionSkeleton />;\n\n  return data.map(txn => <TransactionRow key={txn.id} {...txn} />);\n};\n```\n\n### 23.3 Button Loading States\n\n```tsx\n// Already implemented in Button component (Section 9)\n<Button variant=\"primary\" isLoading={true}>\n  Processing...\n</Button>\n\n// Renders as:\n<button className=\"...\">\n  <Loader className=\"h-4 w-4 animate-spin mr-2\" />\n  <span>Processing...</span>\n</button>\n```\n\n### 23.4 Progressive Loading Pattern\n\n```tsx\nconst DashboardPage = () => {\n  const [statsLoaded, setStatsLoaded] = useState(false);\n  const [chartsLoaded, setChartsLoaded] = useState(false);\n  const [transactionsLoaded, setTransactionsLoaded] = useState(false);\n\n  useEffect(() => {\n    // Load critical data first\n    loadStats().then(() => setStatsLoaded(true));\n\n    // Then load secondary data\n    loadCharts().then(() => setChartsLoaded(true));\n\n    // Finally load heavy data\n    loadTransactions().then(() => setTransactionsLoaded(true));\n  }, []);\n\n  return (\n    <div>\n      {/* Critical stats load first */}\n      {statsLoaded ? <StatsGrid /> : <StatsSkeleton />}\n\n      {/* Charts load second */}\n      {chartsLoaded ? <RevenueChart /> : <ChartSkeleton />}\n\n      {/* Heavy table loads last */}\n      {transactionsLoaded ? <TransactionsTable /> : <TableSkeleton />}\n    </div>\n  );\n};\n```\n\n---\n"
+}

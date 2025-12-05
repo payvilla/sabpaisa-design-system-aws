@@ -1,0 +1,21 @@
+{
+  "section": 27,
+  "title": "Data Visualization Patterns",
+  "metadata": {
+    "startLine": 8868,
+    "endLine": 8935,
+    "codeBlockCount": 1,
+    "tableCount": 0,
+    "extractedAt": "2025-12-01T16:35:09.332Z"
+  },
+  "codeBlocks": [
+    {
+      "id": "code-27-0",
+      "language": "tsx",
+      "code": "import { Line } from 'react-chartjs-2';\n\nconst RevenueChart = ({ data }) => {\n  const chartData = {\n    labels: data.map(d => d.date),\n    datasets: [\n      {\n        label: 'Revenue',\n        data: data.map(d => d.amount),\n        borderColor: 'rgb(59, 130, 246)',\n        backgroundColor: 'rgba(59, 130, 246, 0.1)',\n        fill: true,\n        tension: 0.4,\n      },\n    ],\n  };\n\n  const options = {\n    responsive: true,\n    maintainAspectRatio: false,\n    plugins: {\n      legend: { display: false },\n      tooltip: {\n        backgroundColor: 'rgba(15, 23, 42, 0.95)',\n        titleColor: 'rgba(255, 255, 255, 0.9)',\n        bodyColor: 'rgba(255, 255, 255, 0.7)',\n        borderColor: 'rgba(255, 255, 255, 0.1)',\n        borderWidth: 1,\n        padding: 12,\n        displayColors: false,\n        callbacks: {\n          label: (context) => formatCurrency(context.parsed.y),\n        },\n      },\n    },\n    scales: {\n      x: {\n        grid: { color: 'rgba(255, 255, 255, 0.05)' },\n        ticks: { color: 'rgba(255, 255, 255, 0.6)' },\n      },\n      y: {\n        grid: { color: 'rgba(255, 255, 255, 0.05)' },\n        ticks: {\n          color: 'rgba(255, 255, 255, 0.6)',\n          callback: (value) => formatCurrency(value),\n        },\n      },\n    },\n  };\n\n  return (\n    <Card variant=\"default\" padding=\"lg\">\n      <h3 className=\"text-lg font-semibold text-white mb-6\">Revenue Trend</h3>\n      <div className=\"h-80\">\n        <Line data={chartData} options={options} />\n      </div>\n    </Card>\n  );\n};",
+      "lineNumber": 8872
+    }
+  ],
+  "tables": [],
+  "content": "## Section 27: Data Visualization Patterns\n\n### 27.1 Revenue Chart Pattern\n\n```tsx\nimport { Line } from 'react-chartjs-2';\n\nconst RevenueChart = ({ data }) => {\n  const chartData = {\n    labels: data.map(d => d.date),\n    datasets: [\n      {\n        label: 'Revenue',\n        data: data.map(d => d.amount),\n        borderColor: 'rgb(59, 130, 246)',\n        backgroundColor: 'rgba(59, 130, 246, 0.1)',\n        fill: true,\n        tension: 0.4,\n      },\n    ],\n  };\n\n  const options = {\n    responsive: true,\n    maintainAspectRatio: false,\n    plugins: {\n      legend: { display: false },\n      tooltip: {\n        backgroundColor: 'rgba(15, 23, 42, 0.95)',\n        titleColor: 'rgba(255, 255, 255, 0.9)',\n        bodyColor: 'rgba(255, 255, 255, 0.7)',\n        borderColor: 'rgba(255, 255, 255, 0.1)',\n        borderWidth: 1,\n        padding: 12,\n        displayColors: false,\n        callbacks: {\n          label: (context) => formatCurrency(context.parsed.y),\n        },\n      },\n    },\n    scales: {\n      x: {\n        grid: { color: 'rgba(255, 255, 255, 0.05)' },\n        ticks: { color: 'rgba(255, 255, 255, 0.6)' },\n      },\n      y: {\n        grid: { color: 'rgba(255, 255, 255, 0.05)' },\n        ticks: {\n          color: 'rgba(255, 255, 255, 0.6)',\n          callback: (value) => formatCurrency(value),\n        },\n      },\n    },\n  };\n\n  return (\n    <Card variant=\"default\" padding=\"lg\">\n      <h3 className=\"text-lg font-semibold text-white mb-6\">Revenue Trend</h3>\n      <div className=\"h-80\">\n        <Line data={chartData} options={options} />\n      </div>\n    </Card>\n  );\n};\n```\n\n---\n"
+}

@@ -1,0 +1,27 @@
+{
+  "section": 33,
+  "title": "Typography Selection Guide",
+  "metadata": {
+    "startLine": 9268,
+    "endLine": 9322,
+    "codeBlockCount": 2,
+    "tableCount": 0,
+    "extractedAt": "2025-12-01T16:35:09.340Z"
+  },
+  "codeBlocks": [
+    {
+      "id": "code-33-0",
+      "language": "tsx",
+      "code": "// Page title (H1)\n<h1 className=\"text-3xl lg:text-4xl font-bold text-white\">\n  Dashboard\n</h1>\n\n// Section title (H2)\n<h2 className=\"text-2xl font-bold text-white\">\n  Recent Transactions\n</h2>\n\n// Card title (H3)\n<h3 className=\"text-lg font-semibold text-white\">\n  Transaction Details\n</h3>\n\n// Subsection (H4)\n<h4 className=\"text-base font-medium text-white\">\n  Payment Information\n</h4>\n\n// Body text\n<p className=\"text-sm text-white/70\">\n  Description or helper text\n</p>\n\n// Fine print\n<span className=\"text-xs text-white/50\">\n  Timestamp or metadata\n</span>",
+      "lineNumber": 9272
+    },
+    {
+      "id": "code-33-1",
+      "language": "typescript",
+      "code": "// Font weight scale\nfont-normal: 400    // Body text\nfont-medium: 500    // Labels, subtle emphasis\nfont-semibold: 600  // Section headings, navigation\nfont-bold: 700      // Page titles, CTAs\nfont-extrabold: 800 // Display text (rare)\n\n// Usage examples\nclassName=\"font-normal\"     // <p>Regular paragraph text</p>\nclassName=\"font-medium\"     // <label>Form labels</label>\nclassName=\"font-semibold\"   // <h3>Card titles</h3>\nclassName=\"font-bold\"       // <h1>Page headings</h1>",
+      "lineNumber": 9306
+    }
+  ],
+  "tables": [],
+  "content": "## Section 33: Typography Selection Guide\n\n### 33.1 Heading Hierarchy\n\n```tsx\n// Page title (H1)\n<h1 className=\"text-3xl lg:text-4xl font-bold text-white\">\n  Dashboard\n</h1>\n\n// Section title (H2)\n<h2 className=\"text-2xl font-bold text-white\">\n  Recent Transactions\n</h2>\n\n// Card title (H3)\n<h3 className=\"text-lg font-semibold text-white\">\n  Transaction Details\n</h3>\n\n// Subsection (H4)\n<h4 className=\"text-base font-medium text-white\">\n  Payment Information\n</h4>\n\n// Body text\n<p className=\"text-sm text-white/70\">\n  Description or helper text\n</p>\n\n// Fine print\n<span className=\"text-xs text-white/50\">\n  Timestamp or metadata\n</span>\n```\n\n### 33.2 Font Weight Usage\n\n```typescript\n// Font weight scale\nfont-normal: 400    // Body text\nfont-medium: 500    // Labels, subtle emphasis\nfont-semibold: 600  // Section headings, navigation\nfont-bold: 700      // Page titles, CTAs\nfont-extrabold: 800 // Display text (rare)\n\n// Usage examples\nclassName=\"font-normal\"     // <p>Regular paragraph text</p>\nclassName=\"font-medium\"     // <label>Form labels</label>\nclassName=\"font-semibold\"   // <h3>Card titles</h3>\nclassName=\"font-bold\"       // <h1>Page headings</h1>\n```\n\n---\n"
+}

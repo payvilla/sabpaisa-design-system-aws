@@ -1,0 +1,232 @@
+{
+  "section": 8,
+  "title": "Motion & Animation Tokens",
+  "metadata": {
+    "startLine": 1297,
+    "endLine": 1615,
+    "codeBlockCount": 16,
+    "tableCount": 3,
+    "extractedAt": "2025-12-01T16:35:09.300Z"
+  },
+  "codeBlocks": [
+    {
+      "id": "code-8-0",
+      "language": "css",
+      "code": "@keyframes fade-in {\n  from { opacity: 0; }\n  to { opacity: 1; }\n}",
+      "lineNumber": 1339
+    },
+    {
+      "id": "code-8-1",
+      "language": "tsx",
+      "code": "<div className=\"animate-fade-in\">\n  <p>This content fades in</p>\n</div>",
+      "lineNumber": 1360
+    },
+    {
+      "id": "code-8-2",
+      "language": "css",
+      "code": "@keyframes slide-in-bottom {\n  0% { transform: translateY(100%); opacity: 0; }\n  100% { transform: translateY(0); opacity: 1; }\n}",
+      "lineNumber": 1370
+    },
+    {
+      "id": "code-8-3",
+      "language": "css",
+      "code": "@keyframes slide-in-top {\n  0% { transform: translateY(-100%); opacity: 0; }\n  100% { transform: translateY(0); opacity: 1; }\n}",
+      "lineNumber": 1387
+    },
+    {
+      "id": "code-8-4",
+      "language": "css",
+      "code": "@keyframes scale-in {\n  0% { transform: scale(0.9); opacity: 0; }\n  100% { transform: scale(1); opacity: 1; }\n}",
+      "lineNumber": 1401
+    },
+    {
+      "id": "code-8-5",
+      "language": "css",
+      "code": "@keyframes bounce-in {\n  0% { transform: scale(0.3); opacity: 0; }\n  50% { transform: scale(1.05); }\n  70% { transform: scale(0.9); }\n  100% { transform: scale(1); opacity: 1; }\n}",
+      "lineNumber": 1415
+    },
+    {
+      "id": "code-8-6",
+      "language": "css",
+      "code": "@keyframes shimmer {\n  0% { background-position: -200% 0; }\n  100% { background-position: 200% 0; }\n}",
+      "lineNumber": 1431
+    },
+    {
+      "id": "code-8-7",
+      "language": "tsx",
+      "code": "<div className=\"animate-shimmer bg-gradient-to-r from-neutral-200 via-neutral-100 to-neutral-200 bg-[length:200%_100%]\">\n  <div className=\"h-4 rounded\"></div>\n</div>",
+      "lineNumber": 1443
+    },
+    {
+      "id": "code-8-8",
+      "language": "css",
+      "code": "@keyframes gradient {\n  0%, 100% { background-position: 0% 50%; }\n  50% { background-position: 100% 50%; }\n}",
+      "lineNumber": 1453
+    },
+    {
+      "id": "code-8-9",
+      "language": "css",
+      "code": "@keyframes float {\n  0%, 100% { transform: translateY(0); }\n  50% { transform: translateY(-20px); }\n}",
+      "lineNumber": 1468
+    },
+    {
+      "id": "code-8-10",
+      "language": "css",
+      "code": "@keyframes glow {\n  0%, 100% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.5); }\n  50% { box-shadow: 0 0 40px rgba(59, 130, 246, 0.8), 0 0 60px rgba(59, 130, 246, 0.4); }\n}",
+      "lineNumber": 1483
+    },
+    {
+      "id": "code-8-11",
+      "language": "css",
+      "code": "@keyframes levitate {\n  0%, 100% { transform: translateY(0) rotate(0deg); }\n  25% { transform: translateY(-10px) rotate(-1deg); }\n  75% { transform: translateY(-10px) rotate(1deg); }\n}",
+      "lineNumber": 1498
+    },
+    {
+      "id": "code-8-12",
+      "language": "tsx",
+      "code": "import { motion } from 'framer-motion';\n\n<motion.div\n  initial={{ opacity: 0, x: 50 }}\n  animate={{ opacity: 1, x: 0 }}\n  exit={{ opacity: 0, x: -50 }}\n  transition={{ duration: 0.5, ease: 'easeOut' }}\n>\n  {/* Content */}\n</motion.div>",
+      "lineNumber": 1515
+    },
+    {
+      "id": "code-8-13",
+      "language": "tsx",
+      "code": "<motion.button\n  whileHover={{ scale: 1.02, y: -2 }}\n  whileTap={{ scale: 0.98 }}\n  transition={{ type: 'spring', stiffness: 300 }}\n>\n  Hover me\n</motion.button>",
+      "lineNumber": 1534
+    },
+    {
+      "id": "code-8-14",
+      "language": "tsx",
+      "code": "<motion.div\n  variants={containerVariants}\n  initial=\"hidden\"\n  animate=\"visible\"\n>\n  {items.map((item) => (\n    <motion.div key={item.id} variants={itemVariants}>\n      {item.content}\n    </motion.div>\n  ))}\n</motion.div>\n\nconst containerVariants = {\n  hidden: { opacity: 0 },\n  visible: {\n    opacity: 1,\n    transition: {\n      staggerChildren: 0.1\n    }\n  }\n};\n\nconst itemVariants = {\n  hidden: { opacity: 0, y: 20 },\n  visible: { opacity: 1, y: 0 }\n};",
+      "lineNumber": 1548
+    },
+    {
+      "id": "code-8-15",
+      "language": "javascript",
+      "code": "// tailwind.config.js\nmodule.exports = {\n  theme: {\n    extend: {\n      animation: {\n        'in': 'in 0.6s both',\n        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',\n        'gradient': 'gradient 8s linear infinite',\n        'float': 'float 6s ease-in-out infinite',\n        'glow': 'glow 2s ease-in-out infinite',\n        'slide-in-bottom': 'slide-in-bottom 0.5s ease-out',\n        'slide-in-top': 'slide-in-top 0.5s ease-out',\n        'fade-in': 'fade-in 0.5s ease-out',\n        'scale-in': 'scale-in 0.3s ease-out',\n        'bounce-in': 'bounce-in 0.5s ease-out',\n        'shimmer': 'shimmer 2s linear infinite',\n        'levitate': 'levitate 3s ease-in-out infinite',\n        'spin-slow': 'spin 8s linear infinite',\n        'ping-slow': 'ping 2s cubic-bezier(0, 0, 0.2, 1) infinite',\n      },\n      keyframes: {\n        // (All keyframes from Section 8.4)\n      },\n    },\n  },\n};",
+      "lineNumber": 1581
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-8-0",
+      "headers": [
+        "Name",
+        "Value",
+        "Usage"
+      ],
+      "rows": [
+        [
+          "**linear**",
+          "`linear`",
+          "Constant speed, loaders"
+        ],
+        [
+          "**ease**",
+          "`ease`",
+          "Default easing"
+        ],
+        [
+          "**ease-in**",
+          "`ease-in`",
+          "Accelerating, exits"
+        ],
+        [
+          "**ease-out**",
+          "`ease-out`",
+          "**Decelerating, entrances (DEFAULT)**"
+        ],
+        [
+          "**ease-in-out**",
+          "`ease-in-out`",
+          "Smooth both ways"
+        ],
+        [
+          "**spring**",
+          "`cubic-bezier(0.4, 0, 0.6, 1)`",
+          "Bouncy, playful"
+        ]
+      ],
+      "lineNumber": 1301
+    },
+    {
+      "id": "table-8-1",
+      "headers": [
+        "Name",
+        "Value (ms)",
+        "Seconds",
+        "Tailwind",
+        "Usage"
+      ],
+      "rows": [
+        [
+          "**fast**",
+          "150",
+          "0.15s",
+          "`duration-150`",
+          "Quick micro-interactions"
+        ],
+        [
+          "**normal**",
+          "300",
+          "0.3s",
+          "`duration-300`",
+          "**Standard transitions**"
+        ],
+        [
+          "**medium**",
+          "500",
+          "0.5s",
+          "`duration-500`",
+          "**Modal/drawer entrances**"
+        ],
+        [
+          "**slow**",
+          "700",
+          "0.7s",
+          "`duration-700`",
+          "Page transitions"
+        ],
+        [
+          "**slower**",
+          "1000",
+          "1s",
+          "`duration-1000`",
+          "Lazy loaders"
+        ]
+      ],
+      "lineNumber": 1314
+    },
+    {
+      "id": "table-8-2",
+      "headers": [
+        "Value (ms)",
+        "Tailwind",
+        "Usage"
+      ],
+      "rows": [
+        [
+          "75",
+          "`delay-75`",
+          "Micro delay"
+        ],
+        [
+          "150",
+          "`delay-150`",
+          "Small delay"
+        ],
+        [
+          "300",
+          "`delay-300`",
+          "Staggered animations"
+        ],
+        [
+          "500",
+          "`delay-500`",
+          "Longer delay"
+        ]
+      ],
+      "lineNumber": 1326
+    }
+  ],
+  "content": "## Section 8: Motion & Animation Tokens\n\n### 8.1 Easing Curves\n\n| Name | Value | Usage |\n|------|-------|-------|\n| **linear** | `linear` | Constant speed, loaders |\n| **ease** | `ease` | Default easing |\n| **ease-in** | `ease-in` | Accelerating, exits |\n| **ease-out** | `ease-out` | **Decelerating, entrances (DEFAULT)** |\n| **ease-in-out** | `ease-in-out` | Smooth both ways |\n| **spring** | `cubic-bezier(0.4, 0, 0.6, 1)` | Bouncy, playful |\n\n---\n\n### 8.2 Duration Scale\n\n| Name | Value (ms) | Seconds | Tailwind | Usage |\n|------|------------|---------|----------|-------|\n| **fast** | 150 | 0.15s | `duration-150` | Quick micro-interactions |\n| **normal** | 300 | 0.3s | `duration-300` | **Standard transitions** |\n| **medium** | 500 | 0.5s | `duration-500` | **Modal/drawer entrances** |\n| **slow** | 700 | 0.7s | `duration-700` | Page transitions |\n| **slower** | 1000 | 1s | `duration-1000` | Lazy loaders |\n\n---\n\n### 8.3 Delay Values\n\n| Value (ms) | Tailwind | Usage |\n|------------|----------|-------|\n| 75 | `delay-75` | Micro delay |\n| 150 | `delay-150` | Small delay |\n| 300 | `delay-300` | Staggered animations |\n| 500 | `delay-500` | Longer delay |\n\n---\n\n### 8.4 Keyframe Animations\n\n#### 8.4.1 Fade In\n\n```css\n@keyframes fade-in {\n  from { opacity: 0; }\n  to { opacity: 1; }\n}\n```\n\n**Default Duration**: 500ms\n**Default Easing**: ease-out\n**Tailwind Class**: `animate-fade-in`\n\n**When to Use**:\n- Modal entrances\n- Toast notifications\n- Content loading\n\n**Do NOT Use**:\n- Page transitions (too abrupt)\n- Hover states (too slow)\n\n**Code Example**:\n```tsx\n<div className=\"animate-fade-in\">\n  <p>This content fades in</p>\n</div>\n```\n\n---\n\n#### 8.4.2 Slide In Bottom\n\n```css\n@keyframes slide-in-bottom {\n  0% { transform: translateY(100%); opacity: 0; }\n  100% { transform: translateY(0); opacity: 1; }\n}\n```\n\n**Duration**: 500ms\n**Easing**: ease-out\n**Tailwind**: `animate-slide-in-bottom`\n\n**Usage**: Drawers, bottom sheets, mobile menus\n\n---\n\n#### 8.4.3 Slide In Top\n\n```css\n@keyframes slide-in-top {\n  0% { transform: translateY(-100%); opacity: 0; }\n  100% { transform: translateY(0); opacity: 1; }\n}\n```\n\n**Duration**: 500ms\n**Usage**: Top notifications, banners\n\n---\n\n#### 8.4.4 Scale In\n\n```css\n@keyframes scale-in {\n  0% { transform: scale(0.9); opacity: 0; }\n  100% { transform: scale(1); opacity: 1; }\n}\n```\n\n**Duration**: 300ms (fast)\n**Usage**: Popovers, tooltips, dropdowns\n\n---\n\n#### 8.4.5 Bounce In\n\n```css\n@keyframes bounce-in {\n  0% { transform: scale(0.3); opacity: 0; }\n  50% { transform: scale(1.05); }\n  70% { transform: scale(0.9); }\n  100% { transform: scale(1); opacity: 1; }\n}\n```\n\n**Duration**: 500ms\n**Usage**: Success animations, celebration effects\n\n---\n\n#### 8.4.6 Shimmer (Loading)\n\n```css\n@keyframes shimmer {\n  0% { background-position: -200% 0; }\n  100% { background-position: 200% 0; }\n}\n```\n\n**Duration**: 2s\n**Repeat**: Infinite\n**Usage**: Skeleton loaders, loading placeholders\n\n**Code Example**:\n```tsx\n<div className=\"animate-shimmer bg-gradient-to-r from-neutral-200 via-neutral-100 to-neutral-200 bg-[length:200%_100%]\">\n  <div className=\"h-4 rounded\"></div>\n</div>\n```\n\n---\n\n#### 8.4.7 Gradient Animation\n\n```css\n@keyframes gradient {\n  0%, 100% { background-position: 0% 50%; }\n  50% { background-position: 100% 50%; }\n}\n```\n\n**Duration**: 8s\n**Repeat**: Infinite\n**Usage**: Animated gradient backgrounds\n\n---\n\n#### 8.4.8 Float\n\n```css\n@keyframes float {\n  0%, 100% { transform: translateY(0); }\n  50% { transform: translateY(-20px); }\n}\n```\n\n**Duration**: 6s\n**Repeat**: Infinite\n**Usage**: Floating icons, decorative elements\n\n---\n\n#### 8.4.9 Glow\n\n```css\n@keyframes glow {\n  0%, 100% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.5); }\n  50% { box-shadow: 0 0 40px rgba(59, 130, 246, 0.8), 0 0 60px rgba(59, 130, 246, 0.4); }\n}\n```\n\n**Duration**: 2s\n**Repeat**: Infinite\n**Usage**: Attention-grabbing elements, live indicators\n\n---\n\n#### 8.4.10 Levitate\n\n```css\n@keyframes levitate {\n  0%, 100% { transform: translateY(0) rotate(0deg); }\n  25% { transform: translateY(-10px) rotate(-1deg); }\n  75% { transform: translateY(-10px) rotate(1deg); }\n}\n```\n\n**Duration**: 3s\n**Usage**: Floating cards, hover effects\n\n---\n\n### 8.5 Framer Motion Patterns\n\n#### Standard Transition\n\n```tsx\nimport { motion } from 'framer-motion';\n\n<motion.div\n  initial={{ opacity: 0, x: 50 }}\n  animate={{ opacity: 1, x: 0 }}\n  exit={{ opacity: 0, x: -50 }}\n  transition={{ duration: 0.5, ease: 'easeOut' }}\n>\n  {/* Content */}\n</motion.div>\n```\n\n**Usage**: Multi-step wizards, tab panels, slide-in panels\n\n---\n\n#### Hover Effect\n\n```tsx\n<motion.button\n  whileHover={{ scale: 1.02, y: -2 }}\n  whileTap={{ scale: 0.98 }}\n  transition={{ type: 'spring', stiffness: 300 }}\n>\n  Hover me\n</motion.button>\n```\n\n---\n\n#### Staggered Children\n\n```tsx\n<motion.div\n  variants={containerVariants}\n  initial=\"hidden\"\n  animate=\"visible\"\n>\n  {items.map((item) => (\n    <motion.div key={item.id} variants={itemVariants}>\n      {item.content}\n    </motion.div>\n  ))}\n</motion.div>\n\nconst containerVariants = {\n  hidden: { opacity: 0 },\n  visible: {\n    opacity: 1,\n    transition: {\n      staggerChildren: 0.1\n    }\n  }\n};\n\nconst itemVariants = {\n  hidden: { opacity: 0, y: 20 },\n  visible: { opacity: 1, y: 0 }\n};\n```\n\n---\n\n### 8.6 Complete Tailwind Animation Config\n\n```javascript\n// tailwind.config.js\nmodule.exports = {\n  theme: {\n    extend: {\n      animation: {\n        'in': 'in 0.6s both',\n        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',\n        'gradient': 'gradient 8s linear infinite',\n        'float': 'float 6s ease-in-out infinite',\n        'glow': 'glow 2s ease-in-out infinite',\n        'slide-in-bottom': 'slide-in-bottom 0.5s ease-out',\n        'slide-in-top': 'slide-in-top 0.5s ease-out',\n        'fade-in': 'fade-in 0.5s ease-out',\n        'scale-in': 'scale-in 0.3s ease-out',\n        'bounce-in': 'bounce-in 0.5s ease-out',\n        'shimmer': 'shimmer 2s linear infinite',\n        'levitate': 'levitate 3s ease-in-out infinite',\n        'spin-slow': 'spin 8s linear infinite',\n        'ping-slow': 'ping 2s cubic-bezier(0, 0, 0.2, 1) infinite',\n      },\n      keyframes: {\n        // (All keyframes from Section 8.4)\n      },\n    },\n  },\n};\n```\n\n---\n\n**END OF PHASE 1 (Sections 1-8)**\n\n---\n"
+}

@@ -1,0 +1,57 @@
+{
+  "name": "@sabpaisa/design-system-mcp",
+  "version": "1.0.0",
+  "description": "SabPaisa Design System MCP Server - Centralized design system for 14+ fintech products via Model Context Protocol",
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "sabpaisa-design-mcp": "dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "DEBUG=1 tsx src/index.ts",
+    "dev:debug": "DEBUG=1 node dist/index.js",
+    "start": "node dist/index.js",
+    "start:prod": "DEBUG=0 node dist/index.js",
+    "watch": "tsc --watch",
+    "test": "vitest",
+    "lint": "eslint src/**/*.ts",
+    "format": "prettier --write src/**/*.ts"
+  },
+  "keywords": [
+    "mcp",
+    "design-system",
+    "sabpaisa",
+    "fintech",
+    "design-tokens",
+    "style-dictionary",
+    "model-context-protocol"
+  ],
+  "author": "SabPaisa",
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0",
+    "style-dictionary": "^4.0.0",
+    "fuse.js": "^7.0.0",
+    "tinycolor2": "^1.6.0",
+    "handlebars": "^4.7.8",
+    "ajv": "^8.12.0",
+    "fast-glob": "^3.3.2",
+    "lodash": "^4.17.21"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "@types/tinycolor2": "^1.4.6",
+    "@types/lodash": "^4.14.202",
+    "typescript": "^5.3.0",
+    "tsx": "^4.7.0",
+    "vitest": "^1.0.0",
+    "eslint": "^8.55.0",
+    "prettier": "^3.1.0",
+    "@typescript-eslint/eslint-plugin": "^6.15.0",
+    "@typescript-eslint/parser": "^6.15.0"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

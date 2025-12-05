@@ -1,0 +1,183 @@
+{
+  "version": "1.0.0",
+  "extractedAt": "2025-12-01T16:35:09.347Z",
+  "sourcePath": "/Users/sabadmin/Documents/SABPAISA_COB_DESIGN_MASTER.md",
+  "totalSections": 35,
+  "sections": [
+    {
+      "section": 1,
+      "title": "How to Use This Document",
+      "file": "1-meta/how-to-use.json"
+    },
+    {
+      "section": 2,
+      "title": "Quick Reference Cards",
+      "file": "1-meta/quick-reference.json"
+    },
+    {
+      "section": 3,
+      "title": "Document Changelog & Version",
+      "file": "1-meta/changelog.json"
+    },
+    {
+      "section": 4,
+      "title": "Color Token System",
+      "file": "2-atoms/colors.json"
+    },
+    {
+      "section": 5,
+      "title": "Typography Token System",
+      "file": "2-atoms/typography.json"
+    },
+    {
+      "section": 6,
+      "title": "Spacing & Layout Tokens",
+      "file": "2-atoms/spacing.json"
+    },
+    {
+      "section": 7,
+      "title": "Effect Tokens",
+      "file": "2-atoms/effects.json"
+    },
+    {
+      "section": 8,
+      "title": "Motion & Animation Tokens",
+      "file": "2-atoms/animations.json"
+    },
+    {
+      "section": 9,
+      "title": "Button Component",
+      "file": "3-molecules/button.json"
+    },
+    {
+      "section": 10,
+      "title": "TextField Component",
+      "file": "3-molecules/textfield.json"
+    },
+    {
+      "section": 11,
+      "title": "Card Component",
+      "file": "3-molecules/card.json"
+    },
+    {
+      "section": 12,
+      "title": "Badge Component",
+      "file": "3-molecules/badge.json"
+    },
+    {
+      "section": 13,
+      "title": "Toast/Notification Component",
+      "file": "3-molecules/toast.json"
+    },
+    {
+      "section": 14,
+      "title": "OtpInput Component",
+      "file": "3-molecules/otp-input.json"
+    },
+    {
+      "section": 15,
+      "title": "Modal/Dialog Component",
+      "file": "4-organisms/modal.json"
+    },
+    {
+      "section": 16,
+      "title": "FileUpload Component",
+      "file": "4-organisms/file-upload.json"
+    },
+    {
+      "section": 17,
+      "title": "Navigation/Sidebar Component",
+      "file": "4-organisms/navigation.json"
+    },
+    {
+      "section": 18,
+      "title": "Form Composition Patterns",
+      "file": "4-organisms/form-patterns.json"
+    },
+    {
+      "section": 19,
+      "title": "Data Display Patterns",
+      "file": "4-organisms/data-display.json"
+    },
+    {
+      "section": 20,
+      "title": "Layout Patterns",
+      "file": "5-templates/layout-patterns.json"
+    },
+    {
+      "section": 21,
+      "title": "Complete User Flows",
+      "file": "5-templates/user-flows.json"
+    },
+    {
+      "section": 22,
+      "title": "Animation & Motion Patterns",
+      "file": "6-ux-patterns/animations.json"
+    },
+    {
+      "section": 23,
+      "title": "Loading States & Skeletons",
+      "file": "6-ux-patterns/loading-states.json"
+    },
+    {
+      "section": 24,
+      "title": "Error Handling UX",
+      "file": "6-ux-patterns/error-handling.json"
+    },
+    {
+      "section": 25,
+      "title": "Micro-Interactions",
+      "file": "6-ux-patterns/micro-interactions.json"
+    },
+    {
+      "section": 26,
+      "title": "Fintech-Specific Patterns",
+      "file": "6-ux-patterns/fintech-patterns.json"
+    },
+    {
+      "section": 27,
+      "title": "Data Visualization Patterns",
+      "file": "6-ux-patterns/data-viz.json"
+    },
+    {
+      "section": 28,
+      "title": "Responsive Design Patterns",
+      "file": "6-ux-patterns/responsive.json"
+    },
+    {
+      "section": 29,
+      "title": "Accessibility Patterns (WCAG 2.2 AA)",
+      "file": "6-ux-patterns/accessibility.json"
+    },
+    {
+      "section": 30,
+      "title": "Performance Optimization Patterns",
+      "file": "6-ux-patterns/performance.json"
+    },
+    {
+      "section": 31,
+      "title": "Component Selection Guide",
+      "file": "7-implementation/component-selection.json"
+    },
+    {
+      "section": 32,
+      "title": "Color Usage Guide",
+      "file": "7-implementation/color-usage.json"
+    },
+    {
+      "section": 33,
+      "title": "Typography Selection Guide",
+      "file": "7-implementation/typography-selection.json"
+    },
+    {
+      "section": 34,
+      "title": "State Management Patterns",
+      "file": "7-implementation/state-management.json"
+    },
+    {
+      "section": 35,
+      "title": "Anti-Patterns Consolidated",
+      "file": "7-implementation/anti-patterns.json"
+    }
+  ]
+}

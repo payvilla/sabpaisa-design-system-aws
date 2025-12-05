@@ -1,0 +1,33 @@
+{
+  "section": 34,
+  "title": "State Management Patterns",
+  "metadata": {
+    "startLine": 9323,
+    "endLine": 9382,
+    "codeBlockCount": 3,
+    "tableCount": 0,
+    "extractedAt": "2025-12-01T16:35:09.342Z"
+  },
+  "codeBlocks": [
+    {
+      "id": "code-34-0",
+      "language": "tsx",
+      "code": "// Use for:\n// - UI state (open/closed, selected)\n// - Form inputs\n// - Component-specific data\n\nconst [isOpen, setIsOpen] = useState(false);\nconst [formData, setFormData] = useState({});\nconst [loading, setLoading] = useState(false);",
+      "lineNumber": 9328
+    },
+    {
+      "id": "code-34-1",
+      "language": "tsx",
+      "code": "// Use for:\n// - User authentication\n// - User profile data\n// - App-wide settings\n// - Shared data across routes\n\nconst { user, isAuthenticated } = useSelector(state => state.auth);\nconst dispatch = useDispatch();",
+      "lineNumber": 9340
+    },
+    {
+      "id": "code-34-2",
+      "language": "tsx",
+      "code": "const useTransactions = (filters) => {\n  const [data, setData] = useState([]);\n  const [loading, setLoading] = useState(true);\n  const [error, setError] = useState(null);\n\n  useEffect(() => {\n    const fetchData = async () => {\n      setLoading(true);\n      setError(null);\n\n      try {\n        const response = await api.getTransactions(filters);\n        setData(response.data);\n      } catch (err) {\n        setError(err);\n      } finally {\n        setLoading(false);\n      }\n    };\n\n    fetchData();\n  }, [filters]);\n\n  return { data, loading, error };\n};",
+      "lineNumber": 9353
+    }
+  ],
+  "tables": [],
+  "content": "## Section 34: State Management Patterns\n\n### 34.1 Local vs Global State\n\n**Local State (useState)**:\n```tsx\n// Use for:\n// - UI state (open/closed, selected)\n// - Form inputs\n// - Component-specific data\n\nconst [isOpen, setIsOpen] = useState(false);\nconst [formData, setFormData] = useState({});\nconst [loading, setLoading] = useState(false);\n```\n\n**Global State (Redux/Context)**:\n```tsx\n// Use for:\n// - User authentication\n// - User profile data\n// - App-wide settings\n// - Shared data across routes\n\nconst { user, isAuthenticated } = useSelector(state => state.auth);\nconst dispatch = useDispatch();\n```\n\n### 34.2 Data Fetching Pattern\n\n```tsx\nconst useTransactions = (filters) => {\n  const [data, setData] = useState([]);\n  const [loading, setLoading] = useState(true);\n  const [error, setError] = useState(null);\n\n  useEffect(() => {\n    const fetchData = async () => {\n      setLoading(true);\n      setError(null);\n\n      try {\n        const response = await api.getTransactions(filters);\n        setData(response.data);\n      } catch (err) {\n        setError(err);\n      } finally {\n        setLoading(false);\n      }\n    };\n\n    fetchData();\n  }, [filters]);\n\n  return { data, loading, error };\n};\n```\n\n---\n"
+}

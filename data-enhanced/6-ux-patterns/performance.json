@@ -1,0 +1,33 @@
+{
+  "section": 30,
+  "title": "Performance Optimization Patterns",
+  "metadata": {
+    "startLine": 9047,
+    "endLine": 9124,
+    "codeBlockCount": 3,
+    "tableCount": 0,
+    "extractedAt": "2025-12-01T16:35:09.336Z"
+  },
+  "codeBlocks": [
+    {
+      "id": "code-30-0",
+      "language": "tsx",
+      "code": "// Lazy load routes\nimport { lazy, Suspense } from 'react';\n\nconst TransactionsPage = lazy(() => import('./pages/TransactionsPage'));\nconst SettlementsPage = lazy(() => import('./pages/SettlementsPage'));\nconst KYCPage = lazy(() => import('./pages/KYCPage'));\n\n<Suspense fallback={<PageLoader />}>\n  <Routes>\n    <Route path=\"/txns\" element={<TransactionsPage />} />\n    <Route path=\"/settlements\" element={<SettlementsPage />} />\n    <Route path=\"/kyc\" element={<KYCPage />} />\n  </Routes>\n</Suspense>",
+      "lineNumber": 9051
+    },
+    {
+      "id": "code-30-1",
+      "language": "tsx",
+      "code": "import { useMemo, useCallback } from 'react';\n\nconst TransactionsList = ({ transactions, filters }) => {\n  // Expensive filtering memoized\n  const filteredData = useMemo(() => {\n    return transactions.filter(txn => {\n      if (filters.status && txn.status !== filters.status) return false;\n      if (filters.minAmount && txn.amount < filters.minAmount) return false;\n      return true;\n    });\n  }, [transactions, filters]);\n\n  // Callback memoized to prevent re-renders\n  const handleRowClick = useCallback((txn) => {\n    navigate(`/txns/${txn.id}`);\n  }, [navigate]);\n\n  return <DataTable data={filteredData} onRowClick={handleRowClick} />;\n};",
+      "lineNumber": 9070
+    },
+    {
+      "id": "code-30-2",
+      "language": "tsx",
+      "code": "import { useState, useEffect } from 'react';\nimport { useDebounce } from '@/hooks/useDebounce';\n\nconst TransactionSearch = () => {\n  const [searchTerm, setSearchTerm] = useState('');\n  const debouncedSearch = useDebounce(searchTerm, 500);\n\n  useEffect(() => {\n    if (debouncedSearch) {\n      // API call only after user stops typing for 500ms\n      api.searchTransactions(debouncedSearch);\n    }\n  }, [debouncedSearch]);\n\n  return (\n    <TextField\n      placeholder=\"Search transactions...\"\n      value={searchTerm}\n      onChange={(e) => setSearchTerm(e.target.value)}\n    />\n  );\n};",
+      "lineNumber": 9094
+    }
+  ],
+  "tables": [],
+  "content": "## Section 30: Performance Optimization Patterns\n\n### 30.1 Code Splitting\n\n```tsx\n// Lazy load routes\nimport { lazy, Suspense } from 'react';\n\nconst TransactionsPage = lazy(() => import('./pages/TransactionsPage'));\nconst SettlementsPage = lazy(() => import('./pages/SettlementsPage'));\nconst KYCPage = lazy(() => import('./pages/KYCPage'));\n\n<Suspense fallback={<PageLoader />}>\n  <Routes>\n    <Route path=\"/txns\" element={<TransactionsPage />} />\n    <Route path=\"/settlements\" element={<SettlementsPage />} />\n    <Route path=\"/kyc\" element={<KYCPage />} />\n  </Routes>\n</Suspense>\n```\n\n### 30.2 Memoization Pattern\n\n```tsx\nimport { useMemo, useCallback } from 'react';\n\nconst TransactionsList = ({ transactions, filters }) => {\n  // Expensive filtering memoized\n  const filteredData = useMemo(() => {\n    return transactions.filter(txn => {\n      if (filters.status && txn.status !== filters.status) return false;\n      if (filters.minAmount && txn.amount < filters.minAmount) return false;\n      return true;\n    });\n  }, [transactions, filters]);\n\n  // Callback memoized to prevent re-renders\n  const handleRowClick = useCallback((txn) => {\n    navigate(`/txns/${txn.id}`);\n  }, [navigate]);\n\n  return <DataTable data={filteredData} onRowClick={handleRowClick} />;\n};\n```\n\n### 30.3 Debounced Search\n\n```tsx\nimport { useState, useEffect } from 'react';\nimport { useDebounce } from '@/hooks/useDebounce';\n\nconst TransactionSearch = () => {\n  const [searchTerm, setSearchTerm] = useState('');\n  const debouncedSearch = useDebounce(searchTerm, 500);\n\n  useEffect(() => {\n    if (debouncedSearch) {\n      // API call only after user stops typing for 500ms\n      api.searchTransactions(debouncedSearch);\n    }\n  }, [debouncedSearch]);\n\n  return (\n    <TextField\n      placeholder=\"Search transactions...\"\n      value={searchTerm}\n      onChange={(e) => setSearchTerm(e.target.value)}\n    />\n  );\n};\n```\n\n---\n\n**END OF PHASE 5 (Sections 22-30)**\n\n---\n"
+}

@@ -1,0 +1,375 @@
+{
+  "section": 2,
+  "title": "Quick Reference Cards",
+  "metadata": {
+    "startLine": 162,
+    "endLine": 253,
+    "codeBlockCount": 1,
+    "tableCount": 5,
+    "extractedAt": "2025-12-01T16:35:09.290Z"
+  },
+  "codeBlocks": [
+    {
+      "id": "code-2-0",
+      "language": "text",
+      "code": "Button Variant?\n├─ Most important action on page? → variant=\"primary\" (MAX 1)\n├─ Destructive action? → variant=\"danger\" + confirmation\n├─ Alternative action? → variant=\"secondary\"\n└─ Cancel/dismiss? → variant=\"ghost\" or \"outline\"\n\nCard Variant?\n├─ Glass effect needed? → variant=\"glass\"\n├─ Gradient background? → variant=\"gradient\"\n├─ Simple border? → variant=\"outlined\"\n└─ Default solid? → variant=\"default\"\n\nInput State?\n├─ User input valid? → state=\"default\" (blue focus ring)\n├─ Validation error? → state=\"error\" (red border + message)\n├─ Field disabled? → disabled={true} (opacity-50)\n└─ Read-only display? → readOnly={true} + muted styling",
+      "lineNumber": 208
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-2-0",
+      "headers": [
+        "Color",
+        "Hex",
+        "RGB",
+        "Tailwind",
+        "Use Case"
+      ],
+      "rows": [
+        [
+          "**Primary-600**",
+          "`#2563eb`",
+          "`rgb(37, 99, 235)`",
+          "`bg-primary-600`",
+          "Primary buttons, main CTAs"
+        ],
+        [
+          "**Primary-500**",
+          "`#3b82f6`",
+          "`rgb(59, 130, 246)`",
+          "`bg-primary-500`",
+          "Links, accents"
+        ],
+        [
+          "**Secondary-600**",
+          "`#0d9488`",
+          "`rgb(13, 148, 136)`",
+          "`bg-secondary-600`",
+          "Secondary actions"
+        ],
+        [
+          "**Success**",
+          "`#22c55e`",
+          "`rgb(34, 197, 94)`",
+          "`bg-success`",
+          "Success states, credit"
+        ],
+        [
+          "**Error**",
+          "`#ef4444`",
+          "`rgb(239, 68, 68)`",
+          "`bg-error`",
+          "Error states, debit, danger"
+        ],
+        [
+          "**Warning**",
+          "`#f59e0b`",
+          "`rgb(245, 158, 11)`",
+          "`bg-warning`",
+          "Warnings, pending states"
+        ],
+        [
+          "**Info**",
+          "`#3b82f6`",
+          "`rgb(59, 130, 246)`",
+          "`bg-info`",
+          "Info messages"
+        ],
+        [
+          "**White/10**",
+          "`rgba(255,255,255,0.1)`",
+          "-",
+          "`bg-white/10`",
+          "Glass backgrounds"
+        ],
+        [
+          "**Black/40**",
+          "`rgba(0,0,0,0.4)`",
+          "-",
+          "`bg-black/40`",
+          "Overlays, backdrops"
+        ]
+      ],
+      "lineNumber": 166
+    },
+    {
+      "id": "table-2-1",
+      "headers": [
+        "Token",
+        "Rem",
+        "Px",
+        "Tailwind",
+        "Common Use"
+      ],
+      "rows": [
+        [
+          "0",
+          "0",
+          "0",
+          "`p-0`, `m-0`",
+          "Reset spacing"
+        ],
+        [
+          "1",
+          "0.25rem",
+          "4px",
+          "`p-1`, `m-1`",
+          "Micro spacing"
+        ],
+        [
+          "2",
+          "0.5rem",
+          "8px",
+          "`p-2`, `m-2`",
+          "XS spacing, tight padding"
+        ],
+        [
+          "3",
+          "0.75rem",
+          "12px",
+          "`p-3`, `m-3`",
+          "Badge padding"
+        ],
+        [
+          "4",
+          "1rem",
+          "16px",
+          "`p-4`, `m-4`",
+          "**Standard padding**"
+        ],
+        [
+          "6",
+          "1.5rem",
+          "24px",
+          "`p-6`, `m-6`",
+          "**Card padding**"
+        ],
+        [
+          "8",
+          "2rem",
+          "32px",
+          "`p-8`, `m-8`",
+          "Page padding"
+        ],
+        [
+          "12",
+          "3rem",
+          "48px",
+          "`p-12`, `m-12`",
+          "Section spacing"
+        ],
+        [
+          "16",
+          "4rem",
+          "64px",
+          "`p-16`, `m-16`",
+          "Large gaps"
+        ]
+      ],
+      "lineNumber": 180
+    },
+    {
+      "id": "table-2-2",
+      "headers": [
+        "Scale",
+        "Size",
+        "Rem",
+        "Px",
+        "Line Height",
+        "Use Case"
+      ],
+      "rows": [
+        [
+          "xs",
+          "`text-xs`",
+          "0.75rem",
+          "12px",
+          "1rem",
+          "Helper text, captions"
+        ],
+        [
+          "sm",
+          "`text-sm`",
+          "0.875rem",
+          "14px",
+          "1.25rem",
+          "Small text, labels"
+        ],
+        [
+          "base",
+          "`text-base`",
+          "1rem",
+          "16px",
+          "1.5rem",
+          "**Body text**"
+        ],
+        [
+          "lg",
+          "`text-lg`",
+          "1.125rem",
+          "18px",
+          "1.75rem",
+          "Large body"
+        ],
+        [
+          "xl",
+          "`text-xl`",
+          "1.25rem",
+          "20px",
+          "1.75rem",
+          "H5"
+        ],
+        [
+          "2xl",
+          "`text-2xl`",
+          "1.5rem",
+          "24px",
+          "2rem",
+          "**H4**"
+        ],
+        [
+          "3xl",
+          "`text-3xl`",
+          "1.875rem",
+          "30px",
+          "2.25rem",
+          "**H3**"
+        ],
+        [
+          "4xl",
+          "`text-4xl`",
+          "2.25rem",
+          "36px",
+          "2.5rem",
+          "**H2**"
+        ],
+        [
+          "5xl",
+          "`text-5xl`",
+          "3rem",
+          "48px",
+          "1",
+          "**H1**"
+        ]
+      ],
+      "lineNumber": 194
+    },
+    {
+      "id": "table-2-3",
+      "headers": [
+        "Data Type",
+        "Format",
+        "Example",
+        "Function"
+      ],
+      "rows": [
+        [
+          "Currency (INR)",
+          "₹X,XX,XXX.XX",
+          "₹1,23,456.78",
+          "`formatINR(amount)`"
+        ],
+        [
+          "Currency (Compact)",
+          "₹X.XL or ₹X.XCr",
+          "₹1.5L, ₹2.3Cr",
+          "`formatCompact(amount)`"
+        ],
+        [
+          "Date & Time",
+          "DD MMM YYYY, HH:mm IST",
+          "15 Jan 2025, 14:30 IST",
+          "`formatDate(date)`"
+        ],
+        [
+          "Date Only",
+          "DD MMM YYYY",
+          "15 Jan 2025",
+          "`formatShortDate(date)`"
+        ],
+        [
+          "Email (Masked)",
+          "j***@e*.com",
+          "j***@e*.com",
+          "`maskEmail(email)`"
+        ],
+        [
+          "Phone (Masked)",
+          "98****10**",
+          "98****10**",
+          "`maskPhone(phone)`"
+        ],
+        [
+          "PAN (Masked)",
+          "ABCDEX234F",
+          "ABCDEX234F",
+          "`maskPAN(pan)`"
+        ],
+        [
+          "Account (Masked)",
+          "****1234",
+          "****1234",
+          "`maskAccount(account)`"
+        ]
+      ],
+      "lineNumber": 230
+    },
+    {
+      "id": "table-2-4",
+      "headers": [
+        "Animation",
+        "Duration",
+        "Easing",
+        "Tailwind",
+        "Use Case"
+      ],
+      "rows": [
+        [
+          "Fade In",
+          "0.5s",
+          "ease-out",
+          "`animate-fade-in`",
+          "Modals, toasts"
+        ],
+        [
+          "Slide In Bottom",
+          "0.5s",
+          "ease-out",
+          "`animate-slide-in-bottom`",
+          "Drawers, sheets"
+        ],
+        [
+          "Scale In",
+          "0.3s",
+          "ease-out",
+          "`animate-scale-in`",
+          "Popovers, tooltips"
+        ],
+        [
+          "Shimmer",
+          "1.5s",
+          "linear infinite",
+          "`animate-shimmer`",
+          "Skeleton loaders"
+        ],
+        [
+          "Pulse Slow",
+          "3s",
+          "ease infinite",
+          "`animate-pulse-slow`",
+          "Attention grabbers"
+        ],
+        [
+          "Gradient",
+          "8s",
+          "linear infinite",
+          "`animate-gradient`",
+          "Background effects"
+        ]
+      ],
+      "lineNumber": 243
+    }
+  ],
+  "content": "## Section 2: Quick Reference Cards\n\n### 2.1 Most-Used Colors\n\n| Color | Hex | RGB | Tailwind | Use Case |\n|-------|-----|-----|----------|----------|\n| **Primary-600** | `#2563eb` | `rgb(37, 99, 235)` | `bg-primary-600` | Primary buttons, main CTAs |\n| **Primary-500** | `#3b82f6` | `rgb(59, 130, 246)` | `bg-primary-500` | Links, accents |\n| **Secondary-600** | `#0d9488` | `rgb(13, 148, 136)` | `bg-secondary-600` | Secondary actions |\n| **Success** | `#22c55e` | `rgb(34, 197, 94)` | `bg-success` | Success states, credit |\n| **Error** | `#ef4444` | `rgb(239, 68, 68)` | `bg-error` | Error states, debit, danger |\n| **Warning** | `#f59e0b` | `rgb(245, 158, 11)` | `bg-warning` | Warnings, pending states |\n| **Info** | `#3b82f6` | `rgb(59, 130, 246)` | `bg-info` | Info messages |\n| **White/10** | `rgba(255,255,255,0.1)` | - | `bg-white/10` | Glass backgrounds |\n| **Black/40** | `rgba(0,0,0,0.4)` | - | `bg-black/40` | Overlays, backdrops |\n\n### 2.2 Spacing Scale (8pt Grid)\n\n| Token | Rem | Px | Tailwind | Common Use |\n|-------|-----|----|----|-----------|\n| 0 | 0 | 0 | `p-0`, `m-0` | Reset spacing |\n| 1 | 0.25rem | 4px | `p-1`, `m-1` | Micro spacing |\n| 2 | 0.5rem | 8px | `p-2`, `m-2` | XS spacing, tight padding |\n| 3 | 0.75rem | 12px | `p-3`, `m-3` | Badge padding |\n| 4 | 1rem | 16px | `p-4`, `m-4` | **Standard padding** |\n| 6 | 1.5rem | 24px | `p-6`, `m-6` | **Card padding** |\n| 8 | 2rem | 32px | `p-8`, `m-8` | Page padding |\n| 12 | 3rem | 48px | `p-12`, `m-12` | Section spacing |\n| 16 | 4rem | 64px | `p-16`, `m-16` | Large gaps |\n\n### 2.3 Typography Quick Lookup\n\n| Scale | Size | Rem | Px | Line Height | Use Case |\n|-------|------|-----|----|----|----------|\n| xs | `text-xs` | 0.75rem | 12px | 1rem | Helper text, captions |\n| sm | `text-sm` | 0.875rem | 14px | 1.25rem | Small text, labels |\n| base | `text-base` | 1rem | 16px | 1.5rem | **Body text** |\n| lg | `text-lg` | 1.125rem | 18px | 1.75rem | Large body |\n| xl | `text-xl` | 1.25rem | 20px | 1.75rem | H5 |\n| 2xl | `text-2xl` | 1.5rem | 24px | 2rem | **H4** |\n| 3xl | `text-3xl` | 1.875rem | 30px | 2.25rem | **H3** |\n| 4xl | `text-4xl` | 2.25rem | 36px | 2.5rem | **H2** |\n| 5xl | `text-5xl` | 3rem | 48px | 1 | **H1** |\n\n### 2.4 Component Variant Quick Decision\n\n```\nButton Variant?\n├─ Most important action on page? → variant=\"primary\" (MAX 1)\n├─ Destructive action? → variant=\"danger\" + confirmation\n├─ Alternative action? → variant=\"secondary\"\n└─ Cancel/dismiss? → variant=\"ghost\" or \"outline\"\n\nCard Variant?\n├─ Glass effect needed? → variant=\"glass\"\n├─ Gradient background? → variant=\"gradient\"\n├─ Simple border? → variant=\"outlined\"\n└─ Default solid? → variant=\"default\"\n\nInput State?\n├─ User input valid? → state=\"default\" (blue focus ring)\n├─ Validation error? → state=\"error\" (red border + message)\n├─ Field disabled? → disabled={true} (opacity-50)\n└─ Read-only display? → readOnly={true} + muted styling\n```\n\n### 2.5 Fintech Data Formatting Cheat Sheet\n\n| Data Type | Format | Example | Function |\n|-----------|--------|---------|----------|\n| Currency (INR) | ₹X,XX,XXX.XX | ₹1,23,456.78 | `formatINR(amount)` |\n| Currency (Compact) | ₹X.XL or ₹X.XCr | ₹1.5L, ₹2.3Cr | `formatCompact(amount)` |\n| Date & Time | DD MMM YYYY, HH:mm IST | 15 Jan 2025, 14:30 IST | `formatDate(date)` |\n| Date Only | DD MMM YYYY | 15 Jan 2025 | `formatShortDate(date)` |\n| Email (Masked) | j***@e*.com | j***@e*.com | `maskEmail(email)` |\n| Phone (Masked) | 98****10** | 98****10** | `maskPhone(phone)` |\n| PAN (Masked) | ABCDEX234F | ABCDEX234F | `maskPAN(pan)` |\n| Account (Masked) | ****1234 | ****1234 | `maskAccount(account)` |\n\n### 2.6 Common Animations\n\n| Animation | Duration | Easing | Tailwind | Use Case |\n|-----------|----------|--------|----------|----------|\n| Fade In | 0.5s | ease-out | `animate-fade-in` | Modals, toasts |\n| Slide In Bottom | 0.5s | ease-out | `animate-slide-in-bottom` | Drawers, sheets |\n| Scale In | 0.3s | ease-out | `animate-scale-in` | Popovers, tooltips |\n| Shimmer | 1.5s | linear infinite | `animate-shimmer` | Skeleton loaders |\n| Pulse Slow | 3s | ease infinite | `animate-pulse-slow` | Attention grabbers |\n| Gradient | 8s | linear infinite | `animate-gradient` | Background effects |\n\n---\n"
+}

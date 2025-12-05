@@ -1,0 +1,213 @@
+{
+  "color": {
+    "brand": {
+      "blue": {
+        "50": "#eef2f6",
+        "100": "#d9e4f2",
+        "200": "#a8c9f0",
+        "300": "#71adf4",
+        "400": "#3890fa",
+        "500": "#0074ff",
+        "600": "#006ced",
+        "700": "#005dcc",
+        "800": "#044695",
+        "900": "#052f61",
+        "base": "#006CED"
+      },
+      "orange": {
+        "50": "#f6f3ee",
+        "100": "#f2e6d9",
+        "200": "#f0cea8",
+        "300": "#f4b771",
+        "400": "#fa9f38",
+        "500": "#ff8800",
+        "600": "#ff8800",
+        "700": "#cc6d00",
+        "800": "#955104",
+        "900": "#613605",
+        "base": "#FF8800"
+      },
+      "navy": {
+        "50": "#eef1f6",
+        "100": "#d9e1f2",
+        "200": "#a8c0f0",
+        "300": "#719df4",
+        "400": "#3878fa",
+        "500": "#0054ff",
+        "600": "#002e8b",
+        "700": "#0044cc",
+        "800": "#043495",
+        "900": "#052361",
+        "base": "#002E8B"
+      },
+      "dark": {
+        "50": "#f2f2f2",
+        "100": "#e6e6e6",
+        "200": "#cccccc",
+        "300": "#b3b3b3",
+        "400": "#999999",
+        "500": "#808080",
+        "600": "#212121",
+        "700": "#666666",
+        "800": "#4d4d4d",
+        "900": "#333333",
+        "base": "#212121"
+      },
+      "teal": {
+        "50": "#eff5f5",
+        "100": "#dbf0ee",
+        "200": "#aeeae5",
+        "300": "#7ce9df",
+        "400": "#48eadc",
+        "500": "#15ead7",
+        "600": "#0d9488",
+        "700": "#10bcac",
+        "800": "#10897f",
+        "900": "#0d5953",
+        "base": "#0d9488"
+      }
+    },
+    "extended": {
+      "dodgerBlue": {
+        "base": "#00A8FE"
+      },
+      "safetyOrange": {
+        "base": "#FF5700"
+      },
+      "ronchi": {
+        "base": "#FFC247"
+      },
+      "purple": {
+        "base": "#506CE2"
+      },
+      "turquoise": {
+        "base": "#17BEB6"
+      }
+    },
+    "semantic": {
+      "success": {
+        "base": "#22c55e"
+      },
+      "error": {
+        "base": "#ef4444"
+      },
+      "warning": {
+        "base": "#f59e0b"
+      },
+      "info": {
+        "base": "#3b82f6"
+      }
+    },
+    "transaction": {
+      "credit": {
+        "base": "#22c55e"
+      },
+      "debit": {
+        "base": "#ef4444"
+      },
+      "pending": {
+        "base": "#f59e0b"
+      },
+      "settled": {
+        "base": "#06b6d4"
+      },
+      "refunded": {
+        "base": "#a855f7"
+      },
+      "failed": {
+        "base": "#dc2626"
+      }
+    }
+  },
+  "source": [
+    "design-tokens/**/*.json"
+  ],
+  "platforms": {
+    "json": {
+      "transformGroup": "js",
+      "buildPath": "./",
+      "files": [
+        {
+          "destination": "sabpaisa-design-system.json",
+          "format": "json/nested"
+        }
+      ]
+    },
+    "css": {
+      "transformGroup": "css",
+      "buildPath": "./output/",
+      "files": [
+        {
+          "destination": "variables.css",
+          "format": "css/variables"
+        }
+      ]
+    },
+    "js": {
+      "transformGroup": "js",
+      "buildPath": "./output/",
+      "files": [
+        {
+          "destination": "tokens.js",
+          "format": "javascript/es6"
+        }
+      ]
+    }
+  },
+  "spacing": {
+    "0": "0",
+    "1": "0.25rem",
+    "2": "0.5rem",
+    "3": "0.75rem",
+    "4": "1rem",
+    "5": "1.25rem",
+    "6": "1.5rem",
+    "8": "2rem",
+    "10": "2.5rem",
+    "12": "3rem",
+    "16": "4rem",
+    "20": "5rem",
+    "24": "6rem"
+  },
+  "font": {
+    "family": {
+      "heading": "Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+      "body": "Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+      "mono": "source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace"
+    },
+    "size": {
+      "xs": "0.75rem",
+      "sm": "0.875rem",
+      "base": "1rem",
+      "lg": "1.125rem",
+      "xl": "1.25rem",
+      "2xl": "1.5rem",
+      "3xl": "1.875rem",
+      "4xl": "2.25rem",
+      "5xl": "3rem"
+    },
+    "lineHeight": {
+      "none": "1",
+      "tight": "1.25",
+      "snug": "1.375",
+      "normal": "1.5",
+      "relaxed": "1.625",
+      "loose": "2"
+    },
+    "letterSpacing": {
+      "tighter": "-0.05em",
+      "tight": "-0.025em",
+      "normal": "0em",
+      "wide": "0.025em",
+      "wider": "0.05em",
+      "widest": "0.1em"
+    },
+    "weight": {
+      "normal": "400",
+      "medium": "500",
+      "semibold": "600",
+      "bold": "700",
+      "extrabold": "800"
+    }
+  }
+}

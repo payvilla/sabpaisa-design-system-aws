@@ -1,0 +1,147 @@
+{
+  "section": 13,
+  "title": "Toast/Notification Component",
+  "metadata": {
+    "startLine": 3831,
+    "endLine": 4393,
+    "codeBlockCount": 22,
+    "tableCount": 0,
+    "extractedAt": "2025-12-01T16:35:09.309Z"
+  },
+  "codeBlocks": [
+    {
+      "id": "code-13-0",
+      "language": "typescript",
+      "code": "interface ToastProps {\n  /** Unique identifier for toast management */\n  id: string;\n\n  /** Visual and semantic type */\n  type: 'success' | 'error' | 'warning' | 'info';\n\n  /** Primary message (bold) */\n  title: string;\n\n  /** Optional secondary message */\n  message?: string;\n\n  /** Auto-dismiss duration in milliseconds (default: 5000) */\n  duration?: number;\n\n  /** Callback when toast is closed */\n  onClose: (id: string) => void;\n}\n\n// Toast Manager API\nclass ToastManager {\n  show(toast: Omit<ToastProps, 'id' | 'onClose'>): void;\n  remove(id: string): void;\n  clear(): void;\n}",
+      "lineNumber": 3850
+    },
+    {
+      "id": "code-13-1",
+      "language": "tsx",
+      "code": "toast.show({\n  type: 'success',\n  title: 'Payment Successful',\n  message: 'Transaction ID: TXN123456',\n  duration: 5000\n});\n\n// Visual Style:\n// - Icon: CheckCircle (green)\n// - Background: bg-green-50\n// - Border: border-l-4 border-green-200\n// - Text: text-green-800",
+      "lineNumber": 3884
+    },
+    {
+      "id": "code-13-2",
+      "language": "tsx",
+      "code": "toast.show({\n  type: 'error',\n  title: 'Payment Failed',\n  message: 'Insufficient balance. Please try again.',\n  duration: 7000 // Longer for errors\n});\n\n// Visual Style:\n// - Icon: XCircle (red)\n// - Background: bg-red-50\n// - Border: border-l-4 border-red-200\n// - Text: text-red-800",
+      "lineNumber": 3900
+    },
+    {
+      "id": "code-13-3",
+      "language": "tsx",
+      "code": "toast.show({\n  type: 'warning',\n  title: 'Session Expiring Soon',\n  message: 'Your session will expire in 5 minutes.',\n  duration: 6000\n});\n\n// Visual Style:\n// - Icon: AlertTriangle (yellow)\n// - Background: bg-yellow-50\n// - Border: border-l-4 border-yellow-200\n// - Text: text-yellow-800",
+      "lineNumber": 3916
+    },
+    {
+      "id": "code-13-4",
+      "language": "tsx",
+      "code": "toast.show({\n  type: 'info',\n  title: 'New Feature Available',\n  message: 'Check out our new Smart Routing feature!',\n  duration: 5000\n});\n\n// Visual Style:\n// - Icon: Info (blue)\n// - Background: bg-blue-50\n// - Border: border-l-4 border-blue-200\n// - Text: text-blue-800",
+      "lineNumber": 3932
+    },
+    {
+      "id": "code-13-5",
+      "language": "tsx",
+      "code": "import { toast } from '@/components/ui/Toast';\n\n// In your component or function\nconst handleSave = async () => {\n  try {\n    await saveData();\n\n    // Show success toast\n    toast.show({\n      type: 'success',\n      title: 'Saved Successfully',\n      message: 'Your changes have been saved.',\n    });\n  } catch (error) {\n    // Show error toast\n    toast.show({\n      type: 'error',\n      title: 'Save Failed',\n      message: error.message,\n      duration: 7000, // Longer duration for errors\n    });\n  }\n};",
+      "lineNumber": 3952
+    },
+    {
+      "id": "code-13-6",
+      "language": "tsx",
+      "code": "const handlePayment = async (amount: number) => {\n  try {\n    const response = await processPayment(amount);\n\n    toast.show({\n      type: 'success',\n      title: 'Payment Successful',\n      message: `₹${amount.toLocaleString('en-IN')} processed. TXN ID: ${response.transactionId}`,\n      duration: 6000,\n    });\n\n    navigate('/payment-success');\n  } catch (error) {\n    toast.show({\n      type: 'error',\n      title: 'Payment Failed',\n      message: 'There was an error processing your payment. Please try again.',\n      duration: 7000,\n    });\n  }\n};",
+      "lineNumber": 3983
+    },
+    {
+      "id": "code-13-7",
+      "language": "tsx",
+      "code": "const handleSubmit = (data: FormData) => {\n  // Validation\n  if (!data.email) {\n    toast.show({\n      type: 'warning',\n      title: 'Missing Email',\n      message: 'Please enter your email address.',\n    });\n    return;\n  }\n\n  if (!isValidEmail(data.email)) {\n    toast.show({\n      type: 'error',\n      title: 'Invalid Email',\n      message: 'Please enter a valid email address.',\n    });\n    return;\n  }\n\n  // Submit success\n  toast.show({\n    type: 'success',\n    title: 'Form Submitted',\n    message: 'We will review your application shortly.',\n  });\n};",
+      "lineNumber": 4010
+    },
+    {
+      "id": "code-13-8",
+      "language": "tsx",
+      "code": "const checkKYCStatus = async () => {\n  const status = await fetchKYCStatus();\n\n  const messages = {\n    approved: {\n      type: 'success' as const,\n      title: 'KYC Approved',\n      message: 'Your account has been verified successfully.',\n    },\n    rejected: {\n      type: 'error' as const,\n      title: 'KYC Rejected',\n      message: 'Please re-upload your documents with correct information.',\n    },\n    pending: {\n      type: 'info' as const,\n      title: 'KYC Under Review',\n      message: 'We are reviewing your documents. This may take 24-48 hours.',\n    },\n  };\n\n  toast.show(messages[status]);\n};",
+      "lineNumber": 4043
+    },
+    {
+      "id": "code-13-9",
+      "language": "tsx",
+      "code": "// Session timeout warning\nuseEffect(() => {\n  const warningTime = sessionExpiry - 5 * 60 * 1000; // 5 minutes before\n\n  const timer = setTimeout(() => {\n    toast.show({\n      type: 'warning',\n      title: 'Session Expiring Soon',\n      message: 'Your session will expire in 5 minutes. Please save your work.',\n      duration: 10000, // Stay longer\n    });\n  }, warningTime);\n\n  return () => clearTimeout(timer);\n}, [sessionExpiry]);\n\n// Session expired\nconst handleSessionExpired = () => {\n  toast.show({\n    type: 'error',\n    title: 'Session Expired',\n    message: 'Please log in again to continue.',\n    duration: 0, // Stay until manually closed\n  });\n\n  navigate('/login');\n};",
+      "lineNumber": 4072
+    },
+    {
+      "id": "code-13-10",
+      "language": "tsx",
+      "code": "const apiErrorHandler = (error: AxiosError) => {\n  const statusMessages = {\n    400: {\n      title: 'Invalid Request',\n      message: 'Please check your input and try again.',\n    },\n    401: {\n      title: 'Unauthorized',\n      message: 'Your session has expired. Please log in again.',\n    },\n    403: {\n      title: 'Access Denied',\n      message: 'You do not have permission to perform this action.',\n    },\n    404: {\n      title: 'Not Found',\n      message: 'The requested resource was not found.',\n    },\n    500: {\n      title: 'Server Error',\n      message: 'Something went wrong. Please try again later.',\n    },\n  };\n\n  const message = statusMessages[error.response?.status] || {\n    title: 'Error',\n    message: 'An unexpected error occurred.',\n  };\n\n  toast.show({\n    type: 'error',\n    ...message,\n    duration: 7000,\n  });\n};",
+      "lineNumber": 4105
+    },
+    {
+      "id": "code-13-11",
+      "language": "typescript",
+      "code": "// Toast manager is a singleton\nclass ToastManager {\n  private toasts: Map<string, ToastProps> = new Map();\n  private container: HTMLElement | null = null;\n  private root: any = null;\n\n  // Ensures container exists (creates on first use)\n  private ensureContainer() {\n    if (!this.container) {\n      this.container = document.createElement('div');\n      this.container.className = 'fixed top-4 right-4 z-50 space-y-2';\n      document.body.appendChild(this.container);\n      this.root = createRoot(this.container);\n    }\n  }\n\n  // Renders all active toasts\n  private render() {\n    if (!this.root) return;\n\n    const toastElements = Array.from(this.toasts.values()).map(toast => (\n      <Toast key={toast.id} {...toast} onClose={this.remove.bind(this)} />\n    ));\n\n    this.root.render(<>{toastElements}</>);\n  }\n\n  // Public API: Show toast\n  show(toast: Omit<ToastProps, 'id' | 'onClose'>) {\n    const id = Math.random().toString(36).substr(2, 9);\n    this.ensureContainer();\n    this.toasts.set(id, { ...toast, id, onClose: this.remove.bind(this) });\n    this.render();\n  }\n\n  // Public API: Remove specific toast\n  remove(id: string) {\n    this.toasts.delete(id);\n    this.render();\n  }\n\n  // Public API: Clear all toasts\n  clear() {\n    this.toasts.clear();\n    this.render();\n  }\n}\n\n// Export singleton instance\nexport const toast = new ToastManager();",
+      "lineNumber": 4148
+    },
+    {
+      "id": "code-13-12",
+      "language": "tsx",
+      "code": "// No provider needed - use directly\nimport { toast } from '@/components/ui/Toast';\n\ntoast.show({ type: 'success', title: 'Done!' });",
+      "lineNumber": 4202
+    },
+    {
+      "id": "code-13-13",
+      "language": "tsx",
+      "code": "// Default: 5000ms (5 seconds)\ntoast.show({\n  type: 'success',\n  title: 'Saved',\n  // duration defaults to 5000\n});",
+      "lineNumber": 4214
+    },
+    {
+      "id": "code-13-14",
+      "language": "tsx",
+      "code": "// Short duration (3 seconds)\ntoast.show({\n  type: 'info',\n  title: 'Copied to clipboard',\n  duration: 3000,\n});\n\n// Long duration (10 seconds)\ntoast.show({\n  type: 'warning',\n  title: 'Important Notice',\n  message: 'Please read this carefully.',\n  duration: 10000,\n});\n\n// Never auto-dismiss (duration: 0 or Infinity)\ntoast.show({\n  type: 'error',\n  title: 'Critical Error',\n  message: 'Manual action required.',\n  duration: 0, // User must close manually\n});",
+      "lineNumber": 4224
+    },
+    {
+      "id": "code-13-15",
+      "language": "css",
+      "code": "/* Toast container */\nfixed top-4 right-4 z-50 space-y-2\n\n/* Positioning */\n- top-4: 1rem from top\n- right-4: 1rem from right\n- z-50: Above most content\n- space-y-2: 0.5rem gap between toasts",
+      "lineNumber": 4261
+    },
+    {
+      "id": "code-13-16",
+      "language": "tsx",
+      "code": "// Mobile: Full width at top\n<div className=\"fixed top-4 left-4 right-4 z-50 space-y-2 md:left-auto md:w-96\">\n  {/* Toasts */}\n</div>",
+      "lineNumber": 4279
+    },
+    {
+      "id": "code-13-17",
+      "language": "tsx",
+      "code": "className=\"animate-in slide-in-from-top-full duration-300\"\n\n// Keyframes (from tailwind.config.js)\n'slide-in-top': {\n  '0%': { transform: 'translateY(-100%)', opacity: '0' },\n  '100%': { transform: 'translateY(0)', opacity: '1' },\n}",
+      "lineNumber": 4291
+    },
+    {
+      "id": "code-13-18",
+      "language": "tsx",
+      "code": "// Toast is announced to screen readers\n<div role=\"alert\" aria-live=\"assertive\">\n  <p className=\"text-sm font-medium\">{title}</p>\n  {message && <p className=\"mt-1 text-sm\">{message}</p>}\n</div>\n\n// Close button has label\n<button\n  className=\"...\"\n  onClick={() => onClose(id)}\n  aria-label=\"Close notification\"\n>\n  <X className=\"h-5 w-5\" />\n</button>",
+      "lineNumber": 4318
+    },
+    {
+      "id": "code-13-19",
+      "language": "tsx",
+      "code": "// WRONG: Overwhelming user\nfor (let i = 0; i < 10; i++) {\n  toast.show({ type: 'info', title: `Message ${i}` });\n}\n\n// CORRECT: Show one summary toast\ntoast.show({\n  type: 'success',\n  title: '10 items processed',\n  message: 'View details in the activity log.',\n});",
+      "lineNumber": 4345
+    },
+    {
+      "id": "code-13-20",
+      "language": "tsx",
+      "code": "// WRONG: Toast disappears, user loses error info\ntoast.show({\n  type: 'error',\n  title: 'Form has 12 errors',\n  message: 'Check all fields',\n});\n\n// CORRECT: Show inline errors on form\n<TextField\n  name=\"email\"\n  error={true}\n  errorMessage=\"Invalid email address\"\n/>",
+      "lineNumber": 4360
+    },
+    {
+      "id": "code-13-21",
+      "language": "tsx",
+      "code": "// WRONG: User doesn't know what succeeded\ntoast.show({\n  type: 'success',\n  title: 'Success',\n});\n\n// CORRECT: Specific message\ntoast.show({\n  type: 'success',\n  title: 'Payment Successful',\n  message: 'Transaction ID: TXN123456',\n});",
+      "lineNumber": 4377
+    }
+  ],
+  "tables": [],
+  "content": "## Section 13: Toast/Notification Component\n\n### 13.1 Component Overview\n\n**Description**: Temporary notification system with 4 semantic types (success, error, warning, info). Auto-dismisses after duration, positioned fixed top-right.\n\n**Location**: `src/components/ui/Toast.tsx`\n\n**When to Use**:\n- ✅ Action feedback (save, delete, update)\n- ✅ Error messages (API failures, validation errors)\n- ✅ Success confirmations (payment complete, KYC approved)\n- ✅ Warning alerts (session timeout, unsaved changes)\n- ✅ Information messages (new feature announcements)\n\n---\n\n### 13.2 TypeScript Interface\n\n```typescript\ninterface ToastProps {\n  /** Unique identifier for toast management */\n  id: string;\n\n  /** Visual and semantic type */\n  type: 'success' | 'error' | 'warning' | 'info';\n\n  /** Primary message (bold) */\n  title: string;\n\n  /** Optional secondary message */\n  message?: string;\n\n  /** Auto-dismiss duration in milliseconds (default: 5000) */\n  duration?: number;\n\n  /** Callback when toast is closed */\n  onClose: (id: string) => void;\n}\n\n// Toast Manager API\nclass ToastManager {\n  show(toast: Omit<ToastProps, 'id' | 'onClose'>): void;\n  remove(id: string): void;\n  clear(): void;\n}\n```\n\n---\n\n### 13.3 All Toast Types\n\n#### Success Toast\n```tsx\ntoast.show({\n  type: 'success',\n  title: 'Payment Successful',\n  message: 'Transaction ID: TXN123456',\n  duration: 5000\n});\n\n// Visual Style:\n// - Icon: CheckCircle (green)\n// - Background: bg-green-50\n// - Border: border-l-4 border-green-200\n// - Text: text-green-800\n```\n\n#### Error Toast\n```tsx\ntoast.show({\n  type: 'error',\n  title: 'Payment Failed',\n  message: 'Insufficient balance. Please try again.',\n  duration: 7000 // Longer for errors\n});\n\n// Visual Style:\n// - Icon: XCircle (red)\n// - Background: bg-red-50\n// - Border: border-l-4 border-red-200\n// - Text: text-red-800\n```\n\n#### Warning Toast\n```tsx\ntoast.show({\n  type: 'warning',\n  title: 'Session Expiring Soon',\n  message: 'Your session will expire in 5 minutes.',\n  duration: 6000\n});\n\n// Visual Style:\n// - Icon: AlertTriangle (yellow)\n// - Background: bg-yellow-50\n// - Border: border-l-4 border-yellow-200\n// - Text: text-yellow-800\n```\n\n#### Info Toast\n```tsx\ntoast.show({\n  type: 'info',\n  title: 'New Feature Available',\n  message: 'Check out our new Smart Routing feature!',\n  duration: 5000\n});\n\n// Visual Style:\n// - Icon: Info (blue)\n// - Background: bg-blue-50\n// - Border: border-l-4 border-blue-200\n// - Text: text-blue-800\n```\n\n---\n\n### 13.4 Usage Pattern\n\n#### Basic Usage\n```tsx\nimport { toast } from '@/components/ui/Toast';\n\n// In your component or function\nconst handleSave = async () => {\n  try {\n    await saveData();\n\n    // Show success toast\n    toast.show({\n      type: 'success',\n      title: 'Saved Successfully',\n      message: 'Your changes have been saved.',\n    });\n  } catch (error) {\n    // Show error toast\n    toast.show({\n      type: 'error',\n      title: 'Save Failed',\n      message: error.message,\n      duration: 7000, // Longer duration for errors\n    });\n  }\n};\n```\n\n---\n\n### 13.5 Code Examples\n\n#### Example 1: Payment Success\n```tsx\nconst handlePayment = async (amount: number) => {\n  try {\n    const response = await processPayment(amount);\n\n    toast.show({\n      type: 'success',\n      title: 'Payment Successful',\n      message: `₹${amount.toLocaleString('en-IN')} processed. TXN ID: ${response.transactionId}`,\n      duration: 6000,\n    });\n\n    navigate('/payment-success');\n  } catch (error) {\n    toast.show({\n      type: 'error',\n      title: 'Payment Failed',\n      message: 'There was an error processing your payment. Please try again.',\n      duration: 7000,\n    });\n  }\n};\n```\n\n---\n\n#### Example 2: Form Validation\n```tsx\nconst handleSubmit = (data: FormData) => {\n  // Validation\n  if (!data.email) {\n    toast.show({\n      type: 'warning',\n      title: 'Missing Email',\n      message: 'Please enter your email address.',\n    });\n    return;\n  }\n\n  if (!isValidEmail(data.email)) {\n    toast.show({\n      type: 'error',\n      title: 'Invalid Email',\n      message: 'Please enter a valid email address.',\n    });\n    return;\n  }\n\n  // Submit success\n  toast.show({\n    type: 'success',\n    title: 'Form Submitted',\n    message: 'We will review your application shortly.',\n  });\n};\n```\n\n---\n\n#### Example 3: KYC Status Update\n```tsx\nconst checkKYCStatus = async () => {\n  const status = await fetchKYCStatus();\n\n  const messages = {\n    approved: {\n      type: 'success' as const,\n      title: 'KYC Approved',\n      message: 'Your account has been verified successfully.',\n    },\n    rejected: {\n      type: 'error' as const,\n      title: 'KYC Rejected',\n      message: 'Please re-upload your documents with correct information.',\n    },\n    pending: {\n      type: 'info' as const,\n      title: 'KYC Under Review',\n      message: 'We are reviewing your documents. This may take 24-48 hours.',\n    },\n  };\n\n  toast.show(messages[status]);\n};\n```\n\n---\n\n#### Example 4: Session Management\n```tsx\n// Session timeout warning\nuseEffect(() => {\n  const warningTime = sessionExpiry - 5 * 60 * 1000; // 5 minutes before\n\n  const timer = setTimeout(() => {\n    toast.show({\n      type: 'warning',\n      title: 'Session Expiring Soon',\n      message: 'Your session will expire in 5 minutes. Please save your work.',\n      duration: 10000, // Stay longer\n    });\n  }, warningTime);\n\n  return () => clearTimeout(timer);\n}, [sessionExpiry]);\n\n// Session expired\nconst handleSessionExpired = () => {\n  toast.show({\n    type: 'error',\n    title: 'Session Expired',\n    message: 'Please log in again to continue.',\n    duration: 0, // Stay until manually closed\n  });\n\n  navigate('/login');\n};\n```\n\n---\n\n#### Example 5: API Error Handling\n```tsx\nconst apiErrorHandler = (error: AxiosError) => {\n  const statusMessages = {\n    400: {\n      title: 'Invalid Request',\n      message: 'Please check your input and try again.',\n    },\n    401: {\n      title: 'Unauthorized',\n      message: 'Your session has expired. Please log in again.',\n    },\n    403: {\n      title: 'Access Denied',\n      message: 'You do not have permission to perform this action.',\n    },\n    404: {\n      title: 'Not Found',\n      message: 'The requested resource was not found.',\n    },\n    500: {\n      title: 'Server Error',\n      message: 'Something went wrong. Please try again later.',\n    },\n  };\n\n  const message = statusMessages[error.response?.status] || {\n    title: 'Error',\n    message: 'An unexpected error occurred.',\n  };\n\n  toast.show({\n    type: 'error',\n    ...message,\n    duration: 7000,\n  });\n};\n```\n\n---\n\n### 13.6 Toast Manager Pattern\n\n#### Singleton Implementation\n```typescript\n// Toast manager is a singleton\nclass ToastManager {\n  private toasts: Map<string, ToastProps> = new Map();\n  private container: HTMLElement | null = null;\n  private root: any = null;\n\n  // Ensures container exists (creates on first use)\n  private ensureContainer() {\n    if (!this.container) {\n      this.container = document.createElement('div');\n      this.container.className = 'fixed top-4 right-4 z-50 space-y-2';\n      document.body.appendChild(this.container);\n      this.root = createRoot(this.container);\n    }\n  }\n\n  // Renders all active toasts\n  private render() {\n    if (!this.root) return;\n\n    const toastElements = Array.from(this.toasts.values()).map(toast => (\n      <Toast key={toast.id} {...toast} onClose={this.remove.bind(this)} />\n    ));\n\n    this.root.render(<>{toastElements}</>);\n  }\n\n  // Public API: Show toast\n  show(toast: Omit<ToastProps, 'id' | 'onClose'>) {\n    const id = Math.random().toString(36).substr(2, 9);\n    this.ensureContainer();\n    this.toasts.set(id, { ...toast, id, onClose: this.remove.bind(this) });\n    this.render();\n  }\n\n  // Public API: Remove specific toast\n  remove(id: string) {\n    this.toasts.delete(id);\n    this.render();\n  }\n\n  // Public API: Clear all toasts\n  clear() {\n    this.toasts.clear();\n    this.render();\n  }\n}\n\n// Export singleton instance\nexport const toast = new ToastManager();\n```\n\n#### Usage Anywhere in App\n```tsx\n// No provider needed - use directly\nimport { toast } from '@/components/ui/Toast';\n\ntoast.show({ type: 'success', title: 'Done!' });\n```\n\n---\n\n### 13.7 Auto-Dismiss Behavior\n\n#### Default Duration\n```tsx\n// Default: 5000ms (5 seconds)\ntoast.show({\n  type: 'success',\n  title: 'Saved',\n  // duration defaults to 5000\n});\n```\n\n#### Custom Duration\n```tsx\n// Short duration (3 seconds)\ntoast.show({\n  type: 'info',\n  title: 'Copied to clipboard',\n  duration: 3000,\n});\n\n// Long duration (10 seconds)\ntoast.show({\n  type: 'warning',\n  title: 'Important Notice',\n  message: 'Please read this carefully.',\n  duration: 10000,\n});\n\n// Never auto-dismiss (duration: 0 or Infinity)\ntoast.show({\n  type: 'error',\n  title: 'Critical Error',\n  message: 'Manual action required.',\n  duration: 0, // User must close manually\n});\n```\n\n#### Recommended Durations\n- **Success**: 5000ms (5s) - User quickly sees confirmation\n- **Error**: 7000ms (7s) - User needs time to read error\n- **Warning**: 6000ms (6s) - Important but not critical\n- **Info**: 5000ms (5s) - Standard information\n- **Critical**: 0ms (manual) - Requires user action\n\n---\n\n### 13.8 Positioning & Stacking\n\n#### Fixed Position\n```css\n/* Toast container */\nfixed top-4 right-4 z-50 space-y-2\n\n/* Positioning */\n- top-4: 1rem from top\n- right-4: 1rem from right\n- z-50: Above most content\n- space-y-2: 0.5rem gap between toasts\n```\n\n#### Stacking Behavior\n- New toasts appear at the **top** of the stack\n- Old toasts stack below new toasts\n- Each toast animates in with `slide-in-from-top-full`\n- When dismissed, toast fades out and others shift up\n\n#### Responsive Positioning\n```tsx\n// Mobile: Full width at top\n<div className=\"fixed top-4 left-4 right-4 z-50 space-y-2 md:left-auto md:w-96\">\n  {/* Toasts */}\n</div>\n```\n\n---\n\n### 13.9 Animation & Transitions\n\n#### Entry Animation\n```tsx\nclassName=\"animate-in slide-in-from-top-full duration-300\"\n\n// Keyframes (from tailwind.config.js)\n'slide-in-top': {\n  '0%': { transform: 'translateY(-100%)', opacity: '0' },\n  '100%': { transform: 'translateY(0)', opacity: '1' },\n}\n```\n\n#### Exit Animation\n- Fades out over 200ms\n- Removed from DOM after animation completes\n- Other toasts smoothly transition up due to `space-y-2`\n\n---\n\n### 13.10 Accessibility\n\n#### WCAG Compliance\n- **Contrast**: All colors meet WCAG 2.2 AA\n  - Success: Green-800 on Green-50 = 5.2:1\n  - Error: Red-800 on Red-50 = 5.4:1\n  - Warning: Yellow-800 on Yellow-50 = 4.9:1\n  - Info: Blue-800 on Blue-50 = 5.1:1\n\n#### Screen Reader Support\n```tsx\n// Toast is announced to screen readers\n<div role=\"alert\" aria-live=\"assertive\">\n  <p className=\"text-sm font-medium\">{title}</p>\n  {message && <p className=\"mt-1 text-sm\">{message}</p>}\n</div>\n\n// Close button has label\n<button\n  className=\"...\"\n  onClick={() => onClose(id)}\n  aria-label=\"Close notification\"\n>\n  <X className=\"h-5 w-5\" />\n</button>\n```\n\n#### Keyboard Navigation\n- **Close Button**: Focusable and keyboard accessible\n- **Tab Order**: Natural tab order (title → message → close button)\n- **Enter/Space**: Activates close button\n\n---\n\n### 13.11 Anti-Patterns\n\n❌ **Too Many Toasts at Once**\n```tsx\n// WRONG: Overwhelming user\nfor (let i = 0; i < 10; i++) {\n  toast.show({ type: 'info', title: `Message ${i}` });\n}\n\n// CORRECT: Show one summary toast\ntoast.show({\n  type: 'success',\n  title: '10 items processed',\n  message: 'View details in the activity log.',\n});\n```\n\n❌ **Using Toast for Persistent Errors**\n```tsx\n// WRONG: Toast disappears, user loses error info\ntoast.show({\n  type: 'error',\n  title: 'Form has 12 errors',\n  message: 'Check all fields',\n});\n\n// CORRECT: Show inline errors on form\n<TextField\n  name=\"email\"\n  error={true}\n  errorMessage=\"Invalid email address\"\n/>\n```\n\n❌ **Missing Context in Toast**\n```tsx\n// WRONG: User doesn't know what succeeded\ntoast.show({\n  type: 'success',\n  title: 'Success',\n});\n\n// CORRECT: Specific message\ntoast.show({\n  type: 'success',\n  title: 'Payment Successful',\n  message: 'Transaction ID: TXN123456',\n});\n```\n\n---\n"
+}

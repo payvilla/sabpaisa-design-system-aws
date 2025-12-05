@@ -1,0 +1,141 @@
+{
+  "section": 12,
+  "title": "Badge Component",
+  "metadata": {
+    "startLine": 3420,
+    "endLine": 3830,
+    "codeBlockCount": 21,
+    "tableCount": 0,
+    "extractedAt": "2025-12-01T16:35:09.307Z"
+  },
+  "codeBlocks": [
+    {
+      "id": "code-12-0",
+      "language": "tsx",
+      "code": "<span className=\"\n  px-3 py-1\n  rounded-full\n  text-xs font-medium\n  border\n\">\n  Badge Text\n</span>",
+      "lineNumber": 3440
+    },
+    {
+      "id": "code-12-1",
+      "language": "tsx",
+      "code": "<span className=\"px-3 py-1 rounded-full text-xs font-medium bg-green-500/20 text-green-400 border border-green-400/30\">\n  Success\n</span>\n\n// Use Cases:\n- Completed transactions\n- Verified KYC\n- Active accounts\n- Approved requests",
+      "lineNumber": 3462
+    },
+    {
+      "id": "code-12-2",
+      "language": "tsx",
+      "code": "<span className=\"px-3 py-1 rounded-full text-xs font-medium bg-red-500/20 text-red-400 border border-red-400/30\">\n  Failed\n</span>\n\n// Use Cases:\n- Failed transactions\n- Rejected KYC\n- Declined payments\n- Error states",
+      "lineNumber": 3475
+    },
+    {
+      "id": "code-12-3",
+      "language": "tsx",
+      "code": "<span className=\"px-3 py-1 rounded-full text-xs font-medium bg-yellow-500/20 text-yellow-400 border border-yellow-400/30\">\n  Pending\n</span>\n\n// Use Cases:\n- Pending transactions\n- In-review KYC\n- Awaiting approval\n- Processing status",
+      "lineNumber": 3488
+    },
+    {
+      "id": "code-12-4",
+      "language": "tsx",
+      "code": "<span className=\"px-3 py-1 rounded-full text-xs font-medium bg-blue-500/20 text-blue-400 border border-blue-400/30\">\n  Info\n</span>\n\n// Use Cases:\n- Informational labels\n- New features (NEW)\n- Beta features (BETA)\n- General status",
+      "lineNumber": 3501
+    },
+    {
+      "id": "code-12-5",
+      "language": "tsx",
+      "code": "<span className=\"px-3 py-1 rounded-full text-xs font-medium bg-white/10 text-white/90 border border-white/20\">\n  Inactive\n</span>\n\n// Use Cases:\n- Inactive accounts\n- Disabled features\n- Neutral status",
+      "lineNumber": 3514
+    },
+    {
+      "id": "code-12-6",
+      "language": "tsx",
+      "code": "<span className=\"px-2 py-0.5 rounded-full text-[10px] font-medium bg-blue-500/20 text-blue-400 border border-blue-400/30\">\n  Small\n</span>\n\n// Dimensions: ~8px vertical, 16px horizontal\n// Font: 10px\n// Use: Compact layouts, notification counts",
+      "lineNumber": 3530
+    },
+    {
+      "id": "code-12-7",
+      "language": "tsx",
+      "code": "<span className=\"px-3 py-1 rounded-full text-xs font-medium bg-blue-500/20 text-blue-400 border border-blue-400/30\">\n  Medium\n</span>\n\n// Dimensions: ~8px vertical, 24px horizontal\n// Font: 12px (text-xs)\n// Use: Standard badges, most common",
+      "lineNumber": 3541
+    },
+    {
+      "id": "code-12-8",
+      "language": "tsx",
+      "code": "<span className=\"px-4 py-1.5 rounded-full text-sm font-medium bg-blue-500/20 text-blue-400 border border-blue-400/30\">\n  Large\n</span>\n\n// Dimensions: ~12px vertical, 32px horizontal\n// Font: 14px (text-sm)\n// Use: Prominent labels, hero sections",
+      "lineNumber": 3552
+    },
+    {
+      "id": "code-12-9",
+      "language": "tsx",
+      "code": "<div className=\"relative inline-block\">\n  <Bell className=\"w-6 h-6 text-white\" />\n  <span className=\"absolute -top-1 -right-1 w-5 h-5 rounded-full bg-red-500 text-white text-[10px] font-bold flex items-center justify-center border-2 border-white/20\">\n    12\n  </span>\n</div>\n\n// Position: Absolute top-right\n// Shape: Circle (w-5 h-5)\n// Border: 2px white/20 for separation\n// Use: Notification icons, message counts",
+      "lineNumber": 3567
+    },
+    {
+      "id": "code-12-10",
+      "language": "tsx",
+      "code": "<div className=\"flex items-center gap-2\">\n  <h3 className=\"text-lg font-semibold text-white\">Smart Routing</h3>\n  <span className=\"px-2 py-0.5 rounded text-[10px] font-bold bg-gradient-to-r from-blue-500 to-teal-500 text-white\">\n    NEW\n  </span>\n</div>\n\n// Gradient background for emphasis\n// Small size (px-2 py-0.5)\n// Bold weight (font-bold)\n// Use: New features, beta labels",
+      "lineNumber": 3582
+    },
+    {
+      "id": "code-12-11",
+      "language": "tsx",
+      "code": "<div className=\"flex items-center gap-2\">\n  <span className=\"w-2 h-2 rounded-full bg-green-400\"></span>\n  <span className=\"text-sm text-white/90\">Active</span>\n</div>\n\n// Minimal: Just a colored dot\n// Size: w-2 h-2 (8px)\n// Use: Inline status, minimal UI",
+      "lineNumber": 3597
+    },
+    {
+      "id": "code-12-12",
+      "language": "tsx",
+      "code": "const TransactionCard = ({ transaction }) => {\n  const statusBadge = {\n    success: (\n      <span className=\"px-3 py-1 rounded-full text-xs font-medium bg-green-500/20 text-green-400 border border-green-400/30\">\n        Success\n      </span>\n    ),\n    failed: (\n      <span className=\"px-3 py-1 rounded-full text-xs font-medium bg-red-500/20 text-red-400 border border-red-400/30\">\n        Failed\n      </span>\n    ),\n    pending: (\n      <span className=\"px-3 py-1 rounded-full text-xs font-medium bg-yellow-500/20 text-yellow-400 border border-yellow-400/30\">\n        Pending\n      </span>\n    ),\n  };\n\n  return (\n    <Card variant=\"default\" padding=\"md\">\n      <div className=\"flex items-center justify-between mb-3\">\n        <span className=\"text-sm text-white/60\">TXN{transaction.id}</span>\n        {statusBadge[transaction.status]}\n      </div>\n      <div className=\"text-2xl font-bold text-white\">\n        ₹{transaction.amount.toLocaleString('en-IN')}\n      </div>\n    </Card>\n  );\n};",
+      "lineNumber": 3613
+    },
+    {
+      "id": "code-12-13",
+      "language": "tsx",
+      "code": "const KYCStatus = ({ status }) => {\n  const badges = {\n    verified: (\n      <span className=\"px-3 py-1 rounded-full text-xs font-medium bg-green-500/20 text-green-400 border border-green-400/30\">\n        ✓ Verified\n      </span>\n    ),\n    pending: (\n      <span className=\"px-3 py-1 rounded-full text-xs font-medium bg-yellow-500/20 text-yellow-400 border border-yellow-400/30\">\n        ⏳ In Review\n      </span>\n    ),\n    rejected: (\n      <span className=\"px-3 py-1 rounded-full text-xs font-medium bg-red-500/20 text-red-400 border border-red-400/30\">\n        ✗ Rejected\n      </span>\n    ),\n    not_started: (\n      <span className=\"px-3 py-1 rounded-full text-xs font-medium bg-white/10 text-white/90 border border-white/20\">\n        Not Started\n      </span>\n    ),\n  };\n\n  return (\n    <div className=\"flex items-center justify-between\">\n      <span className=\"text-sm text-white/90\">KYC Status</span>\n      {badges[status]}\n    </div>\n  );\n};",
+      "lineNumber": 3650
+    },
+    {
+      "id": "code-12-14",
+      "language": "tsx",
+      "code": "const NotificationBell = ({ count }) => {\n  return (\n    <button className=\"relative p-2 rounded-lg hover:bg-white/10 transition-colors\">\n      <Bell className=\"w-6 h-6 text-white\" />\n      {count > 0 && (\n        <span className=\"absolute -top-1 -right-1 w-5 h-5 rounded-full bg-red-500 text-white text-[10px] font-bold flex items-center justify-center border-2 border-white/20 animate-pulse\">\n          {count > 99 ? '99+' : count}\n        </span>\n      )}\n    </button>\n  );\n};",
+      "lineNumber": 3687
+    },
+    {
+      "id": "code-12-15",
+      "language": "tsx",
+      "code": "const FeatureCard = ({ title, isNew, isBeta }) => {\n  return (\n    <Card variant=\"glass\" padding=\"lg\" hover={true}>\n      <div className=\"flex items-center gap-2 mb-3\">\n        <h3 className=\"text-xl font-semibold text-white\">{title}</h3>\n        {isNew && (\n          <span className=\"px-2 py-0.5 rounded text-[10px] font-bold bg-gradient-to-r from-blue-500 to-teal-500 text-white\">\n            NEW\n          </span>\n        )}\n        {isBeta && (\n          <span className=\"px-2 py-0.5 rounded text-[10px] font-bold bg-yellow-500/20 text-yellow-400 border border-yellow-400/30\">\n            BETA\n          </span>\n        )}\n      </div>\n      <p className=\"text-white/70\">Feature description...</p>\n    </Card>\n  );\n};",
+      "lineNumber": 3705
+    },
+    {
+      "id": "code-12-16",
+      "language": "tsx",
+      "code": "const SettlementStatus = ({ settlements }) => {\n  const statusColors = {\n    settled: 'bg-green-500/20 text-green-400 border-green-400/30',\n    processing: 'bg-blue-500/20 text-blue-400 border-blue-400/30',\n    pending: 'bg-yellow-500/20 text-yellow-400 border-yellow-400/30',\n    failed: 'bg-red-500/20 text-red-400 border-red-400/30',\n  };\n\n  return (\n    <div className=\"space-y-3\">\n      {settlements.map((settlement) => (\n        <div key={settlement.id} className=\"flex items-center justify-between\">\n          <div>\n            <p className=\"text-sm font-medium text-white\">{settlement.merchant}</p>\n            <p className=\"text-xs text-white/50\">{settlement.date}</p>\n          </div>\n          <div className=\"flex items-center gap-3\">\n            <span className=\"text-lg font-bold text-white\">\n              ₹{settlement.amount.toLocaleString('en-IN')}\n            </span>\n            <span className={`px-3 py-1 rounded-full text-xs font-medium border ${statusColors[settlement.status]}`}>\n              {settlement.status.charAt(0).toUpperCase() + settlement.status.slice(1)}\n            </span>\n          </div>\n        </div>\n      ))}\n    </div>\n  );\n};",
+      "lineNumber": 3731
+    },
+    {
+      "id": "code-12-17",
+      "language": "tsx",
+      "code": "// Add sr-only text for context\n<span className=\"px-3 py-1 rounded-full text-xs font-medium bg-green-500/20 text-green-400 border border-green-400/30\">\n  <span className=\"sr-only\">Transaction status: </span>\n  Success\n</span>\n\n// Or use aria-label on parent\n<div aria-label=\"Transaction status: Success\">\n  <span className=\"px-3 py-1 rounded-full text-xs font-medium bg-green-500/20 text-green-400 border border-green-400/30\">\n    Success\n  </span>\n</div>",
+      "lineNumber": 3775
+    },
+    {
+      "id": "code-12-18",
+      "language": "tsx",
+      "code": "// WRONG: Rainbow badges confuse meaning\n<span className=\"bg-purple-500/20 text-purple-400\">Custom</span>\n<span className=\"bg-pink-500/20 text-pink-400\">Random</span>\n\n// CORRECT: Stick to semantic colors\n<span className=\"bg-green-500/20 text-green-400\">Success</span>\n<span className=\"bg-red-500/20 text-red-400\">Failed</span>",
+      "lineNumber": 3795
+    },
+    {
+      "id": "code-12-19",
+      "language": "tsx",
+      "code": "// WRONG: Defeats purpose of badge\n<span className=\"px-3 py-1 rounded-full text-xs\">\n  This is a very long badge text that wraps\n</span>\n\n// CORRECT: Keep it concise\n<span className=\"px-3 py-1 rounded-full text-xs\">\n  Success\n</span>",
+      "lineNumber": 3806
+    },
+    {
+      "id": "code-12-20",
+      "language": "tsx",
+      "code": "// WRONG: Different styles for same purpose\n<span className=\"px-2 py-1 rounded\">Success</span>\n<span className=\"px-4 py-2 rounded-full\">Failed</span>\n\n// CORRECT: Consistent styling\n<span className=\"px-3 py-1 rounded-full text-xs font-medium\">Success</span>\n<span className=\"px-3 py-1 rounded-full text-xs font-medium\">Failed</span>",
+      "lineNumber": 3819
+    }
+  ],
+  "tables": [],
+  "content": "## Section 12: Badge Component\n\n### 12.1 Component Overview\n\n**Description**: Small status indicators and labels with semantic color coding. Used for transaction statuses, notification counts, and feature labels.\n\n**Pattern**: Inline badges using utility classes (no dedicated component file)\n\n**When to Use**:\n- ✅ Transaction status (success, pending, failed)\n- ✅ KYC verification status\n- ✅ Notification counts\n- ✅ Feature labels (NEW, BETA)\n- ✅ Settlement status indicators\n\n---\n\n### 12.2 Badge Pattern\n\n#### Base Badge Structure\n```tsx\n<span className=\"\n  px-3 py-1\n  rounded-full\n  text-xs font-medium\n  border\n\">\n  Badge Text\n</span>\n```\n\n**Core Classes**:\n- `px-3 py-1`: Padding (12px horizontal, 4px vertical)\n- `rounded-full`: Pill shape\n- `text-xs font-medium`: Typography (12px, 500 weight)\n- `border`: 1px border\n\n---\n\n### 12.3 Semantic Color Variants\n\n#### Success Badge\n```tsx\n<span className=\"px-3 py-1 rounded-full text-xs font-medium bg-green-500/20 text-green-400 border border-green-400/30\">\n  Success\n</span>\n\n// Use Cases:\n- Completed transactions\n- Verified KYC\n- Active accounts\n- Approved requests\n```\n\n#### Error/Failed Badge\n```tsx\n<span className=\"px-3 py-1 rounded-full text-xs font-medium bg-red-500/20 text-red-400 border border-red-400/30\">\n  Failed\n</span>\n\n// Use Cases:\n- Failed transactions\n- Rejected KYC\n- Declined payments\n- Error states\n```\n\n#### Warning Badge\n```tsx\n<span className=\"px-3 py-1 rounded-full text-xs font-medium bg-yellow-500/20 text-yellow-400 border border-yellow-400/30\">\n  Pending\n</span>\n\n// Use Cases:\n- Pending transactions\n- In-review KYC\n- Awaiting approval\n- Processing status\n```\n\n#### Info Badge\n```tsx\n<span className=\"px-3 py-1 rounded-full text-xs font-medium bg-blue-500/20 text-blue-400 border border-blue-400/30\">\n  Info\n</span>\n\n// Use Cases:\n- Informational labels\n- New features (NEW)\n- Beta features (BETA)\n- General status\n```\n\n#### Neutral Badge\n```tsx\n<span className=\"px-3 py-1 rounded-full text-xs font-medium bg-white/10 text-white/90 border border-white/20\">\n  Inactive\n</span>\n\n// Use Cases:\n- Inactive accounts\n- Disabled features\n- Neutral status\n```\n\n---\n\n### 12.4 Size Variants\n\n#### Small Badge\n```tsx\n<span className=\"px-2 py-0.5 rounded-full text-[10px] font-medium bg-blue-500/20 text-blue-400 border border-blue-400/30\">\n  Small\n</span>\n\n// Dimensions: ~8px vertical, 16px horizontal\n// Font: 10px\n// Use: Compact layouts, notification counts\n```\n\n#### Medium Badge (Default)\n```tsx\n<span className=\"px-3 py-1 rounded-full text-xs font-medium bg-blue-500/20 text-blue-400 border border-blue-400/30\">\n  Medium\n</span>\n\n// Dimensions: ~8px vertical, 24px horizontal\n// Font: 12px (text-xs)\n// Use: Standard badges, most common\n```\n\n#### Large Badge\n```tsx\n<span className=\"px-4 py-1.5 rounded-full text-sm font-medium bg-blue-500/20 text-blue-400 border border-blue-400/30\">\n  Large\n</span>\n\n// Dimensions: ~12px vertical, 32px horizontal\n// Font: 14px (text-sm)\n// Use: Prominent labels, hero sections\n```\n\n---\n\n### 12.5 Special Purpose Badges\n\n#### Notification Count Badge\n```tsx\n<div className=\"relative inline-block\">\n  <Bell className=\"w-6 h-6 text-white\" />\n  <span className=\"absolute -top-1 -right-1 w-5 h-5 rounded-full bg-red-500 text-white text-[10px] font-bold flex items-center justify-center border-2 border-white/20\">\n    12\n  </span>\n</div>\n\n// Position: Absolute top-right\n// Shape: Circle (w-5 h-5)\n// Border: 2px white/20 for separation\n// Use: Notification icons, message counts\n```\n\n#### Feature Label Badge\n```tsx\n<div className=\"flex items-center gap-2\">\n  <h3 className=\"text-lg font-semibold text-white\">Smart Routing</h3>\n  <span className=\"px-2 py-0.5 rounded text-[10px] font-bold bg-gradient-to-r from-blue-500 to-teal-500 text-white\">\n    NEW\n  </span>\n</div>\n\n// Gradient background for emphasis\n// Small size (px-2 py-0.5)\n// Bold weight (font-bold)\n// Use: New features, beta labels\n```\n\n#### Status Dot Badge\n```tsx\n<div className=\"flex items-center gap-2\">\n  <span className=\"w-2 h-2 rounded-full bg-green-400\"></span>\n  <span className=\"text-sm text-white/90\">Active</span>\n</div>\n\n// Minimal: Just a colored dot\n// Size: w-2 h-2 (8px)\n// Use: Inline status, minimal UI\n```\n\n---\n\n### 12.6 Code Examples\n\n#### Example 1: Transaction Status Badges\n```tsx\nconst TransactionCard = ({ transaction }) => {\n  const statusBadge = {\n    success: (\n      <span className=\"px-3 py-1 rounded-full text-xs font-medium bg-green-500/20 text-green-400 border border-green-400/30\">\n        Success\n      </span>\n    ),\n    failed: (\n      <span className=\"px-3 py-1 rounded-full text-xs font-medium bg-red-500/20 text-red-400 border border-red-400/30\">\n        Failed\n      </span>\n    ),\n    pending: (\n      <span className=\"px-3 py-1 rounded-full text-xs font-medium bg-yellow-500/20 text-yellow-400 border border-yellow-400/30\">\n        Pending\n      </span>\n    ),\n  };\n\n  return (\n    <Card variant=\"default\" padding=\"md\">\n      <div className=\"flex items-center justify-between mb-3\">\n        <span className=\"text-sm text-white/60\">TXN{transaction.id}</span>\n        {statusBadge[transaction.status]}\n      </div>\n      <div className=\"text-2xl font-bold text-white\">\n        ₹{transaction.amount.toLocaleString('en-IN')}\n      </div>\n    </Card>\n  );\n};\n```\n\n---\n\n#### Example 2: KYC Verification Status\n```tsx\nconst KYCStatus = ({ status }) => {\n  const badges = {\n    verified: (\n      <span className=\"px-3 py-1 rounded-full text-xs font-medium bg-green-500/20 text-green-400 border border-green-400/30\">\n        ✓ Verified\n      </span>\n    ),\n    pending: (\n      <span className=\"px-3 py-1 rounded-full text-xs font-medium bg-yellow-500/20 text-yellow-400 border border-yellow-400/30\">\n        ⏳ In Review\n      </span>\n    ),\n    rejected: (\n      <span className=\"px-3 py-1 rounded-full text-xs font-medium bg-red-500/20 text-red-400 border border-red-400/30\">\n        ✗ Rejected\n      </span>\n    ),\n    not_started: (\n      <span className=\"px-3 py-1 rounded-full text-xs font-medium bg-white/10 text-white/90 border border-white/20\">\n        Not Started\n      </span>\n    ),\n  };\n\n  return (\n    <div className=\"flex items-center justify-between\">\n      <span className=\"text-sm text-white/90\">KYC Status</span>\n      {badges[status]}\n    </div>\n  );\n};\n```\n\n---\n\n#### Example 3: Notification Bell with Count\n```tsx\nconst NotificationBell = ({ count }) => {\n  return (\n    <button className=\"relative p-2 rounded-lg hover:bg-white/10 transition-colors\">\n      <Bell className=\"w-6 h-6 text-white\" />\n      {count > 0 && (\n        <span className=\"absolute -top-1 -right-1 w-5 h-5 rounded-full bg-red-500 text-white text-[10px] font-bold flex items-center justify-center border-2 border-white/20 animate-pulse\">\n          {count > 99 ? '99+' : count}\n        </span>\n      )}\n    </button>\n  );\n};\n```\n\n---\n\n#### Example 4: Feature Labels\n```tsx\nconst FeatureCard = ({ title, isNew, isBeta }) => {\n  return (\n    <Card variant=\"glass\" padding=\"lg\" hover={true}>\n      <div className=\"flex items-center gap-2 mb-3\">\n        <h3 className=\"text-xl font-semibold text-white\">{title}</h3>\n        {isNew && (\n          <span className=\"px-2 py-0.5 rounded text-[10px] font-bold bg-gradient-to-r from-blue-500 to-teal-500 text-white\">\n            NEW\n          </span>\n        )}\n        {isBeta && (\n          <span className=\"px-2 py-0.5 rounded text-[10px] font-bold bg-yellow-500/20 text-yellow-400 border border-yellow-400/30\">\n            BETA\n          </span>\n        )}\n      </div>\n      <p className=\"text-white/70\">Feature description...</p>\n    </Card>\n  );\n};\n```\n\n---\n\n#### Example 5: Settlement Status Grid\n```tsx\nconst SettlementStatus = ({ settlements }) => {\n  const statusColors = {\n    settled: 'bg-green-500/20 text-green-400 border-green-400/30',\n    processing: 'bg-blue-500/20 text-blue-400 border-blue-400/30',\n    pending: 'bg-yellow-500/20 text-yellow-400 border-yellow-400/30',\n    failed: 'bg-red-500/20 text-red-400 border-red-400/30',\n  };\n\n  return (\n    <div className=\"space-y-3\">\n      {settlements.map((settlement) => (\n        <div key={settlement.id} className=\"flex items-center justify-between\">\n          <div>\n            <p className=\"text-sm font-medium text-white\">{settlement.merchant}</p>\n            <p className=\"text-xs text-white/50\">{settlement.date}</p>\n          </div>\n          <div className=\"flex items-center gap-3\">\n            <span className=\"text-lg font-bold text-white\">\n              ₹{settlement.amount.toLocaleString('en-IN')}\n            </span>\n            <span className={`px-3 py-1 rounded-full text-xs font-medium border ${statusColors[settlement.status]}`}>\n              {settlement.status.charAt(0).toUpperCase() + settlement.status.slice(1)}\n            </span>\n          </div>\n        </div>\n      ))}\n    </div>\n  );\n};\n```\n\n---\n\n### 12.7 Accessibility\n\n#### WCAG Compliance\n- **Contrast**: All badge colors meet WCAG 2.2 AA (4.5:1 minimum)\n  - Green: `text-green-400` on `bg-green-500/20` = 4.8:1\n  - Red: `text-red-400` on `bg-red-500/20` = 5.1:1\n  - Yellow: `text-yellow-400` on `bg-yellow-500/20` = 4.6:1\n  - Blue: `text-blue-400` on `bg-blue-500/20` = 4.7:1\n\n#### Screen Reader Support\n```tsx\n// Add sr-only text for context\n<span className=\"px-3 py-1 rounded-full text-xs font-medium bg-green-500/20 text-green-400 border border-green-400/30\">\n  <span className=\"sr-only\">Transaction status: </span>\n  Success\n</span>\n\n// Or use aria-label on parent\n<div aria-label=\"Transaction status: Success\">\n  <span className=\"px-3 py-1 rounded-full text-xs font-medium bg-green-500/20 text-green-400 border border-green-400/30\">\n    Success\n  </span>\n</div>\n```\n\n---\n\n### 12.8 Anti-Patterns\n\n❌ **Using Too Many Colors**\n```tsx\n// WRONG: Rainbow badges confuse meaning\n<span className=\"bg-purple-500/20 text-purple-400\">Custom</span>\n<span className=\"bg-pink-500/20 text-pink-400\">Random</span>\n\n// CORRECT: Stick to semantic colors\n<span className=\"bg-green-500/20 text-green-400\">Success</span>\n<span className=\"bg-red-500/20 text-red-400\">Failed</span>\n```\n\n❌ **Badge Text Too Long**\n```tsx\n// WRONG: Defeats purpose of badge\n<span className=\"px-3 py-1 rounded-full text-xs\">\n  This is a very long badge text that wraps\n</span>\n\n// CORRECT: Keep it concise\n<span className=\"px-3 py-1 rounded-full text-xs\">\n  Success\n</span>\n```\n\n❌ **Inconsistent Badge Styling**\n```tsx\n// WRONG: Different styles for same purpose\n<span className=\"px-2 py-1 rounded\">Success</span>\n<span className=\"px-4 py-2 rounded-full\">Failed</span>\n\n// CORRECT: Consistent styling\n<span className=\"px-3 py-1 rounded-full text-xs font-medium\">Success</span>\n<span className=\"px-3 py-1 rounded-full text-xs font-medium\">Failed</span>\n```\n\n---\n"
+}
