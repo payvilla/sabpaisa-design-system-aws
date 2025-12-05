@@ -109,15 +109,20 @@ jobs:
             --include "*.json"
 
       - name: Invalidate CloudFront cache
+        if: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID != '' }}
         run: |
           aws cloudfront create-invalidation \
             --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} \
             --paths "/*"
 
-      - name: Get CloudFront URL
+      - name: Get Frontend URL
         id: get-frontend-url
         run: |
-          FRONTEND_URL="https://$(aws cloudfront get-distribution --id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} --query 'Distribution.DomainName' --output text)"
+          if [ -n "${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}" ]; then
+            FRONTEND_URL="https://$(aws cloudfront get-distribution --id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} --query 'Distribution.DomainName' --output text)"
+          else
+            FRONTEND_URL="http://${{ secrets.S3_BUCKET_NAME }}.s3-website.${{ env.AWS_REGION }}.amazonaws.com"
+          fi
           echo "frontend_url=$FRONTEND_URL" >> $GITHUB_OUTPUT
           echo "Frontend deployed to: $FRONTEND_URL"
 
