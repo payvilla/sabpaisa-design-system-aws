@@ -1606,5 +1606,360 @@ git commit -m "chore: remove legacy styling dependencies after design system mig
         example: 'Use webpack-bundle-analyzer after each phase'
       }
     ]
+  },
+  claude: {
+    title: 'Claude AI Integration',
+    subtitle: 'Use MCP server with Claude Code',
+    description: 'Connect Claude Code to the SabPaisa Design System MCP server for AI-powered access to design tokens, components, patterns, and more.',
+    duration: '10-15 minutes',
+    difficulty: 'Intermediate' as const,
+    prerequisites: [
+      'Node.js 18+ installed',
+      'Claude Code desktop app installed',
+      'Network access to AWS endpoints',
+      'Basic terminal/command line knowledge'
+    ],
+    steps: [
+      {
+        step: 1,
+        title: 'Verify Prerequisites',
+        description: 'Check that your environment meets the requirements',
+        explanation: 'Before setting up the MCP connection, ensure you have the correct Node.js version and Claude Code installed. The MCP server runs on AWS and requires network connectivity.',
+        codeExample: `# Check Node.js version (requires 18+)
+node --version
+
+# Expected output: v18.x.x or v20.x.x
+
+# Test network connectivity to MCP server
+curl https://suanrlo9yc.execute-api.ap-south-1.amazonaws.com/health
+
+# Expected: {"status":"healthy","version":"1.0.0",...}`,
+        language: 'bash',
+        tips: [
+          'Node.js 18+ is required for native fetch support in the bridge script',
+          'Claude Code should be fully installed and running',
+          'Test the health endpoint to verify AWS connectivity',
+          'Close Claude Code before making configuration changes'
+        ],
+        commonPitfalls: [
+          'Using Node.js version below 18 (bridge script will fail)',
+          'Firewall blocking AWS API Gateway endpoints',
+          'Trying to configure while Claude Code is running (config not loaded)'
+        ]
+      },
+      {
+        step: 2,
+        title: 'Create HTTP Bridge Script',
+        description: 'Set up the bridge that translates HTTP MCP to stdio',
+        explanation: 'Claude Code expects MCP servers to use stdio (standard input/output). Since the SabPaisa MCP server is deployed on AWS Lambda with HTTP, we need a bridge script that translates between the two protocols.',
+        codeExample: `# Create directory for bridge script
+mkdir -p ~/.sabpaisa-mcp
+cd ~/.sabpaisa-mcp
+
+# Create the bridge script
+cat > mcp-bridge.mjs <<'EOF'
+#!/usr/bin/env node
+import * as readline from 'readline';
+
+const endpoint = process.argv[2] || 'https://suanrlo9yc.execute-api.ap-south-1.amazonaws.com/mcp';
+
+const rl = readline.createInterface({ input: process.stdin, output: process.stdout, terminal: false });
+
+rl.on('line', async (line) => {
+  try {
+    const request = JSON.parse(line);
+    const response = await fetch(endpoint, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(request)
+    });
+    if (!response.ok) {
+      console.log(JSON.stringify({ jsonrpc: '2.0', id: request.id, error: { code: -32603, message: \`HTTP \${response.status}\` }}));
+    } else {
+      console.log(JSON.stringify(await response.json()));
+    }
+  } catch (error) {
+    console.log(JSON.stringify({ jsonrpc: '2.0', id: null, error: { code: -32603, message: error.message }}));
+  }
+});
+EOF
+
+# Make it executable
+chmod +x mcp-bridge.mjs`,
+        language: 'bash',
+        tips: [
+          'The bridge script uses native Node.js fetch (requires Node 18+)',
+          'Endpoint URL is passed as command line argument for flexibility',
+          'Script handles both successful responses and errors gracefully',
+          'Use ~/.sabpaisa-mcp for consistent location across projects'
+        ],
+        commonPitfalls: [
+          'Forgetting chmod +x (script won\'t execute)',
+          'Incorrect endpoint URL (copy exactly from above)',
+          'Using older Node.js without fetch support'
+        ]
+      },
+      {
+        step: 3,
+        title: 'Configure Claude Code',
+        description: 'Add MCP server to Claude Code configuration',
+        explanation: 'Claude Code loads MCP server configuration from a JSON file. You can configure it per-project or globally. The configuration tells Claude Code where to find the bridge script and how to connect.',
+        codeExample: `# Option 1: Project-specific (recommended)
+# Create .claude/mcp.json in your project root
+
+mkdir -p .claude
+cat > .claude/mcp.json <<'EOF'
+{
+  "mcpServers": {
+    "sabpaisa-design-system": {
+      "command": "node",
+      "args": [
+        "/Users/YOUR_USERNAME/.sabpaisa-mcp/mcp-bridge.mjs",
+        "https://suanrlo9yc.execute-api.ap-south-1.amazonaws.com/mcp"
+      ],
+      "description": "SabPaisa Design System - Colors, components, patterns, formatting"
+    }
+  }
+}
+EOF
+
+# Option 2: Global configuration
+# Add to ~/.claude/mcp.json (creates if doesn't exist)
+
+# IMPORTANT: Replace YOUR_USERNAME with actual username
+# Example: /Users/john/.sabpaisa-mcp/mcp-bridge.mjs`,
+        language: 'bash',
+        tips: [
+          'Use absolute path to bridge script (not ~/ or relative paths)',
+          'Replace YOUR_USERNAME with your actual username',
+          'Project-specific config allows per-project customization',
+          'Global config applies to all Claude Code sessions',
+          'The description helps identify the server in Claude Code UI'
+        ],
+        commonPitfalls: [
+          'Using relative path or ~/ instead of absolute path',
+          'Forgetting to replace YOUR_USERNAME placeholder',
+          'Creating config while Claude Code is running (not loaded)',
+          'Invalid JSON syntax (missing commas, quotes)'
+        ]
+      },
+      {
+        step: 4,
+        title: 'Restart Claude Code',
+        description: 'Fully quit and reopen Claude Code to load the configuration',
+        explanation: 'MCP server configuration is only loaded when Claude Code starts. A simple window reload is not enough - you must completely quit the application and reopen it.',
+        codeExample: `# macOS
+# 1. Cmd+Q to quit Claude Code completely
+# 2. Reopen from Applications
+
+# Windows/Linux
+# 1. File → Exit (or Alt+F4)
+# 2. Reopen from Start Menu/Launcher
+
+# Verify MCP server loaded:
+# Look for "SabPaisa Design System" in the MCP servers list`,
+        language: 'bash',
+        tips: [
+          'Complete quit is required, not just closing window',
+          'Wait a few seconds before reopening',
+          'Check Claude Code logs if server doesn\'t appear',
+          'MCP servers appear in the Claude Code sidebar/status bar'
+        ],
+        commonPitfalls: [
+          'Just closing window instead of quitting app',
+          'Not waiting long enough for complete shutdown',
+          'Missing error messages in startup logs'
+        ]
+      },
+      {
+        step: 5,
+        title: 'Verify Connection',
+        description: 'Test the MCP connection with a simple query',
+        explanation: 'Once Claude Code restarts with the new configuration, verify the connection works by asking Claude to list available MCP resources. This confirms the bridge script, endpoint, and permissions are all correct.',
+        codeExample: `# Ask Claude Code (in the chat):
+
+"List available MCP resources from the SabPaisa Design System"
+
+# Expected response should include:
+# - 20 resources total
+# - Design tokens (colors, typography, spacing, shadows)
+# - Components (button, card, input)
+# - Fintech patterns (settlement, KYC, reconciliation, refund)
+# - Data formatting guides
+# - Accessibility guidelines`,
+        language: 'text',
+        tips: [
+          'First query may take 2-3 seconds (Lambda cold start)',
+          'Subsequent queries are much faster (warm Lambda)',
+          'Ask for specific resources to test different tools',
+          'Check Claude Code console for any error messages'
+        ],
+        commonPitfalls: [
+          'Expecting instant response (Lambda cold start delay)',
+          'Not checking error messages in console',
+          'Assuming failure if first request is slow'
+        ]
+      },
+      {
+        step: 6,
+        title: 'Explore Available Tools',
+        description: 'Discover the 6 MCP tools for design system access',
+        explanation: 'The SabPaisa MCP server provides 6 specialized tools for different design system tasks. Understanding each tool helps you work more efficiently with Claude Code.',
+        codeExample: `# Tool 1: search_design_system
+"Search for button components"
+"Find all color tokens"
+"Show me settlement patterns"
+
+# Tool 2: find_color
+"Find the primary blue color"
+"Show success colors that meet WCAG AA"
+"What colors are in the secondary palette?"
+
+# Tool 3: convert_color
+"Convert #2563eb to RGB"
+"Show #2563eb in all formats"
+"Convert primary-600 to HSL"
+
+# Tool 4: validate_contrast
+"Is #2563eb accessible on white background?"
+"Check contrast between primary-600 and white"
+"Validate text color #1e40af on #f0f9ff"
+
+# Tool 5: generate_component
+"Generate a primary button in React"
+"Create a Vue input component"
+"Show me a card component in Angular"
+
+# Tool 6: view_analytics
+"Show me server usage statistics"
+"What are the most popular resources?"
+"View MCP analytics"`,
+        language: 'text',
+        tips: [
+          'Use natural language queries - Claude understands intent',
+          'Tools can be chained together for complex workflows',
+          'Color tools include visual SVG previews',
+          'Component generation supports React, Vue, Angular, and HTML'
+        ]
+      },
+      {
+        step: 7,
+        title: 'Build Your First Component',
+        description: 'Complete workflow example: Create an accessible payment button',
+        explanation: 'This example demonstrates a real workflow combining multiple MCP tools to build a production-ready component with proper colors, accessibility validation, and generated code.',
+        codeExample: `# Workflow: Build Payment Button
+
+# Step 1: Find the right color
+Ask: "Find the primary blue color from SabPaisa design system"
+# Result: #2563eb (primary-600)
+
+# Step 2: Validate accessibility
+Ask: "Is #2563eb accessible on white background for button text?"
+# Result: Contrast ratio 7.5:1, passes WCAG AA and AAA
+
+# Step 3: Generate component code
+Ask: "Generate a primary payment button in React using #2563eb"
+# Result: Complete React component with proper styling
+
+# Step 4: Customize and use
+import { Button } from '@/components/ui';
+
+<Button
+  variant="primary"
+  onClick={handlePayment}
+  className="bg-primary-600 hover:bg-primary-700"
+>
+  Pay ₹1,234.56
+</Button>`,
+        language: 'typescript',
+        tips: [
+          'Chain multiple tool calls in one conversation for complete workflows',
+          'Claude remembers context from previous queries in the same chat',
+          'Ask for explanations if you don\'t understand a response',
+          'Save frequently used code snippets for reuse',
+          'Reference the live frontend showcase for visual examples'
+        ]
+      }
+    ],
+    troubleshooting: [
+      {
+        issue: 'MCP server not found in Claude Code',
+        cause: 'Configuration file not in correct location or invalid JSON syntax',
+        solution: 'Verify .claude/mcp.json exists with correct JSON, check for typos, ensure Claude Code was fully restarted',
+        preventionTip: 'Validate JSON with a linter before saving config file'
+      },
+      {
+        issue: 'Cannot connect to MCP endpoint',
+        cause: 'Network issues, incorrect endpoint URL, or AWS Lambda not responding',
+        solution: 'Test with curl first, check firewall settings, verify endpoint URL is correct: https://suanrlo9yc.execute-api.ap-south-1.amazonaws.com/mcp',
+        preventionTip: 'Always test health endpoint before configuration'
+      },
+      {
+        issue: 'Permission denied when running bridge script',
+        cause: 'Bridge script not executable',
+        solution: 'Run: chmod +x ~/.sabpaisa-mcp/mcp-bridge.mjs',
+        preventionTip: 'Make script executable immediately after creating it'
+      },
+      {
+        issue: 'No resources found when querying',
+        cause: 'MCP server connected but not returning resources (Lambda cold start or error)',
+        solution: 'Wait 10 seconds and try again (Lambda cold start), check Claude Code console for errors, verify health endpoint returns 200 OK',
+        preventionTip: 'First query after Lambda deployment takes longer'
+      },
+      {
+        issue: 'Tool execution timeout',
+        cause: 'Complex query or slow network, Lambda cold start',
+        solution: 'Simplify query, try again after a moment (Lambda will be warm), check network latency',
+        preventionTip: 'Start with simple queries to warm up the Lambda function'
+      },
+      {
+        issue: 'Invalid response format',
+        cause: 'Bridge script outdated or corrupted, endpoint URL incorrect',
+        solution: 'Re-download bridge script from integration guide, verify endpoint URL matches exactly',
+        preventionTip: 'Copy bridge script code exactly as provided'
+      }
+    ],
+    bestPractices: [
+      {
+        practice: 'Start with search before generating',
+        why: 'Understanding what\'s available in the design system helps you use the right components and patterns',
+        example: 'Search for "settlement" before building settlement UI'
+      },
+      {
+        practice: 'Chain tools together for complete workflows',
+        why: 'Multiple tool calls in one conversation create complete, production-ready solutions faster',
+        example: 'Find color → Validate contrast → Generate component → Use in project'
+      },
+      {
+        practice: 'Always validate accessibility',
+        why: 'WCAG compliance is required for fintech applications, validation prevents accessibility issues',
+        example: 'Use validate_contrast tool before finalizing color choices'
+      },
+      {
+        practice: 'Use natural language queries',
+        why: 'Claude understands intent, you don\'t need to match exact API syntax',
+        example: 'Ask "Show me payment buttons" instead of technical API calls'
+      },
+      {
+        practice: 'Verify health endpoint before sessions',
+        why: 'Quick health check confirms MCP server is available before starting work',
+        example: 'curl https://suanrlo9yc.execute-api.ap-south-1.amazonaws.com/health'
+      },
+      {
+        practice: 'Reference the live frontend showcase',
+        why: 'Visual examples help you understand how components should look and behave',
+        example: 'Browse http://sabpaisa-design-system-frontend-428169664322.s3-website.ap-south-1.amazonaws.com'
+      },
+      {
+        practice: 'Keep bridge script updated',
+        why: 'Updates may include bug fixes, performance improvements, or new features',
+        example: 'Check integration guide periodically for script updates'
+      },
+      {
+        practice: 'Use project-specific MCP configuration',
+        why: 'Different projects may need different design system versions or custom endpoints',
+        example: 'Create .claude/mcp.json in each project instead of global config'
+      }
+    ]
   }
 };

@@ -1,12 +1,12 @@
 import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { Disclosure } from '@headlessui/react';
-import { ChevronDown, CheckCircle, AlertTriangle, Lightbulb } from 'lucide-react';
+import { ChevronDown, CheckCircle, AlertTriangle, Lightbulb, Sparkles } from 'lucide-react';
 import CodeBlock from '../components/CodeBlock';
 import { integrationGuides } from '../data/designSystemData';
 
 export default function IntegrationGuide() {
-  const [activeTab, setActiveTab] = useState<'greenfield' | 'brownfield'>('greenfield');
+  const [activeTab, setActiveTab] = useState<'greenfield' | 'brownfield' | 'claude'>('greenfield');
   const guide = integrationGuides[activeTab];
 
   return (
@@ -36,11 +36,11 @@ export default function IntegrationGuide() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2 }}
-        className="flex flex-col sm:flex-row gap-4 mb-8"
+        className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8"
       >
         <button
           onClick={() => setActiveTab('greenfield')}
-          className={`flex-1 px-6 py-4 rounded-xl font-medium transition-all duration-200 ${
+          className={`px-6 py-4 rounded-xl font-medium transition-all duration-200 ${
             activeTab === 'greenfield'
               ? 'bg-gradient-to-r from-primary-600 to-primary-500 text-white shadow-lg'
               : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600'
@@ -53,7 +53,7 @@ export default function IntegrationGuide() {
         </button>
         <button
           onClick={() => setActiveTab('brownfield')}
-          className={`flex-1 px-6 py-4 rounded-xl font-medium transition-all duration-200 ${
+          className={`px-6 py-4 rounded-xl font-medium transition-all duration-200 ${
             activeTab === 'brownfield'
               ? 'bg-gradient-to-r from-primary-600 to-primary-500 text-white shadow-lg'
               : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600'
@@ -64,6 +64,22 @@ export default function IntegrationGuide() {
             <div className="text-sm opacity-90 mt-1">Gradual migration • {integrationGuides.brownfield.duration}</div>
           </div>
         </button>
+        <button
+          onClick={() => setActiveTab('claude')}
+          className={`px-6 py-4 rounded-xl font-medium transition-all duration-200 ${
+            activeTab === 'claude'
+              ? 'bg-gradient-to-r from-indigo-600 to-purple-500 text-white shadow-lg'
+              : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600'
+          }`}
+        >
+          <div className="text-left">
+            <div className="flex items-center gap-2">
+              <Sparkles className="w-5 h-5" />
+              <div className="text-lg font-bold">Claude AI Integration</div>
+            </div>
+            <div className="text-sm opacity-90 mt-1">MCP server • {integrationGuides.claude.duration}</div>
+          </div>
+        </button>
       </motion.div>
 
       {/* Guide Info Card */}
@@ -72,7 +88,11 @@ export default function IntegrationGuide() {
         initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.3 }}
-        className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 border border-blue-200 dark:border-blue-800 rounded-xl p-6"
+        className={`bg-gradient-to-r rounded-xl p-6 border ${
+          activeTab === 'claude'
+            ? 'from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 border-indigo-200 dark:border-indigo-800'
+            : 'from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 border-blue-200 dark:border-blue-800'
+        }`}
       >
         <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
           {guide.title}
