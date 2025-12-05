@@ -1608,18 +1608,127 @@ git commit -m "chore: remove legacy styling dependencies after design system mig
     ]
   },
   claude: {
-    title: 'Claude AI Integration',
-    subtitle: 'Use MCP server with Claude Code',
-    description: 'Connect Claude Code to the SabPaisa Design System MCP server for AI-powered access to design tokens, components, patterns, and more.',
+    title: 'Claude AI Integration (MCP Server)',
+    subtitle: 'AI-powered design system access via Claude Code',
+    description: 'Connect Claude Code to the cloud-hosted SabPaisa Design System MCP server for instant access to 28 resources including design tokens, components, patterns, templates, and formatting guidelines. No local installation required - just configure and start querying!',
     duration: '10-15 minutes',
     difficulty: 'Intermediate' as const,
     prerequisites: [
       'Node.js 18+ installed',
       'Claude Code desktop app installed',
-      'Network access to AWS endpoints',
+      'Network access to AWS API Gateway',
       'Basic terminal/command line knowledge'
     ],
     steps: [
+      {
+        step: 0,
+        title: 'MCP Server Endpoints & Information',
+        description: 'Essential URLs and server details for integration',
+        explanation: 'The SabPaisa Design System MCP server is deployed on AWS Lambda with API Gateway and serves 28 resources (design tokens, components, patterns, templates, formatting guidelines). Copy these URLs exactly as shown - you\'ll need them for configuration.',
+        codeExample: `# =============================================================
+# 🌐 SABPAISA DESIGN SYSTEM MCP SERVER - CLOUD ENDPOINTS
+# =============================================================
+
+# Main MCP Server Endpoint (use this in configuration)
+https://suanrlo9yc.execute-api.ap-south-1.amazonaws.com/mcp
+
+# Health Check Endpoint (verify server is running)
+https://suanrlo9yc.execute-api.ap-south-1.amazonaws.com/health
+
+# Frontend Showcase (visual examples)
+http://sabpaisa-design-system-frontend-428169664322.s3-website.ap-south-1.amazonaws.com
+
+# =============================================================
+# 📊 WHAT'S AVAILABLE (28 RESOURCES)
+# =============================================================
+
+Design Tokens (5):
+  - Colors: Palettes with hex, rgb, hsl, CSS vars, Tailwind, WCAG ratios
+  - Typography: Font families, sizes, weights, line heights
+  - Spacing: 8pt grid system
+  - Shadows: Elevation and depth definitions
+  - All Tokens: Complete token system
+
+Components (4):
+  - Button: Variants, sizes, states with code examples
+  - Card: Container with glass/gradient variants
+  - Input: Text fields with validation and icons
+  - All Components: Complete library
+
+Fintech Patterns (5):
+  - Settlement: T+2 processing with fee calculations
+  - KYC: 7-step onboarding and verification workflow
+  - Reconciliation: Daily matching algorithms
+  - Refund/Chargeback: Full/partial refund workflows
+  - All Patterns: Complete pattern library
+
+Templates (8) - NEW:
+  - All Templates: 6 production-ready templates
+  - Page Layouts: Dashboard, form, table, auth pages
+  - Loading: Snake spinner, bouncing dots, pulse loaders
+  - Splash: App launch screens with animations
+  - Fintech: Payment checkout, KYC flows
+  - UI: Button, badge, modal, switch variants
+  - Forms: Multi-step wizards with validation
+  - Dashboards: Widget layouts and metrics
+
+Data Formatting (4):
+  - Currency: Indian Rupee formatting (en-IN, lakhs/crores)
+  - DateTime: IST timezone with settlement calculations
+  - Masking: PII masking for PAN, Aadhaar, phone, email
+  - Validation: Regex patterns for Indian identifiers
+
+Guidelines (2):
+  - Accessibility: WCAG 2.2 AA compliance
+  - Brand: Logo usage, colors, voice & tone
+
+# =============================================================
+# 🔧 6 MCP TOOLS AVAILABLE
+# =============================================================
+
+1. search_design_system
+   Search across all 28 resources by keyword or category
+
+2. find_color
+   Find colors with multi-format output and WCAG accessibility
+
+3. convert_color
+   Convert between color formats (hex, rgb, hsl, rgba, CSS var, Tailwind)
+
+4. validate_contrast
+   Check WCAG color contrast compliance with visual previews
+
+5. generate_component
+   Generate component code for React, Vue, Angular, or HTML
+
+6. view_analytics
+   View server usage statistics and popular resources
+
+# =============================================================
+# ⚡ QUICK TEST
+# =============================================================
+
+# Test health endpoint (should return JSON with status: healthy)
+curl https://suanrlo9yc.execute-api.ap-south-1.amazonaws.com/health
+
+# Expected response:
+# {"status":"healthy","version":"1.0.0","uptime":"...","resources":28}`,
+        language: 'text',
+        tips: [
+          '🔗 Bookmark these URLs for quick reference',
+          '📋 Copy the MCP endpoint exactly - no trailing slashes',
+          '🎨 Visit the frontend showcase to see visual examples before querying',
+          '✅ Test the health endpoint first to verify connectivity',
+          '📱 The server is deployed on AWS Lambda in ap-south-1 (Mumbai) region',
+          '⚡ First request may take 2-3 seconds (Lambda cold start), subsequent requests are instant'
+        ],
+        commonPitfalls: [
+          'Copying URL with trailing slash (remove it)',
+          'Using HTTP instead of HTTPS for MCP endpoint',
+          'Not testing health endpoint before configuration',
+          'Expecting instant first response (Lambda cold start is normal)'
+        ]
+      },
       {
         step: 1,
         title: 'Verify Prerequisites',
@@ -1633,7 +1742,7 @@ node --version
 # Test network connectivity to MCP server
 curl https://suanrlo9yc.execute-api.ap-south-1.amazonaws.com/health
 
-# Expected: {"status":"healthy","version":"1.0.0",...}`,
+# Expected: {"status":"healthy","version":"1.0.0","resources":28}`,
         language: 'bash',
         tips: [
           'Node.js 18+ is required for native fetch support in the bridge script',
@@ -1781,12 +1890,13 @@ EOF
 "List available MCP resources from the SabPaisa Design System"
 
 # Expected response should include:
-# - 20 resources total
-# - Design tokens (colors, typography, spacing, shadows)
-# - Components (button, card, input)
-# - Fintech patterns (settlement, KYC, reconciliation, refund)
-# - Data formatting guides
-# - Accessibility guidelines`,
+# - 28 resources total
+# - Design tokens (colors, typography, spacing, shadows) - 5 resources
+# - Components (button, card, input) - 4 resources
+# - Fintech patterns (settlement, KYC, reconciliation, refund) - 5 resources
+# - Templates (page layouts, loading, splash, fintech, forms) - 8 resources NEW
+# - Data formatting guides (currency, datetime, masking, validation) - 4 resources
+# - Accessibility and brand guidelines - 2 resources`,
         language: 'text',
         tips: [
           'First query may take 2-3 seconds (Lambda cold start)',
@@ -1833,7 +1943,14 @@ EOF
 # Tool 6: view_analytics
 "Show me server usage statistics"
 "What are the most popular resources?"
-"View MCP analytics"`,
+"View MCP analytics"
+
+# Template Queries (NEW):
+"Show me all available templates"
+"Get the payment checkout flow template with code"
+"Find a dashboard layout template"
+"Show me loading spinner templates"
+"Get the multi-step form wizard template"`,
         language: 'text',
         tips: [
           'Use natural language queries - Claude understands intent',
