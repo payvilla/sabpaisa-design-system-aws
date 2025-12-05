@@ -484,6 +484,32 @@ chmod +x ~/.sabpaisa-mcp/mcp-bridge.mjs</div>
           id: mcpRequest.id,
           result: toolResult,
         };
+      } else if (mcpRequest.method === 'initialize') {
+        // MCP protocol initialization handshake
+        logger.debug('Handling initialize request');
+        result = {
+          jsonrpc: '2.0',
+          id: mcpRequest.id,
+          result: {
+            protocolVersion: '2024-11-05',
+            capabilities: {
+              resources: {},
+              tools: {},
+            },
+            serverInfo: {
+              name: SERVER_NAME,
+              version: SERVER_VERSION,
+            },
+          },
+        };
+      } else if (mcpRequest.method === 'initialized') {
+        // MCP protocol initialization notification (no response needed)
+        logger.debug('Handling initialized notification');
+        result = {
+          jsonrpc: '2.0',
+          id: mcpRequest.id,
+          result: {},
+        };
       } else {
         result = {
           jsonrpc: '2.0',
