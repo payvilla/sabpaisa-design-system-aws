@@ -30,7 +30,7 @@ Search across all design resources
 ```typescript
 {
   "query": "button",
-  "category": "components",  // Optional: all, tokens, components, patterns, formatting
+  "category": "components",  // Optional: all, tokens, components, patterns, formatting, templates
   "limit": 10                 // Optional: default 10
 }
 ```
@@ -98,7 +98,7 @@ View server usage statistics
 
 **Returns:** Uptime, request counts, top resources, top tools, popular queries
 
-## 📦 All 22 Resources
+## 📦 All 28 Resources
 
 ### Design Tokens (5)
 - `sabpaisa://tokens/all` - Complete token system
@@ -130,9 +130,15 @@ View server usage statistics
 - `sabpaisa://guidelines/accessibility` - WCAG 2.2 AA
 - `sabpaisa://guidelines/brand` - Brand guidelines
 
-### Other (2)
-- `sabpaisa://snippets/code` - Code snippets
-- `sabpaisa://examples/usage` - Usage examples
+### Templates (8) **NEW**
+- `sabpaisa://templates/all` - All templates
+- `sabpaisa://templates/page-layouts` - Dashboard, form, table layouts
+- `sabpaisa://templates/loading` - Spinners, dots, pulse loaders
+- `sabpaisa://templates/splash` - App launch screens
+- `sabpaisa://templates/fintech` - Payment, KYC workflows
+- `sabpaisa://templates/ui` - Button, badge, modal variants
+- `sabpaisa://templates/forms` - Multi-step forms, validation
+- `sabpaisa://templates/dashboards` - Widget layouts, metrics
 
 ## 💬 Example Queries for Claude
 
@@ -164,6 +170,15 @@ View server usage statistics
 "How to format Indian Rupees?"
 "What's the date format for IST?"
 "Show PII masking rules"
+```
+
+**Templates:** **NEW**
+```
+"Show me a dashboard layout template"
+"Get a payment checkout flow template"
+"Find a loading spinner template with code"
+"Show all template categories"
+"Get the multi-step form wizard template"
 ```
 
 **Analytics:**

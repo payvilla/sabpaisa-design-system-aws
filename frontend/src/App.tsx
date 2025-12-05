@@ -10,6 +10,7 @@ import Patterns from './pages/Patterns';
 import IntegrationGuide from './pages/IntegrationGuide';
 import Icons from './pages/Icons';
 import Loaders from './pages/Loaders';
+import Templates from './pages/Templates';
 import Examples from './pages/Examples';
 import Playground from './pages/Playground';
 import ThemeCustomizer from './pages/ThemeCustomizer';
@@ -31,6 +32,7 @@ function App() {
           <Route path="/patterns" element={<Patterns />} />
           <Route path="/icons" element={<Icons />} />
           <Route path="/loaders" element={<Loaders />} />
+          <Route path="/templates" element={<Templates />} />
           <Route path="/examples" element={<Examples />} />
           <Route path="/playground" element={<Playground />} />
           <Route path="/theme-customizer" element={<ThemeCustomizer />} />

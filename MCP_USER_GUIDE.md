@@ -53,7 +53,7 @@ Close and reopen Claude Desktop completely for the configuration to take effect.
 
 Ask Claude: **"What design system resources are available?"**
 
-✅ **Success**: You should see a list of 22 resources (tokens, components, patterns, formatting)
+✅ **Success**: You should see a list of 28 resources (tokens, components, patterns, formatting, templates)
 
 ---
 
@@ -367,6 +367,75 @@ export function useKYC() {
 
 ---
 
+### Recipe 4: Use Production-Ready Templates (1 min) **NEW**
+
+**Use Case**: Get complete, copy-paste templates for common UI patterns.
+
+#### Step 1: Browse Available Templates
+
+Ask Claude:
+```
+"Show me all available template categories"
+```
+
+You'll see 7 categories:
+- Page Layouts (dashboard, form, table views)
+- Loading Animations (spinners, dots, progress)
+- Splash Screens (app launch screens)
+- Fintech Workflows (payment, KYC flows)
+- UI Components (buttons, badges, modals)
+- Forms (multi-step wizards, validation)
+- Dashboards (widgets, metrics)
+
+#### Step 2: Get a Specific Template
+
+Ask Claude:
+```
+"Get the payment checkout flow template"
+```
+
+You'll receive:
+- ✅ **Full source code** (React + TypeScript)
+- 📦 **Installation steps** (dependencies + setup)
+- 📋 **Props documentation** (all configurable options)
+- 💡 **Usage examples** (basic + advanced)
+- 🎨 **Live preview** (see it in action)
+
+#### Step 3: Install & Use
+
+```bash
+# 1. Install dependencies (from template)
+npm install lucide-react
+
+# 2. Copy the component code
+# (Provided in the template response)
+
+# 3. Use in your app
+import PaymentCheckout from '@/components/PaymentCheckout';
+
+function App() {
+  return <PaymentCheckout amount={1234.56} />;
+}
+```
+
+#### Example: Dashboard Layout Template
+
+Ask Claude:
+```
+"Show me the dashboard layout template"
+```
+
+You get complete code for:
+- Sidebar navigation
+- Header with title
+- Responsive grid layout
+- Dark mode support
+- Mobile responsive
+
+**Time saved**: 2-4 hours of building UI from scratch!
+
+---
+
 ## 📚 4. Quick Reference
 
 ### All 6 MCP Tools
@@ -380,7 +449,7 @@ export function useKYC() {
 | `generate_component` | Create code | "Generate React button" |
 | `view_analytics` | See usage stats | "Show server analytics" |
 
-### All 22 Resources by Category
+### All 28 Resources by Category
 
 #### 🎨 Design Tokens (5)
 - Colors, Typography, Spacing, Shadows, All Tokens
@@ -397,8 +466,9 @@ export function useKYC() {
 #### 📖 Guidelines (2)
 - Accessibility (WCAG 2.2 AA), Brand
 
-#### 📌 Other (2)
-- Code Snippets, Usage Examples
+#### 📦 Templates (8) **NEW**
+- All Templates, Page Layouts, Loading Animations, Splash Screens
+- Fintech Workflows, UI Components, Forms, Dashboards
 
 ### When to Use Which Tool?
 
@@ -441,6 +511,15 @@ Curious about usage? → view_analytics
 "IST date format"
 "Mask phone numbers"
 "Validate email regex"
+```
+
+**Templates:** **NEW**
+```
+"Show all template categories"
+"Get payment checkout template"
+"Find a loading spinner template"
+"Show dashboard layout template"
+"Get multi-step form wizard"
 ```
 
 ---

@@ -16,6 +16,7 @@ import {
   Wrench,
   BookText,
   Loader2,
+  LayoutGrid,
 } from 'lucide-react';
 
 const navigation = [
@@ -28,6 +29,7 @@ const navigation = [
   { name: 'Patterns', href: '/patterns', icon: Workflow },
   { name: 'Icons', href: '/icons', icon: Layers },
   { name: 'Loaders', href: '/loaders', icon: Loader2 },
+  { name: 'Templates', href: '/templates', icon: LayoutGrid },
   { name: 'Examples', href: '/examples', icon: Lightbulb },
   { name: 'Playground', href: '/playground', icon: Code2 },
   { name: 'Utilities & Hooks', href: '/utilities', icon: Wrench },

@@ -17,12 +17,18 @@ Deployed on AWS Lambda + S3/CloudFront for real-time access to design system res
 ## 📦 What's Included
 
 ### MCP Server
-- **20 Resources**: Complete design system access
+- **28 Resources**: Complete design system access
   - Design tokens (colors, typography, spacing, shadows)
   - Component specifications (Button, Card, Input)
   - Fintech patterns (Settlement, Reconciliation, KYC, Refund/Chargeback)
   - Data formatting guidelines (currency, datetime, masking, validation)
   - Guidelines (accessibility, brand)
+  - **Templates (NEW)**: 6 production-ready templates with full source code
+    - Loading animations (Snake Spinner, Bouncing Dots)
+    - Splash screens (Fade & Zoom)
+    - Page layouts (Dashboard Layout)
+    - Fintech workflows (Payment Checkout)
+    - Forms (Multi-Step Wizard)
 
 - **6 Tools**:
   - `search_design_system` - Search across all design system resources
@@ -38,6 +44,12 @@ Deployed on AWS Lambda + S3/CloudFront for real-time access to design system res
 - Color palette explorer
 - Typography samples
 - Pattern demonstrations
+- **Templates Library**: Browse and copy 6 production-ready templates
+  - Live preview with animations
+  - Full source code with copy button
+  - Installation instructions
+  - Props documentation
+  - Usage examples
 
 ---
 
@@ -172,7 +184,8 @@ sabpaisa-design-system-aws/
 ├── data/
 │   ├── design-system.json
 │   ├── fintech-patterns.json
-│   └── data-formatting-guide.json
+│   ├── data-formatting-guide.json
+│   └── design-templates.json     # 6 templates with code
 ├── data-enhanced/            # 36 modular JSON files
 ├── frontend/
 │   ├── src/                  # React app source
