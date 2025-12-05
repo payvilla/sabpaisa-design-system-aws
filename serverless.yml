@@ -22,6 +22,9 @@ functions:
       - httpApi:
           path: /health
           method: GET
+      - httpApi:
+          path: /debug/files
+          method: GET
     environment:
       NODE_ENV: production
       DEBUG: '0'

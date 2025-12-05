@@ -241,11 +241,12 @@ function initializeServer(): Server {
 export const handler = async (
   event: APIGatewayProxyEvent
 ): Promise<APIGatewayProxyResult> => {
-  // Support both v1 and v2 payload formats
-  const path = event.rawPath || event.path || '';
-  const method = event.requestContext?.http?.method || event.httpMethod || '';
+  try {
+    // Support both v1 and v2 payload formats
+    const path = event.rawPath || event.path || '';
+    const method = event.requestContext?.http?.method || event.httpMethod || '';
 
-  console.log(`Received ${method} ${path}`, JSON.stringify(event, null, 2));
+    console.log(`Received ${method} ${path}`, JSON.stringify(event, null, 2));
 
   // Health check endpoint
   if (path === '/health' && method === 'GET') {
@@ -264,6 +265,74 @@ export const handler = async (
         timestamp: new Date().toISOString(),
       }),
     };
+  }
+
+  // Debug endpoint to check file system
+  if (path === '/debug/files' && method === 'GET') {
+    const fs = await import('fs');
+    const pathModule = await import('path');
+
+    try {
+      const cwd = process.cwd();
+      const possibleDataPaths = [
+        pathModule.join(cwd, 'data'),
+        pathModule.join(cwd, '..', 'data'),
+        '/var/task/data',
+      ];
+
+      const debug: any = {
+        cwd,
+        env: process.env.NODE_ENV,
+        paths: {},
+        cwdFiles: [],
+        dataFiles: null
+      };
+
+      // Check each possible data path
+      for (const dataPath of possibleDataPaths) {
+        debug.paths[dataPath] = fs.existsSync(dataPath);
+      }
+
+      // List files in cwd
+      try {
+        debug.cwdFiles = fs.readdirSync(cwd);
+      } catch (e) {
+        debug.cwdFiles = `Error: ${e instanceof Error ? e.message : String(e)}`;
+      }
+
+      // List data files if directory exists
+      for (const dataPath of possibleDataPaths) {
+        if (fs.existsSync(dataPath)) {
+          try {
+            debug.dataFiles = {
+              path: dataPath,
+              files: fs.readdirSync(dataPath)
+            };
+            break;
+          } catch (e) {
+            debug.dataFiles = `Error reading ${dataPath}: ${e instanceof Error ? e.message : String(e)}`;
+          }
+        }
+      }
+
+      return {
+        statusCode: 200,
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+        },
+        body: JSON.stringify(debug, null, 2),
+      };
+    } catch (error) {
+      return {
+        statusCode: 500,
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+        },
+        body: JSON.stringify({ error: error instanceof Error ? error.message : String(error) }),
+      };
+    }
   }
 
   // MCP endpoint - GET returns info page
@@ -445,20 +514,32 @@ chmod +x ~/.sabpaisa-mcp/mcp-bridge.mjs</div>
           result: { resources },
         };
       } else if (mcpRequest.method === 'resources/read') {
-        const contents = getResource(mcpRequest.params.uri);
-        result = {
-          jsonrpc: '2.0',
-          id: mcpRequest.id,
-          result: {
-            contents: [
-              {
-                uri: mcpRequest.params.uri,
-                mimeType: 'application/json',
-                text: contents,
-              },
-            ],
-          },
-        };
+        try {
+          const contents = getResource(mcpRequest.params.uri);
+          result = {
+            jsonrpc: '2.0',
+            id: mcpRequest.id,
+            result: {
+              contents: [
+                {
+                  uri: mcpRequest.params.uri,
+                  mimeType: 'application/json',
+                  text: contents || '{}',
+                },
+              ],
+            },
+          };
+        } catch (resourceError) {
+          logger.error(`Error reading resource ${mcpRequest.params.uri}:`, resourceError);
+          result = {
+            jsonrpc: '2.0',
+            id: mcpRequest.id,
+            error: {
+              code: -32603,
+              message: `Failed to read resource: ${resourceError instanceof Error ? resourceError.message : String(resourceError)}`,
+            },
+          };
+        }
       } else if (mcpRequest.method === 'tools/list') {
         result = {
           jsonrpc: '2.0',
@@ -548,13 +629,28 @@ chmod +x ~/.sabpaisa-mcp/mcp-bridge.mjs</div>
     }
   }
 
-  // 404 for unknown endpoints
-  return {
-    statusCode: 404,
-    headers: {
-      'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*',
-    },
-    body: JSON.stringify({ error: 'Not Found' }),
-  };
+    // 404 for unknown endpoints
+    return {
+      statusCode: 404,
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+      },
+      body: JSON.stringify({ error: 'Not Found' }),
+    };
+  } catch (handlerError) {
+    console.error('Unhandled error in Lambda handler:', handlerError);
+    return {
+      statusCode: 500,
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+      },
+      body: JSON.stringify({
+        error: 'Internal Server Error',
+        message: handlerError instanceof Error ? handlerError.message : String(handlerError),
+        stack: handlerError instanceof Error ? handlerError.stack : undefined
+      }),
+    };
+  }
 };

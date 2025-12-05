@@ -246,11 +246,15 @@ function getTokenResource(subdomain: string): string {
     case 'all':
       return JSON.stringify({
         ...designSystem.tokens,
-        enhanced: enhanced.colors
+        enhanced: enhanced.designSystem?.tokens?.colors || enhanced.colors
       }, null, 2);
 
     case 'colors':
-      return JSON.stringify(enhanced.colors || designSystem.tokens?.colors, null, 2);
+      return JSON.stringify(
+        enhanced.designTokens?.colors || enhanced.colors || designSystem.tokens?.colors,
+        null,
+        2
+      );
 
     case 'typography':
       return JSON.stringify(designSystem.tokens?.typography, null, 2);
@@ -290,20 +294,44 @@ function getComponentResource(subdomain: string): string {
  * Get fintech pattern resources
  */
 function getPatternResource(subdomain: string): string {
-  const patterns = dataLoader.getPatterns();
+  const data = dataLoader.getPatterns();
+  const patterns = data.fintechPatterns || data;
 
   if (subdomain === 'all') {
     return JSON.stringify(patterns, null, 2);
   }
 
-  // Map subdomain to pattern key
-  const patternKey = subdomain.replace(/-/g, '_'); // 'refund-chargeback' -> 'refund_chargeback'
+  // Map subdomain to pattern key - try multiple variations
+  // Special case mappings
+  const keyMap: Record<string, string> = {
+    'kyc': 'kycManagementPatterns',
+    'settlement': 'settlementPatterns',
+    'reconciliation': 'reconciliationPatterns',
+    'refund-chargeback': 'refundChargebackPatterns',
+  };
 
-  if (!patterns[patternKey]) {
-    throw new Error(`Pattern not found: ${subdomain}`);
+  // Try mapped key first
+  if (keyMap[subdomain] && patterns[keyMap[subdomain]]) {
+    return JSON.stringify(patterns[keyMap[subdomain]], null, 2);
   }
 
-  return JSON.stringify(patterns[patternKey], null, 2);
+  // Try other variations
+  const possibleKeys = [
+    `${subdomain}Patterns`,                              // kyc -> kycPatterns
+    `${subdomain}Pattern`,                               // kyc -> kycPattern
+    `${subdomain}ManagementPatterns`,                    // kyc -> kycManagementPatterns
+    subdomain.replace(/-/g, ''),                         // refund-chargeback -> refundchargeback
+    `${subdomain.replace(/-/g, '')}Patterns`,            // refund-chargeback -> refundchargebackPatterns
+    subdomain.replace(/-/g, '').replace(/^(.)/, (m) => m.toUpperCase()) + 'Patterns', // refund-chargeback -> RefundchargebackPatterns
+  ];
+
+  for (const key of possibleKeys) {
+    if (patterns[key]) {
+      return JSON.stringify(patterns[key], null, 2);
+    }
+  }
+
+  throw new Error(`Pattern not found: ${subdomain}. Available: ${Object.keys(patterns).filter(k => k.endsWith('Patterns')).join(', ')}`);
 }
 
 /**
@@ -314,16 +342,32 @@ function getFormattingResource(subdomain: string): string {
 
   switch (subdomain) {
     case 'currency':
-      return JSON.stringify(formatting.currency, null, 2);
+      return JSON.stringify(
+        formatting.dataFormattingGuide?.currencyFormatting || formatting.currency,
+        null,
+        2
+      );
 
     case 'datetime':
-      return JSON.stringify(formatting.datetime, null, 2);
+      return JSON.stringify(
+        formatting.dataFormattingGuide?.datetimeFormatting || formatting.datetime,
+        null,
+        2
+      );
 
     case 'masking':
-      return JSON.stringify(formatting.masking, null, 2);
+      return JSON.stringify(
+        formatting.dataFormattingGuide?.dataPrivacy || formatting.masking,
+        null,
+        2
+      );
 
     case 'validation':
-      return JSON.stringify(formatting.validation, null, 2);
+      return JSON.stringify(
+        formatting.dataFormattingGuide?.validationPatterns || formatting.validation,
+        null,
+        2
+      );
 
     default:
       throw new Error(`Unknown formatting subdomain: ${subdomain}`);

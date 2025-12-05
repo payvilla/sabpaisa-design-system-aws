@@ -5,10 +5,9 @@
  * Implements efficient in-memory caching to minimize file I/O operations.
  */
 
-import { readFileSync } from 'fs';
+import { readFileSync, existsSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
-import { dataLogger } from './logger.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -20,9 +19,43 @@ export class DataLoader {
   private cache: Map<string, any> = new Map();
   private dataPath: string;
 
+  private initialized: boolean = false;
+
   constructor() {
-    // Data directory is one level up from src, then into data/
-    this.dataPath = join(__dirname, '..', 'data');
+    // Don't initialize path here - do it lazily on first use
+    this.dataPath = '';
+  }
+
+  private ensureInitialized(): void {
+    if (this.initialized) {
+      return;
+    }
+
+    // Data directory path - handle both local development and Lambda
+    const possiblePaths = [
+      join(process.cwd(), 'data'),            // Lambda: /var/task/data (FIRST - most reliable)
+      join(__dirname, '..', 'data'),          // Local: dist/../data
+      join(__dirname, '..', '..', 'data'),    // Alternative
+    ];
+
+    // Try each path until we find one that exists
+    for (const dataPath of possiblePaths) {
+      try {
+        if (existsSync(dataPath)) {
+          this.dataPath = dataPath;
+          console.error(`[Data] Data path resolved to: ${dataPath}`);
+          this.initialized = true;
+          return;
+        }
+      } catch (e) {
+        console.error(`[Data] Failed to check path ${dataPath}: ${e}`);
+      }
+    }
+
+    // Use first path as default if none found
+    this.dataPath = possiblePaths[0];
+    console.error(`[Data] No data directory found. Using default: ${this.dataPath}`);
+    this.initialized = true;
   }
 
   /**
@@ -31,6 +64,9 @@ export class DataLoader {
    * @returns Parsed JSON data
    */
   private load(filename: string): any {
+    // Ensure data path is initialized
+    this.ensureInitialized();
+
     // Check cache first
     if (this.cache.has(filename)) {
       return this.cache.get(filename);
@@ -47,7 +83,7 @@ export class DataLoader {
 
       return data;
     } catch (error) {
-      dataLogger.error(`Error loading ${filename}:`, error);
+      console.error(`[Data] Error loading ${filename}:`, error);
       throw new Error(`Failed to load design system file: ${filename}`);
     }
   }
