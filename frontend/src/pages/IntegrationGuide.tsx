@@ -1,13 +1,44 @@
 import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { Disclosure } from '@headlessui/react';
-import { ChevronDown, CheckCircle, AlertTriangle, Lightbulb, Sparkles } from 'lucide-react';
+import { ChevronDown, CheckCircle, AlertTriangle, Lightbulb, Sparkles, Copy, Check, Server, Activity, Globe } from 'lucide-react';
 import CodeBlock from '../components/CodeBlock';
 import { integrationGuides } from '../data/designSystemData';
 
 export default function IntegrationGuide() {
   const [activeTab, setActiveTab] = useState<'greenfield' | 'brownfield' | 'claude'>('greenfield');
+  const [copiedUrl, setCopiedUrl] = useState<string | null>(null);
   const guide = integrationGuides[activeTab];
+
+  const endpoints = [
+    {
+      name: 'MCP Server Endpoint',
+      url: 'https://suanrlo9yc.execute-api.ap-south-1.amazonaws.com/mcp',
+      description: 'Main endpoint for MCP protocol (use in Claude Code config)',
+      icon: Server,
+      color: 'indigo'
+    },
+    {
+      name: 'Health Check',
+      url: 'https://suanrlo9yc.execute-api.ap-south-1.amazonaws.com/health',
+      description: 'Verify server status and connectivity',
+      icon: Activity,
+      color: 'green'
+    },
+    {
+      name: 'Frontend Showcase',
+      url: 'http://sabpaisa-design-system-frontend-428169664322.s3-website.ap-south-1.amazonaws.com',
+      description: 'Visual examples and live component previews',
+      icon: Globe,
+      color: 'blue'
+    }
+  ];
+
+  const copyToClipboard = (url: string) => {
+    navigator.clipboard.writeText(url);
+    setCopiedUrl(url);
+    setTimeout(() => setCopiedUrl(null), 2000);
+  };
 
   return (
     <div className="space-y-8">
@@ -30,6 +61,88 @@ export default function IntegrationGuide() {
           your React projects. Choose your path below.
         </motion.p>
       </div>
+
+      {/* API Endpoints Section */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.15 }}
+        className="bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 rounded-xl p-6 border border-indigo-200 dark:border-indigo-800"
+      >
+        <div className="flex items-center gap-3 mb-4">
+          <Server className="w-6 h-6 text-indigo-600 dark:text-indigo-400" />
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
+            Cloud-Hosted MCP Server
+          </h2>
+        </div>
+        <p className="text-gray-700 dark:text-gray-300 mb-6">
+          The SabPaisa Design System is deployed on AWS Lambda with API Gateway. Copy these endpoints for integration:
+        </p>
+
+        <div className="grid grid-cols-1 gap-4">
+          {endpoints.map((endpoint, index) => (
+            <motion.div
+              key={endpoint.name}
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.2 + index * 0.1 }}
+              className="bg-white dark:bg-gray-800 rounded-lg p-4 border border-gray-200 dark:border-gray-700"
+            >
+              <div className="flex items-start justify-between gap-4">
+                <div className="flex items-start gap-3 flex-1">
+                  <endpoint.icon className={`w-5 h-5 mt-0.5 text-${endpoint.color}-600 dark:text-${endpoint.color}-400 flex-shrink-0`} />
+                  <div className="flex-1 min-w-0">
+                    <h3 className="font-semibold text-gray-900 dark:text-white mb-1">
+                      {endpoint.name}
+                    </h3>
+                    <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
+                      {endpoint.description}
+                    </p>
+                    <div className="bg-gray-50 dark:bg-gray-900 rounded px-3 py-2 font-mono text-sm text-gray-800 dark:text-gray-200 break-all">
+                      {endpoint.url}
+                    </div>
+                  </div>
+                </div>
+                <button
+                  onClick={() => copyToClipboard(endpoint.url)}
+                  className="flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-colors flex-shrink-0"
+                  title="Copy URL"
+                >
+                  {copiedUrl === endpoint.url ? (
+                    <>
+                      <Check className="w-4 h-4" />
+                      <span className="text-sm font-medium">Copied!</span>
+                    </>
+                  ) : (
+                    <>
+                      <Copy className="w-4 h-4" />
+                      <span className="text-sm font-medium">Copy</span>
+                    </>
+                  )}
+                </button>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Quick Stats */}
+        <div className="mt-6 pt-6 border-t border-indigo-200 dark:border-indigo-800">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+            <div>
+              <div className="text-3xl font-bold text-indigo-600 dark:text-indigo-400">28</div>
+              <div className="text-sm text-gray-600 dark:text-gray-400">MCP Resources</div>
+            </div>
+            <div>
+              <div className="text-3xl font-bold text-purple-600 dark:text-purple-400">6</div>
+              <div className="text-sm text-gray-600 dark:text-gray-400">MCP Tools</div>
+            </div>
+            <div>
+              <div className="text-3xl font-bold text-pink-600 dark:text-pink-400">6</div>
+              <div className="text-sm text-gray-600 dark:text-gray-400">Production Templates</div>
+            </div>
+          </div>
+        </div>
+      </motion.div>
 
       {/* Tab/Toggle Interface */}
       <motion.div
