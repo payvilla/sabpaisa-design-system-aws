@@ -109,11 +109,16 @@ jobs:
             --include "*.json"
 
       - name: Invalidate CloudFront cache
-        if: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID != '' }}
+        continue-on-error: true
         run: |
-          aws cloudfront create-invalidation \
-            --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} \
-            --paths "/*"
+          if [ -n "${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}" ]; then
+            echo "Invalidating CloudFront cache..."
+            aws cloudfront create-invalidation \
+              --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} \
+              --paths "/*"
+          else
+            echo "No CloudFront distribution configured, skipping cache invalidation"
+          fi
 
       - name: Get Frontend URL
         id: get-frontend-url
